@@ -1,0 +1,116 @@
+<div class="page-wrapper chiller-theme toggled">
+		<nav id="sidebar" class="sidebar-wrapper">
+			<div class="sidebar-content">
+				<div id="toggle-sidebar">
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+				<div class="sidebar-brand" (click)="clickedFeature('wellcome')">
+					<a>NK Store</a>
+				</div>
+				<div class="sidebar-header">
+					<div class="user-pic">
+						<img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/bootstrap4/assets/img/user.jpg"
+						 alt="User picture">
+					</div>
+					<div class="user-info">
+						<span class="user-name">
+							<strong>Nam Ngo</strong>
+						</span>
+						<span class="user-role">Administrator</span>
+						<span class="user-status">
+							<i class="fas fa-circle"></i>
+							<span>Online</span>
+						</span>
+					</div>
+				</div>
+				<!-- sidebar-header  -->
+				<!-- <div class="sidebar-search">
+						<div>
+							<div class="input-group">
+								<input type="text" class="form-control search-menu" placeholder="Search...">
+								<div class="input-group-append">
+									<span class="input-group-text">
+										<i class="fa fa-search" aria-hidden="true"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div> -->
+				<!-- sidebar-search  -->
+				<div class="sidebar-menu">
+					<ul>
+						<div>
+							<li class="header-menu">
+								<span>Admin</span>
+							</li>
+							<li class="sidebar-dropdown" (click)="clickedFeature(PAGE.EMPLOYEE)">
+								<a>
+									<i class="fas fa-user-secret"></i>
+									<span>Employee</span>
+									<!-- <span class="badge badge-pill badge-danger">New</span> -->
+								</a>
+							</li>
+							<li class="sidebar-dropdown" (click)="clickedFeature(PAGE.REPORT)">
+								<a>
+									<i class="fas fa-flag"></i>
+									<span>Report</span>
+								</a>
+							</li>
+						</div>
+						<div>
+							<li class="header-menu">
+								<span>General</span>
+							</li>
+							<li class="sidebar-dropdown" (click)="clickedFeature(PAGE.MERCHANDISE)">
+								<a>
+									<i class="fas fa-shopping-bag"></i>
+									<span>Merchandise</span>
+									<!-- <span class="badge badge-pill badge-primary">3</span> -->
+								</a>
+	
+							</li>
+							<li class="sidebar-dropdown" (click)="clickedFeature(PAGE.CUSTOMER)">
+								<a >
+									<i class="fas fa-user"></i>
+									<span>Customer</span>
+								</a>
+							</li>
+						</div>
+					</ul>
+				</div>
+				<!-- sidebar-menu  -->
+			</div>
+			<!-- sidebar-content  -->
+			<div class="sidebar-footer">
+				<a>
+					<!-- <i class="fa fa-bell"></i> -->
+					<!-- <span class="badge badge-pill badge-warning notification">3</span> -->
+				</a>
+				<a>
+					<!-- <i class="fa fa-envelope"></i> -->
+					<!-- <span class="badge badge-pill badge-success notification">7</span> -->
+				</a>
+				<a>
+					<!-- <i class="fa fa-power-off"></i> -->
+				</a>
+				<a (click)="logout()">
+					<!-- <span class="badge-sonar"></span> -->
+					<i class="fas fa-sign-out-alt"></i>
+				</a>
+			</div>
+		</nav>
+		<!-- sidebar-wrapper  -->
+		<main class="page-content">
+			<div class="container">
+				<router-outlet></router-outlet>
+				<!-- <div *ngIf="page === PAGE.WELLCOME"> WELLCOME</div>
+				<app-employee *ngIf="page === PAGE.EMPLOYEE"></app-employee>
+				<app-merchandise *ngIf="page === PAGE.MERCHANDISE"></app-merchandise>
+				<app-report *ngIf="page === PAGE.REPORT"></app-report>
+				<app-customer *ngIf="page === PAGE.CUSTOMER"></app-customer> -->
+			</div>
+		</main>
+		<!-- page-content" -->
+	</div>

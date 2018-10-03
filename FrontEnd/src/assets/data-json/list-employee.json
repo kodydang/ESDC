@@ -1,0 +1,37 @@
+[
+	{
+		"id": 1,
+		"name": "Khanh Đặng",
+		"birthday": "1997-04-26T17:00:00.000Z",
+		"address": "Tp.Hồ Chí Minh",
+		"phone": "0912345678"
+	},
+	{
+		"id": 2,
+		"name": "Nam Ngô",
+		"birthday": "1997-03-24T17:00:00.000Z",
+		"address": "Tp.Hồ Chí Minh",
+		"phone": "0912345678"
+	},
+	{
+		"id": 3,
+		"name": "Trần Ngô Tiểu Hảo",
+		"birthday": "1997-08-09T17:00:00.000Z",
+		"address": "Tp.Hồ Chí Minh",
+		"phone": "0912345678"
+	},
+	{
+		"id": 4,
+		"name": "Lê Trung Hiếu",
+		"birthday": "1997-09-10T17:00:00.000Z",
+		"address": "Tp.Hồ Chí Minh",
+		"phone": "0912345678"
+	},
+	{
+		"id": 5,
+		"name": "Nguyễn Thị Diệp",
+		"birthday": "1997-11-15T17:00:00.000Z",
+		"address": "Tp.Hồ Chí Minh",
+		"phone": "0912345678"
+	}
+]
