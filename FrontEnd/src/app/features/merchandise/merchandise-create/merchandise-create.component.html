@@ -1,0 +1,73 @@
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i>
+  Add new</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Merchandise Detail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addForm="ngForm" (ngSubmit)="formSubmit(addForm)" data-toggle="validator" role="form">
+          <div class="form-group" [ngClass]="{
+                'has-success': nameMerchandise.valid,
+                'has-error': nameMerchandise.invalid && (nameMerchandise.dirty || nameMerchandise.touched)}">
+            <label for="name">Name: <span class="k-required">*</span></label>
+            <input type="text" class="form-control" id="nameMerchandise" placeholder="Enter merchandise's name"
+              [(ngModel)]="merchandise.name" name="nameMerchandise" #nameMerchandise="ngModel" required>
+            <div [hidden]="nameMerchandise.valid || nameMerchandise.pristine" class="alert alert-danger">
+              <strong>Please enter merchandise's name</strong>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Category: <span class="k-required">*</span></label>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {{merchandise.category? merchandise.category : 'Category' }}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" *ngFor="let category of categories" (click)="onCategoryClick(category.name)">
+                  {{category.name}}</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Price: <span class="k-required">*</span></label>
+            <input class="form-control" type="number" min="0" id="inputPrice" [(ngModel)]="merchandise.price" name="price"
+              #price="ngModel" required pattern="^\d+(?:\.\d{1,2})?$">
+            <div [hidden]="price.valid || price.pristine" class="alert alert-warning">
+              <strong>Please enter a valid price!!</strong>
+            </div>
+          </div>
+
+          <div class="form-group" [ngClass]="{
+              'has-success': quantities.valid,
+              'has-warning': quantities.invalid && (quantities.dirty || quantities.touched)
+            }">
+            <label>Quantities: <span class="k-required">*</span></label>
+            <input class="form-control" type="number" min="0" id="inputQuantities" [(ngModel)]="merchandise.quantities"
+              name="quantities" #quantities="ngModel" required pattern="^\d+(?:\.\d{1,2})?$">
+            <div [hidden]="quantities.valid || quantities.pristine" class="alert alert-warning">
+              <strong>Please enter a valid quantities </strong>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameMerchandise.valid && address.valid && quantities.valid && price.valid && phone.valid)">{{
+              isUpdate ? 'Update' : 'Add' }}</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

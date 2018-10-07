@@ -10,12 +10,14 @@ import { ReportComponent } from '../features/report/report.component';
 import { MerchandiseComponent } from '../features/merchandise/merchandise.component';
 import { CustomerComponent } from '../features/customer/customer.component';
 import { CustomerModule } from '../features/customer/customer.module';
+import { MerchandiseModule } from '../features/merchandise/merchandise.module';
 
 @NgModule({
   imports: [
     CommonModule,
     EmployeeModule,
     CustomerModule,
+    MerchandiseModule,
     AdminRoutingModule,
   ],
   declarations: [

@@ -1,6 +1,9 @@
 <div class="table-responsive">
   <!-- <button type="button" class="btn btn-primary" (click)="add()"><i class="fas fa-plus"></i> Add new</button> -->
-  <app-employee-create (submit)="addEvent($event)"></app-employee-create>
+  <button type="button" (click)="add()" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <i class="fas fa-plus"></i>
+    Add new</button>
+  <app-employee-create (submit)="addEvent($event)" [employee]="employee" [isUpdate]="isUpdate"></app-employee-create>
   <table class="table table-bordered custab table-hover mt-3 mb-3 mr-3">
 
     <thead>
@@ -10,30 +13,35 @@
           <span>Name</span>
           <i class="fas i-sort" [ngClass]="sortIcon('name', 0)"></i>
         </th>
-        <th scope="col" (click)="sortBy('birthday', 1)">
+        <th scope="col" (click)="sortBy('gender', 1)">
+          <span>Gender</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('gender', 1)"></i>
+        </th>
+        <th scope="col" (click)="sortBy('birthday', 2)">
           <span>Birthday</span>
-          <i class="fas i-sort" [ngClass]="sortIcon('birthday', 1)"></i>
+          <i class="fas i-sort" [ngClass]="sortIcon('birthday', 2)"></i>
         </th>
-        <th scope="col" (click)="sortBy('address', 2)">
+        <th scope="col" (click)="sortBy('address', 3)">
           <span>Address</span>
-          <i class="fas i-sort" [ngClass]="sortIcon('address', 2)"></i>
+          <i class="fas i-sort" [ngClass]="sortIcon('address', 3)"></i>
         </th>
-        <th scope="col" (click)="sortBy('phone', 3)">
+        <th scope="col" (click)="sortBy('phone', 4)">
           <span>Phone</span>
-          <i class="fas i-sort" [ngClass]="sortIcon('phone', 3)"></i>
+          <i class="fas i-sort" [ngClass]="sortIcon('phone', 4)"></i>
         </th>
         <th class="text-center">Action</th>
       </tr>
     </thead>
     <tbody *ngFor="let item of listEmployeeSorted | paginate: paginateConfig; let i = index">
       <tr>
-        <th scope="row">{{i+1}}</th>
-        <td>{{ item.name }}</td>
-        <td>{{ formatDate(item.birthday) }} </td>
-        <td>{{ item.address }}</td>
-        <td>{{ item.phone }}</td>
-        <td class="text-center d-flex">
-          <button class="btn btn-info btn-xs mr-1">
+        <th width="5%" scope="row">{{i+1}}</th>
+        <td width="25%">{{ item.name }}</td>
+        <td width="15%">{{ item.gender }}</td>
+        <td width="15%">{{ formatDate(item.birthday) }} </td>
+        <td width="25%">{{ item.address }}</td>
+        <td width="10%">{{ item.phone }}</td>
+        <td width="20%" class="text-center d-flex td-noborder">
+          <button class="btn btn-info btn-xs mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
             <i class="fas fa-edit"></i> Edit
           </button>
           <button class="btn btn-danger btn-xs">

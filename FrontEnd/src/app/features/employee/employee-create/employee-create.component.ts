@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import * as moment from 'moment';
 
@@ -9,14 +9,9 @@ import * as moment from 'moment';
 })
 export class EmployeeCreateComponent implements OnInit {
   @Output() submit = new EventEmitter();
-  employee = {
-    name: '',
-    gender: '',
-    address: '',
-    email: '',
-    birthday: null,
-    phone: '',
-  };
+  @Input() employee;
+  @Input() isUpdate;
+
   submitted = false;
   constructor() { }
 

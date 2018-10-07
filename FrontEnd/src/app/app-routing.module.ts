@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminPageComponent },
   // { path: 'admin', loadChildren: 'app/admin-page/admin-page.module#AdminPageModule' },
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
+  // { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -14,14 +14,23 @@ import { Router } from '@angular/router';
 export class EmployeeComponent implements OnInit {
   listEmployee: Employee[] = [];
   listEmployeeSorted: Employee[] = [];
-  typeSort = ['', '', '', ''];
-  style: boolean[] = [false, false, false, false];
+  typeSort = ['', '', '', '', ''];
+  style: boolean[] = [false, false, false, false, false];
   paginateConfig = {
     id: 'paginator',
-    itemsPerPage: 3,
+    itemsPerPage: 4,
     currentPage: 1,
   };
   open = false;
+  employee = {
+    name: '',
+    gender: '',
+    address: '',
+    email: '',
+    birthday: null,
+    phone: '',
+  };
+  isUpdate: boolean;
   constructor(
     private router: Router,
     private employeeService: EmployeeService,
@@ -50,7 +59,6 @@ export class EmployeeComponent implements OnInit {
   sortBy(type, position) {
     this.typeSort[position] = type;
     this.style[position] = !this.style[position];
-    console.log(this.typeSort);
 
     if (this.style[position]) {
       return this.listEmployeeSorted = _.sortBy(this.listEmployeeSorted, [type]);
@@ -73,7 +81,23 @@ export class EmployeeComponent implements OnInit {
   }
 
   add() {
-    this.open = !this.open;
+    this.isUpdate = false;
+    this.employee.name = '';
+    this.employee.gender = '';
+    this.employee.address = '';
+    this.employee.email = '';
+    this.employee.birthday = null;
+    this.employee.phone = '';
+  }
+
+  edit(event) {
+    this.isUpdate = true;
+    this.employee.name = event.name;
+    this.employee.gender = event.gender;
+    this.employee.address = event.address;
+    this.employee.email = event.email;
+    this.employee.birthday = event.birthday;
+    this.employee.phone = event.phone;
   }
 
   addEvent(event) {

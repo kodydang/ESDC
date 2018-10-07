@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import * as moment from 'moment';
 
@@ -9,14 +9,8 @@ import * as moment from 'moment';
 })
 export class CustomerCreateComponent implements OnInit {
   @Output() submit = new EventEmitter();
-  employee = {
-    name: '',
-    gender: '',
-    address: '',
-    email: '',
-    birthday: null,
-    phone: '',
-  };
+  @Input() customer;
+  @Input() isUpdate;
   submitted = false;
   constructor() { }
 
@@ -28,10 +22,10 @@ export class CustomerCreateComponent implements OnInit {
     this.submitted = true;
   }
   add() {
-    this.employee.birthday = moment(this.employee.birthday).toDate();
-    this.submit.emit(this.employee);
+    this.customer.birthday = moment(this.customer.birthday).toDate();
+    this.submit.emit(this.customer);
   }
   onGenderClick(value) {
-    this.employee.gender = value;
+    this.customer.gender = value;
   }
 }
