@@ -27,7 +27,6 @@ export class MerchandiseCreateComponent implements OnInit {
   getCategory() {
     this.merchandiseService.getCategory().subscribe((res: any) => {
       this.categories = res;
-      console.log(this.categories);
     });
   }
   formSubmit(res: NgForm) {
