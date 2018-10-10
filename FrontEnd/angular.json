@@ -23,9 +23,19 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/../node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/vendors/base/vendors.bundle.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/../node_modules/jquery/dist/jquery.min.js",
+              "src/../node_modules/popper.js/dist/umd/popper.min.js",
+              "src/../node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "src/../node_modules/web-animations-js/web-animations.min.js",
+              "src/../node_modules/hammerjs/hammer.min.js",
+              "src/assets/vendors/base/vendors.bundle.js",
+              "src/../node_modules/muuri/dist/muuri.min.js"
+            ]
           },
           "configurations": {
             "production": {
