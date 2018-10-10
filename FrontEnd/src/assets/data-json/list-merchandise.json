@@ -1,0 +1,72 @@
+[
+	{
+		"id": 1,
+		"name": "Apple Macbook Pro Touch MR9Q2SA/A i5 2.3GHz/8GB/256GB (2018)",
+		"price": 44490000,
+		"quantities": 10,
+		"category": "Laptop"
+	},
+	{
+		"id": 2,
+		"name": "Dell Inspiron 7570 i7 8550U/8GB/1TB+128GB/4GB MX130/Win10/Office365/(782P82)",
+		"price": 26990000,
+		"quantities": 5,
+		"category": "Laptop"
+	},
+	{
+		"id": 3,
+		"name": "Dell Vostro 5568 i5 7200U/4GB/1TB/2GB 940MX/Win10/(077M52)",
+		"price": 16490000,
+		"quantities": 9,
+		"category": "Laptop"
+	},
+	{
+		"id": 4,
+		"name": "MSI GF63 8RD i7 8750H/8GB/1TB+128GB/4GB GTX1050Ti/Win10/(221VN)",
+		"price": 27490000,
+		"quantities": 3,
+		"category": "Laptop"
+	},
+	{
+		"id": 5,
+		"name": "Asus ROG Strix Scar GL504GM i7 8750H/16GB/1TB+128GB/6GB GTX1060/Win10/(ES044T)",
+		"price": 45490000,
+		"quantities": 3,
+		"category": "Laptop"
+	},
+	{
+		"id": 6,
+		"name": "Soundbar Samsung 5.1 HW-K950/XV 500W",
+		"price": 25990000,
+		"quantities": 10,
+		"category": "Soundbar"
+	},
+	{
+		"id": 7,
+		"name": "Android Tivi Sony 4K 43 inch KD-43X7500F",
+		"price": 13900000,
+		"quantities": 10,
+		"category": "Tivi"
+	},
+	{
+		"id": 9,
+		"name": "Refrigerator Samsung Inverter 380 liter RT38K5982BS/SV",
+		"price": 16290000,
+		"quantities": 6,
+		"category": "Refrigerator"
+	},
+	{
+		"id": 10,
+		"name": "Refrigerator Sharp Inverter 626 liter SJ-FX630V-ST",
+		"price": 18990000,
+		"quantities": 5,
+		"category": "Refrigerator"
+	},
+	{
+		"id": 8,
+		"name": "Smart Tivi LG 4K 43 inch 43UK6340PTF",
+		"price": 12900000,
+		"quantities": 10,
+		"category": "Tivi"
+	}
+]

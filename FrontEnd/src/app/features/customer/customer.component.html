@@ -1,0 +1,55 @@
+<div class="table-responsive">
+	<!-- <button type="button" class="btn btn-primary"><i class="fas fa-plus"></i> Add new</button> -->
+	<app-customer-create (submit)="addEvent($event)" [customer]="customer" [isUpdate]="isUpdate"></app-customer-create>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="add()">
+		<i class="fas fa-plus"></i>
+		Add new</button>
+	<table class="table table-bordered custab table-hover mt-3 mb-3 mr-3 " style="width:100%">
+
+		<thead>
+			<tr>
+				<th scope="col"></th>
+				<th scope="col" (click)="sortBy('name', 0)">
+					<span>Name</span>
+					<i class="fas i-sort" [ngClass]="sortIcon('name', 0)"></i>
+				</th>
+				<th scope="col" (click)="sortBy('gender', 1)">
+						<span>Name</span>
+						<i class="fas i-sort" [ngClass]="sortIcon('gender', 1)"></i>
+					</th>
+				<th scope="col" (click)="sortBy('birthday', 2)">
+					<span>Birthday</span>
+					<i class="fas i-sort" [ngClass]="sortIcon('birthday', 2)"></i>
+				</th>
+				<th scope="col" (click)="sortBy('address', 3)">
+					<span>Address</span>
+					<i class="fas i-sort" [ngClass]="sortIcon('address', 3)"></i>
+				</th>
+				<th scope="col" (click)="sortBy('phone', 4)">
+					<span>Phone</span>
+					<i class="fas i-sort" [ngClass]="sortIcon('phone', 4)"></i>
+				</th>
+				<th class="text-center">Action</th>
+			</tr>
+		</thead>
+		<tbody *ngFor="let item of listCustomerSorted | paginate: paginateConfig; let i = index">
+			<tr>
+				<th width="5%" scope="row">{{i+1}}</th>
+				<td width="25%">{{ item.name }}</td>
+				<td width="15%">{{ item.gender }}</td>
+				<td width="15%">{{ formatDate(item.birthday) }} </td>
+				<td width="25%">{{ item.address }}</td>
+				<td width="10%">{{ item.phone }}</td>
+				<td class="text-center d-flex td-noborder">
+					<button class="btn btn-info btn-xs mr-1"data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
+						<i class="fas fa-edit"></i> Edit
+					</button>
+					<button class="btn btn-danger btn-xs">
+						<i class="fas fa-trash-alt"></i> Delete
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<pagination-controls id="paginator" (pageChange)="onPageChange($event)" style="text-align: center;" [responsive]="true"></pagination-controls>
+</div>
