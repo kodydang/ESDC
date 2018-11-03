@@ -24,6 +24,19 @@
               <strong>Please enter employee's name</strong>
             </div>
           </div>
+          {{checkUsername}}
+          {{accountEmployee.valid}}
+          {{accountEmployee.valid && checkUsername}}
+          <div class="form-group" [ngClass]="{
+            'has-success': accountEmployee.valid && checkUsername,
+            'has-error': accountEmployee.invalid && (accountEmployee.dirty || accountEmployee.touched)}">
+            <label for="name">Username: <span class="k-required">*</span></label>
+            <input type="text" class="form-control" id="accountEmployee" placeholder="Enter employee's username"
+              [(ngModel)]="employee.username" name="accountEmployee" #accountEmployee="ngModel" required pattern="^[a-zA-Z0-9]+$">
+            <div [hidden]="accountEmployee.valid || accountEmployee.pristine" class="alert alert-danger">
+              <strong>Please enter employee's username</strong>
+            </div>
+          </div>
 
           <div class="form-group" [ngClass]="{
             'has-success': address.valid,
@@ -85,7 +98,8 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameEmployee.valid && address.valid && email.valid && birthday.valid && phone.valid)">{{ isUpdate ? 'Update' : 'Add' }}</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameEmployee.valid && address.valid && email.valid && birthday.valid && phone.valid)">{{
+              isUpdate ? 'Update' : 'Add' }}</button>
             <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()">Add</button> -->
           </div>
 

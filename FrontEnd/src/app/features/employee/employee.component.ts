@@ -24,6 +24,7 @@ export class EmployeeComponent implements OnInit {
   open = false;
   employee = {
     name: '',
+    username: '',
     gender: '',
     address: '',
     email: '',
@@ -83,6 +84,7 @@ export class EmployeeComponent implements OnInit {
   add() {
     this.isUpdate = false;
     this.employee.name = '';
+    this.employee.username = '';
     this.employee.gender = '';
     this.employee.address = '';
     this.employee.email = '';
@@ -93,6 +95,7 @@ export class EmployeeComponent implements OnInit {
   edit(event) {
     this.isUpdate = true;
     this.employee.name = event.name;
+    this.employee.username = event.username;
     this.employee.gender = event.gender;
     this.employee.address = event.address;
     this.employee.email = event.email;

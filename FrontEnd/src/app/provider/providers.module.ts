@@ -7,6 +7,7 @@ import { EmployeeService } from './employee.service';
 import { CustomerService } from './customer.service';
 import { MerchandiseService } from './merchandise.service';
 import { CategoryService } from './category.service';
+import { ReportService } from './report.service';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { CategoryService } from './category.service';
     CustomerService,
     MerchandiseService,
     CategoryService,
+    ReportService,
   ],
 })
 export class ProvidersModule { }

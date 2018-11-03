@@ -12,6 +12,7 @@ export class EmployeeCreateComponent implements OnInit {
   @Input() employee;
   @Input() isUpdate;
 
+  checkUsername = false;
   submitted = false;
   constructor() { }
 
@@ -28,5 +29,9 @@ export class EmployeeCreateComponent implements OnInit {
   }
   onGenderClick(value) {
     this.employee.gender = value;
+  }
+
+  checkAccountUser(username) {
+    this.checkUsername = false;
   }
 }

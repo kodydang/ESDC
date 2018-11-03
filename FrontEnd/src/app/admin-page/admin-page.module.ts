@@ -14,6 +14,7 @@ import { CustomerModule } from '../features/customer/customer.module';
 import { CategoryComponent } from '../features/category/category.component';
 import { CategoryModule } from '../features/category/category.module';
 import { PaymentComponent } from '../features/payment/payment.component';
+import { ReportModule } from '../features/report/report.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { PaymentComponent } from '../features/payment/payment.component';
     CustomerModule,
     MerchandiseModule,
     CategoryModule,
+    ReportModule,
     AdminRoutingModule,
   ],
   declarations: [
