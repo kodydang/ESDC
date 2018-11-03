@@ -5,15 +5,31 @@
       <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
       <img id="profile-img" class="profile-img-card" [src]="'./../../assets/images/logo-app.png'" />
 
-      <form class="form-signin">
+      <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <span id="reauth-email" class="reauth-email"></span>
         <div class="form-group">
-          <input type="text" id="inputUsername" class="form-control radius" placeholder="Username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" required pattern="^[a-zA-Z0-9]*$">
+          <input type="text" formControlName="username" placeholder="Username" class="form-control radius" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div class="form-group noti" [ngClass]="{
+              'has-danger': loginForm.controls.username.invalid && loginForm.controls.username.dirty}">
+              Username is required.
+            </div>
+          </div>
         </div>
         <div class="form-group">
-          <input type="password" id="inputPass" class="form-control radius" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" required pattern="^[a-zA-Z0-9]{6,}$">
+          <input type="password" formControlName="password" placeholder="Password" class="form-control radius"
+            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div class="form-group noti" [ngClass]="{
+                'has-danger': loginForm.controls.password.invalid && loginForm.controls.password.dirty}">
+              Password is required. <br />
+              Password must have at least 8 characters.
+            </div>
+          </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" (click)="login()">Sign in</button>
+        <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+        </div>
       </form>
       <!-- <a href="#" class="forgot-password">
               Forgot the password?
