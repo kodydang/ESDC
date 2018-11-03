@@ -1,3 +1,27 @@
-<p>
-    Report works!
-</p>
+<!-- <div class="form-group" style="width: 40%">
+    <label for="sel1">Select type report:</label>
+    <select class="form-control" [(ngModel)]="typeSelected">
+        <option *ngFor="let type of typeReport" [value]="type">{{ type }}</option>
+    </select>
+</div> -->
+<!-- <div *ngIf="chart">
+    <canvas id="chartYear"></canvas>
+    <canvas id="chartMer"></canvas>
+</div> -->
+<div class="form-group" style="width: 40%; height: 100%;">
+    <!-- <label>Select type report: </label> -->
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{typeSelected}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" *ngFor="let type of typeReport" (click)="onTypeClick(type)">
+                {{type}}</a>
+        </div>
+    </div>
+</div>
+<h4 class="text-center" *ngIf="typeSelected === 'Year'">Sales by Month</h4>
+<app-report-year *ngIf="typeSelected === 'Year'"></app-report-year>
+<h4 class="text-center" *ngIf="typeSelected === 'Merchandise'">Sales by Product Category</h4>
+<app-report-merchandise *ngIf="typeSelected === 'Merchandise'"></app-report-merchandise>

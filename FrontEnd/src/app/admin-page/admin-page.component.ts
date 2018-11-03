@@ -12,6 +12,8 @@ const PAGE = {
   CUSTOMER: 'customer',
   REPORT: 'report',
   WELLCOME: 'wellcome',
+  CATEGORY: 'category',
+  PAYMENT: 'payment',
 };
 
 @Component({
@@ -52,6 +54,12 @@ export class AdminPageComponent implements OnInit {
     }
     if (page === PAGE.MERCHANDISE) {
       this.router.navigate(['admin' , 'merchandise']);
+    }
+    if (page === PAGE.CATEGORY) {
+      this.router.navigate(['admin' , 'category']);
+    }
+    if (page === PAGE.PAYMENT) {
+      this.router.navigate(['admin' , 'payment']);
     }
   }
 }

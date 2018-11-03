@@ -5,6 +5,8 @@ import { EmployeeComponent } from '../features/employee/employee.component';
 import { CustomerComponent } from '../features/customer/customer.component';
 import { ReportComponent } from '../features/report/report.component';
 import { MerchandiseComponent } from '../features/merchandise/merchandise.component';
+import { CategoryComponent } from '../features/category/category.component';
+import { PaymentComponent } from '../features/payment/payment.component';
 
 const routes: Routes = [
   // Module is lazy loaded, see app-routing.module.ts
@@ -27,6 +29,14 @@ const routes: Routes = [
       {
         path: 'merchandise',
         component: MerchandiseComponent,
+      },
+      {
+        path: 'category',
+        component: CategoryComponent,
+      },
+      {
+        path: 'payment',
+        component: PaymentComponent,
       },
       {
         path: '',
