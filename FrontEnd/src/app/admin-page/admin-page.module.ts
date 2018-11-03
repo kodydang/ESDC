@@ -11,6 +11,7 @@ import { MerchandiseComponent } from '../features/merchandise/merchandise.compon
 import { CustomerComponent } from '../features/customer/customer.component';
 import { CustomerModule } from '../features/customer/customer.module';
 import { MerchandiseModule } from '../features/merchandise/merchandise.module';
+import { ReportModule } from '../features/report/report.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { MerchandiseModule } from '../features/merchandise/merchandise.module';
     EmployeeModule,
     CustomerModule,
     MerchandiseModule,
+    ReportModule,
     AdminRoutingModule,
   ],
   declarations: [
