@@ -32,6 +32,8 @@ export class AdminPageComponent implements OnInit {
 
   logout() {
     this.router.navigate(['/login']);
+     // remove user from local storage to log user out
+     localStorage.removeItem('currentUser');
   }
 
   clickedFeature(page) {

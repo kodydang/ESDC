@@ -5,7 +5,7 @@
       <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
       <img id="profile-img" class="profile-img-card" [src]="'./../../assets/images/logo-app.png'" />
 
-      <form class="form-signin">
+      <form class="form-signin" [formGroup]= "loginForm" (ngSubmit)="onSubmit()">
         <span id="reauth-email" class="reauth-email"></span>
         <div class="form-group">
           <input type="text" id="inputUsername" class="form-control radius" placeholder="Username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" required pattern="^[a-zA-Z0-9]*$">
