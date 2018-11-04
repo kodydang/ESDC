@@ -24,7 +24,7 @@ export class CustomerComponent implements OnInit {
   style: boolean[] = [false, false, false, false];
   paginateConfig = {
     id: 'paginator',
-    itemsPerPage: 4,
+    itemsPerPage: 10,
     currentPage: 1,
   };
   isUpdate: boolean;

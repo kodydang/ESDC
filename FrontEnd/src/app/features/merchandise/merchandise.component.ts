@@ -17,7 +17,7 @@ export class MerchandiseComponent implements OnInit {
   style: boolean[] = [false, false, false, false];
   paginateConfig = {
     id: 'paginator',
-    itemsPerPage: 4,
+    itemsPerPage: 10,
     currentPage: 1,
   };
   open = false;
@@ -25,7 +25,7 @@ export class MerchandiseComponent implements OnInit {
     name: '',
     category: '',
     price: 0,
-    quantities: 0,
+    quantity: 0,
   };
   isUpdate: boolean;
   constructor(
@@ -81,7 +81,7 @@ export class MerchandiseComponent implements OnInit {
     this.merchandise.name = '';
     this.merchandise.category = '';
     this.merchandise.price = 0;
-    this.merchandise.quantities = 0;
+    this.merchandise.quantity = 0;
   }
 
   edit(event) {
@@ -89,7 +89,7 @@ export class MerchandiseComponent implements OnInit {
     this.merchandise.name = event.name;
     this.merchandise.category = event.category;
     this.merchandise.price = event.price;
-    this.merchandise.quantities = event.quantities;
+    this.merchandise.quantity = event.quantity;
   }
 
   addEvent(event) {

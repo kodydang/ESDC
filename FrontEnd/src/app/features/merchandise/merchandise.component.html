@@ -21,9 +21,9 @@
             <span>Price</span>
             <i class="fas i-sort" [ngClass]="sortIcon('price', 2)"></i>
           </th>
-          <th scope="col" (click)="sortBy('quantities', 3)">
+          <th scope="col" (click)="sortBy('quantity', 3)">
             <span>Quantities</span>
-            <i class="fas i-sort" [ngClass]="sortIcon('quantities', 3)"></i>
+            <i class="fas i-sort" [ngClass]="sortIcon('quantity', 3)"></i>
           </th>
           <th scope="col" class="text-center">Action</th>
         </tr>
@@ -34,12 +34,12 @@
           <td width="30%">{{ item.name }}</td>
           <td width="15%">{{ item.category }} </td>
           <td width="15%">{{ item.price | number: '1.0-0' }}</td>
-          <td width="15%">{{ item.quantities }}</td>
+          <td width="15%">{{ item.quantity }}</td>
           <td width="20%" class="text-center d-flex td-noborder">
-              <button class="btn btn-info btn-xs mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
+              <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
               <i class="fas fa-edit"></i> Edit
             </button>
-            <button class="btn btn-danger btn-xs">
+            <button class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i> Delete
             </button>
           </td>

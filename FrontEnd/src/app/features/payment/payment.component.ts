@@ -1,8 +1,11 @@
+import { Category } from './../../shared/models/category';
+import { MerchandiseService } from './../../provider/merchandise.service';
+import { Customer } from './../../shared/models/customer';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-// import { Payment } from '../../shared/models';
-// import { PaymentService } from '../../provider/payment.service';
+import { NgForm } from '@angular/forms';
+import { Merchandise } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-payment',
@@ -10,94 +13,116 @@ import * as _ from 'lodash';
   styleUrls: ['./payment.component.scss'],
 })
 export class PaymentComponent implements OnInit {
-  // payment = {
-  //   name: '',
-  //   gender: '',
-  //   address: '',
-  //   email: '',
-  //   birthday: null,
-  //   phone: '',
-  // };
-  // listPayment: Payment[] = [];
-  // listPaymentSorted: Payment[] = [];
-  // typeSort = ['', '', '', ''];
-  // style: boolean[] = [false, false, false, false];
-  // paginateConfig = {
-  //   id: 'paginator',
-  //   itemsPerPage: 4,
-  //   currentPage: 1,
-  // };
-  // isUpdate: boolean;
-  // constructor(
-  //   private paymentService: PaymentService,
-  // ) { }
+  customer: Customer = new Customer({});
+  tabIndex = 0;
+  merchandises: Merchandise[] = [];
+  cart: Merchandise[] = [];
+  newMerchandise = this.defaultMerchandise;
+  sortKey = '';
+  sortReverse = false;
+  constructor(
+    private merchandiseService: MerchandiseService,
+  ) { }
 
-  ngOnInit() {
-    // this.getAll();
+  get totalQuantity() {
+    let total = 0;
+    this.cart.forEach(i => total += i.quantity);
+    return total;
   }
 
-  // getAll() {
-  //   this.paymentService.getAll().subscribe(
-  //     (res: any) => {
-  //       this.listPayment = res;
-  //       this.listPaymentSorted = this.listPayment;
-  //       // console.log(this.listPayment);
-  //     },
-  //     (er) => {
-  //       console.warn(er);
-  //     });
-  // }
+  get totalPrice() {
+    let total = 0;
+    this.cart.forEach(i => total += i.price * i.quantity);
+    return total;
+  }
 
-  // formatDate(date) {
-  //   return moment(date).format('ll');
-  // }
+  get stock() {
+    const merchandise = this.merchandises.find(i => i.id === this.newMerchandise.id);
+    return merchandise ? merchandise.quantity : 0;
+  }
 
-  // sortBy(type, position) {
-  //   this.typeSort[position] = type;
-  //   this.style[position] = !this.style[position];
-  //   // console.log(this.typeSort);
+  get price() {
+    const merchandise = this.merchandises.find(i => i.id === this.newMerchandise.id);
+    return merchandise ? merchandise.price : 0;
+  }
 
-  //   if (this.style[position]) {
-  //     return this.listPaymentSorted = _.sortBy(this.listPaymentSorted, [type]);
-  //   }
-  //   return this.listPaymentSorted = _.reverse(_.sortBy(this.listPaymentSorted, [type]));
-  // }
+  get defaultMerchandise() {
+    return new Merchandise({
+      quantity: 0,
+      category: 'Unknown',
+    });
+  }
 
-  // sortIcon(type, position) {
-  //   if (this.typeSort[position] === type) {
-  //     if (this.style[position]) {
-  //       return 'fa-sort-down';
-  //     }
-  //     return 'fa-sort-up';
-  //   }
-  //   return 'fa-sort';
-  // }
+  get isItemValid() {
+    return this.newMerchandise.id !== undefined;
+  }
 
-  // onPageChange(number) {
-  //   this.paginateConfig.currentPage = number;
-  // }
+  ngOnInit() {
+    this.getAll();
+  }
 
-  // addEvent(event) {
-  //   console.log(event);
+  getAll() {
+    this.merchandiseService.getAll().subscribe(
+      (res: any) => {
+        this.merchandises = res;
+        this.cart = [];
+      },
+      (er) => {
+        console.warn(er);
+      });
+  }
 
-  // }
-  // add() {
-  //   this.isUpdate = false;
-  //   this.payment.name = '';
-  //   this.payment.gender = '';
-  //   this.payment.address = '';
-  //   this.payment.email = '';
-  //   this.payment.birthday = null;
-  //   this.payment.phone = '';
-  // }
+  sortBy(type) {
+    if (this.sortKey === type) {
+      this.sortReverse = !this.sortReverse;
+      return this.cart = _.reverse(this.cart);
+    }
 
-  // edit(event) {
-  //   this.isUpdate = true;
-  //   this.payment.name = event.name;
-  //   this.payment.gender = event.gender;
-  //   this.payment.address = event.address;
-  //   this.payment.email = event.email;
-  //   this.payment.birthday = event.birthday;
-  //   this.payment.phone = event.phone;
-  // }
+    this.sortKey = type;
+    this.sortReverse = false;
+    return this.cart = _.sortBy(this.cart, [type]);
+  }
+
+  sortIcon(type) {
+    if (this.sortKey === type) {
+      return this.sortReverse ? 'fa-sort-down' : 'fa-sort-up';
+    }
+    return 'fa-sort';
+  }
+
+  delete(item) {
+    this.cart.splice(this.cart.indexOf(item), 1);
+  }
+
+  select(typeaheadMatch) {
+    this.newMerchandise = new Merchandise({ ...typeaheadMatch.item, quantity: 1 });
+  }
+
+  addToCart() {
+    const item = this.cart.find(i => i.id === this.newMerchandise.id);
+    if (item) {
+      item.quantity += this.newMerchandise.quantity;
+    } else {
+      this.cart.push(this.newMerchandise);
+    }
+    this.newMerchandise = this.defaultMerchandise;
+  }
+
+  clear() {
+    this.cart = [];
+  }
+
+  resetForm(form: NgForm) {
+    this.newMerchandise = this.defaultMerchandise;
+    this.clear();
+    form.reset();
+  }
+
+  formSubmit(form: NgForm) {
+
+  }
+
+  showTab(index: number) {
+    this.tabIndex = (this.tabIndex + index + 3) % 3;
+  }
 }

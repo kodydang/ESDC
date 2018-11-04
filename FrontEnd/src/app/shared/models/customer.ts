@@ -7,6 +7,7 @@ export class Customer extends Base {
   'birthday': string;
   'address': string;
   'phone': string;
+  'email': string;
 
   constructor(item) {
     super(item.createdBy, item.createdDate, item.updatedBy, item.updatedDate);
@@ -16,5 +17,6 @@ export class Customer extends Base {
     this.birthday = item.birthday;
     this.address = item.address;
     this.phone = item.phone;
+    this.email = item.email;
   }
 }
