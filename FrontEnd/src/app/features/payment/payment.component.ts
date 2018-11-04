@@ -14,7 +14,6 @@ import { Merchandise } from 'src/app/shared/models';
 })
 export class PaymentComponent implements OnInit {
   customer: Customer = new Customer({});
-  tabIndex = 0;
   merchandises: Merchandise[] = [];
   cart: Merchandise[] = [];
   newMerchandise = this.defaultMerchandise;
@@ -95,7 +94,10 @@ export class PaymentComponent implements OnInit {
   }
 
   select(typeaheadMatch) {
-    this.newMerchandise = new Merchandise({ ...typeaheadMatch.item, quantity: 1 });
+    this.newMerchandise = new Merchandise({
+      ...typeaheadMatch.item,
+      quantity: this.newMerchandise.quantity || 1,
+    });
   }
 
   addToCart() {
@@ -120,9 +122,5 @@ export class PaymentComponent implements OnInit {
 
   formSubmit(form: NgForm) {
 
-  }
-
-  showTab(index: number) {
-    this.tabIndex = (this.tabIndex + index + 3) % 3;
   }
 }
