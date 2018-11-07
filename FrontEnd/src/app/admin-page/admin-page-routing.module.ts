@@ -1,47 +1,47 @@
-import { PAGE } from './../shared/constants';
-import { ImportComponent } from './../features/import/import.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { AdminPageComponent } from './admin-page.component';
-import { EmployeeComponent } from '../features/employee/employee.component';
-import { CustomerComponent } from '../features/customer/customer.component';
-import { ReportComponent } from '../features/report/report.component';
-import { MerchandiseComponent } from '../features/merchandise/merchandise.component';
 import { CategoryComponent } from '../features/category/category.component';
+import { CustomerComponent } from '../features/customer/customer.component';
+import { EmployeeComponent } from '../features/employee/employee.component';
+import { ImportComponent } from './../features/import/import.component';
+import { MerchandiseComponent } from '../features/merchandise/merchandise.component';
+import { NgModule } from '@angular/core';
+import { PAGE } from './../shared/constants';
 import { PaymentComponent } from '../features/payment/payment.component';
+import { ReportComponent } from '../features/report/report.component';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   // Module is lazy loaded, see app-routing.module.ts
   {
-    path: 'admin',
+    path: PAGE.ADMIN.URL,
     component: AdminPageComponent,
     children: [
       {
-        path: PAGE.EMPLOYEE,
+        path: PAGE.EMPLOYEE.URL,
         component: EmployeeComponent,
       },
       {
-        path: PAGE.CUSTOMER,
+        path: PAGE.CUSTOMER.URL,
         component: CustomerComponent,
       },
       {
-        path: PAGE.REPORT,
+        path: PAGE.REPORT.URL,
         component: ReportComponent,
       },
       {
-        path: PAGE.MERCHANDISE,
+        path: PAGE.MERCHANDISE.URL,
         component: MerchandiseComponent,
       },
       {
-        path: PAGE.CATEGORY,
+        path: PAGE.CATEGORY.URL,
         component: CategoryComponent,
       },
       {
-        path: PAGE.PAYMENT,
+        path: PAGE.PAYMENT.URL,
         component: PaymentComponent,
       },
       {
-        path: PAGE.IMPORT,
+        path: PAGE.IMPORT.URL,
         component: ImportComponent,
       },
       {
