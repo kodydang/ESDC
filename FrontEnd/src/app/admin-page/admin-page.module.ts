@@ -13,8 +13,8 @@ import { CustomerComponent } from '../features/customer/customer.component';
 import { CustomerModule } from '../features/customer/customer.module';
 import { CategoryComponent } from '../features/category/category.component';
 import { CategoryModule } from '../features/category/category.module';
-import { PaymentComponent } from '../features/payment/payment.component';
 import { ReportModule } from '../features/report/report.module';
+import { PaymentModule } from '../features/payment/payment.module';
 
 @NgModule({
   imports: [
@@ -25,6 +25,7 @@ import { ReportModule } from '../features/report/report.module';
     CategoryModule,
     ReportModule,
     AdminRoutingModule,
+    PaymentModule,
   ],
   declarations: [
     AdminPageComponent,
@@ -33,7 +34,6 @@ import { ReportModule } from '../features/report/report.module';
     CategoryComponent,
     ReportComponent,
     CustomerComponent,
-    PaymentComponent,
   ],
   exports: [
     AdminPageComponent,

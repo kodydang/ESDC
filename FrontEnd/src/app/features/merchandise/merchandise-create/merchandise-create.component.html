@@ -49,20 +49,20 @@
           </div>
 
           <div class="form-group" [ngClass]="{
-              'has-success': quantities.valid,
-              'has-warning': quantities.invalid && (quantities.dirty || quantities.touched)
+              'has-success': quantity.valid,
+              'has-warning': quantity.invalid && (quantity.dirty || quantity.touched)
             }">
             <label>Quantities: <span class="k-required">*</span></label>
-            <input class="form-control" type="number" min="0" id="inputQuantities" [(ngModel)]="merchandise.quantities"
-              name="quantities" #quantities="ngModel" required pattern="^\d+(?:\.\d{1,2})?$">
-            <div [hidden]="quantities.valid || quantities.pristine" class="alert alert-warning">
-              <strong>Please enter a valid quantities </strong>
+            <input class="form-control" type="number" min="0" id="inputQuantities" [(ngModel)]="merchandise.quantity"
+              name="quantity" #quantity="ngModel" required pattern="^\d+(?:\.\d{1,2})?$">
+            <div [hidden]="quantity.valid || quantity.pristine" class="alert alert-warning">
+              <strong>Please enter a valid quantity </strong>
             </div>
           </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameMerchandise.valid && address.valid && quantities.valid && price.valid && phone.valid)">{{
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameMerchandise.valid && address.valid && quantity.valid && price.valid && phone.valid)">{{
               isUpdate ? 'Update' : 'Add' }}</button>
           </div>
 

@@ -17,7 +17,6 @@ import { CategoryCreateComponent } from './category-create/category-create.compo
   exports: [
     NgxPaginationModule,
     CategoryCreateComponent,
-
   ],
 })
 export class CategoryModule { }

@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
+              "src/main.scss",
               "src/../node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/vendors/base/vendors.bundle.css"
             ],

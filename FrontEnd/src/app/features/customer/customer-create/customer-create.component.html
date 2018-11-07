@@ -24,18 +24,18 @@
                 <strong>Please enter customer's name</strong>
               </div>
             </div>
-  
+
             <div class="form-group" [ngClass]="{
               'has-success': address.valid,
               'has-error': address.invalid && (address.dirty || address.touched)}">
               <label for="address">Address: <span class="k-required">*</span></label>
               <input class="form-control" type="text" id="address" placeholder="Enter customer's address" [(ngModel)]="customer.address"
-                name="address" #address="ngModel" required pattern="^[0-9a-z A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ,.]+$">
+                name="address" #address="ngModel" required pattern="^[0-9a-z A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ,./]+$">
               <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
                 <strong>You should enter customer's address</strong>
               </div>
             </div>
-  
+
             <div class="form-group">
               <label>Birthday: <span class="k-required">*</span></label>
               <input class="form-control" type="date" id="input_Date" [(ngModel)]="customer.birthday" name="birthday"
@@ -44,7 +44,7 @@
                 <strong>You should enter customer's birthday!!</strong>
               </div>
             </div>
-  
+
             <div class="form-group">
               <label class="mr-3">Gender: <span class="k-required">*</span></label>
               <div class="form-check form-check-inline">
@@ -56,7 +56,7 @@
                 <label class="form-check-label" for="female">Female</label>
               </div>
             </div>
-  
+
             <div class="form-group" [ngClass]="{
             'has-success': email.valid,
             'has-warning': email.invalid && (email.dirty || email.touched)
@@ -69,7 +69,7 @@
                 <p>Example: you@example.com</p>
               </div>
             </div>
-  
+
             <div class="form-group" [ngClass]="{
             'has-success': phone.valid,
             'has-warning': phone.invalid && (phone.dirty || phone.touched)
@@ -82,13 +82,13 @@
                 <p>Example: 0912345678</p>
               </div>
             </div>
-  
+
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameCustomer.valid && address.valid && email.valid && birthday.valid && phone.valid)">{{ isUpdate ? 'Update' : 'Add' }}</button>
               <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()">Add</button> -->
             </div>
-  
+
           </form>
         </div>
       </div>
