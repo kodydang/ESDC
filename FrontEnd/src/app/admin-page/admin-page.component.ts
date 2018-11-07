@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PAGE } from '../shared/constants';
 
@@ -14,9 +13,9 @@ const ELEMENT_SELECTOR = {
   styleUrls: ['./admin-page.component.scss'],
 })
 export class AdminPageComponent implements OnInit {
+  readonly PAGE = PAGE;
   clicked = false;
-  page = PAGE.WELCOME;
-  PAGE = PAGE;
+
   constructor(private router: Router) {
     // this.account = JSON.parse(localStorage.getItem('USER'));
   }
@@ -28,30 +27,5 @@ export class AdminPageComponent implements OnInit {
     this.router.navigate(['/login']);
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
-  }
-
-  clickedFeature(page) {
-    // this.page = event;
-    if (page === PAGE.WELCOME) {
-      this.router.navigate(['admin' , 'wellcome']);
-    }
-    if (page === PAGE.EMPLOYEE) {
-      this.router.navigate(['admin' , 'employee']);
-    }
-    if (page === PAGE.REPORT) {
-      this.router.navigate(['admin' , 'report']);
-    }
-    if (page === PAGE.CUSTOMER) {
-      this.router.navigate(['admin' , 'customer']);
-    }
-    if (page === PAGE.MERCHANDISE) {
-      this.router.navigate(['admin' , 'merchandise']);
-    }
-    if (page === PAGE.CATEGORY) {
-      this.router.navigate(['admin' , 'category']);
-    }
-    if (page === PAGE.PAYMENT) {
-      this.router.navigate(['admin' , 'payment']);
-    }
   }
 }
