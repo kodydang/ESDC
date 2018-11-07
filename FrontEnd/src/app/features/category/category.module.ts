@@ -1,3 +1,4 @@
+import { CategoryComponent } from './category.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -12,10 +13,11 @@ import { CategoryCreateComponent } from './category-create/category-create.compo
     FormsModule,
   ],
   declarations: [
+    CategoryComponent,
     CategoryCreateComponent,
   ],
   exports: [
-    NgxPaginationModule,
+    CategoryComponent,
     CategoryCreateComponent,
   ],
 })

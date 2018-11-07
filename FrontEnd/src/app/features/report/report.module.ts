@@ -4,6 +4,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { ReportYearComponent } from './report-year/report-year.component';
 import { ReportMerchandiseComponent } from './report-merchandise/report-merchandise.component';
+import { ReportComponent } from './report.component';
 
 @NgModule({
   imports: [
@@ -12,11 +13,12 @@ import { ReportMerchandiseComponent } from './report-merchandise/report-merchand
     FormsModule,
   ],
   declarations: [
+    ReportComponent,
     ReportYearComponent,
     ReportMerchandiseComponent,
   ],
   exports: [
-    NgxPaginationModule,
+    ReportComponent,
     ReportYearComponent,
     ReportMerchandiseComponent,
   ],

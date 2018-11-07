@@ -1,3 +1,5 @@
+import { PAGE } from './../shared/constants';
+import { ImportComponent } from './../features/import/import.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminPageComponent } from './admin-page.component';
@@ -15,28 +17,32 @@ const routes: Routes = [
     component: AdminPageComponent,
     children: [
       {
-        path: 'employee',
+        path: PAGE.EMPLOYEE,
         component: EmployeeComponent,
       },
       {
-        path: 'customer',
+        path: PAGE.CUSTOMER,
         component: CustomerComponent,
       },
       {
-        path: 'report',
+        path: PAGE.REPORT,
         component: ReportComponent,
       },
       {
-        path: 'merchandise',
+        path: PAGE.MERCHANDISE,
         component: MerchandiseComponent,
       },
       {
-        path: 'category',
+        path: PAGE.CATEGORY,
         component: CategoryComponent,
       },
       {
-        path: 'payment',
+        path: PAGE.PAYMENT,
         component: PaymentComponent,
+      },
+      {
+        path: PAGE.IMPORT,
+        component: ImportComponent,
       },
       {
         path: '',

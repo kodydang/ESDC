@@ -1,22 +1,24 @@
-import { MerchandiseService } from './../../provider/merchandise.service';
-import { Customer } from './../../shared/models/customer';
 import { Component, OnInit } from '@angular/core';
+import { Merchandise } from 'src/app/shared/models';
+import { MerchandiseService } from 'src/app/provider/merchandise.service';
 import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
-import { Merchandise } from 'src/app/shared/models';
 
 @Component({
-  selector: 'app-payment',
-  templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.scss'],
+  selector: 'app-import',
+  templateUrl: './import.component.html',
+  styleUrls: ['./import.component.scss'],
 })
-export class PaymentComponent implements OnInit {
-  customer: Customer = new Customer({});
+export class ImportComponent implements OnInit {
   cart: Merchandise[] = [];
   merchandises: Merchandise[] = [];
   newMerchandise = this.defaultMerchandise;
   sortKey = '';
   sortReverse = false;
+
+  get defaultMerchandise() {
+    return new Merchandise({});
+  }
 
   get totalQuantity() {
     let total = 0;
@@ -30,30 +32,7 @@ export class PaymentComponent implements OnInit {
     return total;
   }
 
-  get stock() {
-    const merchandise = this.merchandises.find(i => i.id === this.newMerchandise.id);
-    return merchandise ? merchandise.quantity : 0;
-  }
-
-  get price() {
-    const merchandise = this.merchandises.find(i => i.id === this.newMerchandise.id);
-    return merchandise ? merchandise.price : 0;
-  }
-
-  get defaultMerchandise() {
-    return new Merchandise({
-      quantity: 0,
-      category: 'Unknown',
-    });
-  }
-
-  get isItemValid() {
-    return this.newMerchandise.id !== undefined;
-  }
-
-  constructor(
-    private merchandiseService: MerchandiseService,
-  ) { }
+  constructor(private merchandiseService: MerchandiseService) { }
 
   ngOnInit() {
     this.getAll();
@@ -95,7 +74,7 @@ export class PaymentComponent implements OnInit {
   select(typeaheadMatch) {
     this.newMerchandise = new Merchandise({
       ...typeaheadMatch.item,
-      quantity: this.newMerchandise.quantity || 1,
+      quantity: undefined,
     });
   }
 
@@ -117,9 +96,5 @@ export class PaymentComponent implements OnInit {
     this.newMerchandise = this.defaultMerchandise;
     this.clear();
     form.reset();
-  }
-
-  formSubmit(form: NgForm) {
-
   }
 }

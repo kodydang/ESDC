@@ -45,35 +45,35 @@
 						<li class="header-menu">
 							<span>Admin</span>
 						</li>
-						<li class="sidebar-dropdown" (click)="clickedFeature(PAGE.EMPLOYEE)">
-							<a>
+						<li class="sidebar-dropdown">
+							<a [routerLink]="[PAGE.EMPLOYEE]">
 								<i class="fas fa-user-secret"></i>
 								<span>Employee</span>
 								<!-- <span class="badge badge-pill badge-danger">New</span> -->
 							</a>
 						</li>
-						<li class="sidebar-dropdown" (click)="clickedFeature(PAGE.REPORT)">
-							<a>
+						<li class="sidebar-dropdown">
+							<a [routerLink]="[PAGE.REPORT]">
 								<i class="fas fa-flag"></i>
 								<span>Report</span>
 							</a>
 						</li>
-						<li class="sidebar-dropdown" (click)="clickedFeature(PAGE.MERCHANDISE)">
-							<a>
+						<li class="sidebar-dropdown">
+							<a [routerLink]="[PAGE.MERCHANDISE]">
 								<i class="fas fa-shopping-bag"></i>
 								<span>Merchandise</span>
 								<!-- <span class="badge badge-pill badge-primary">3</span> -->
 							</a>
 
 						</li>
-						<li class="sidebar-dropdown" (click)="clickedFeature(PAGE.CUSTOMER)">
-							<a>
+						<li class="sidebar-dropdown">
+							<a [routerLink]="[PAGE.CUSTOMER]">
 								<i class="fas fa-user"></i>
 								<span>Customer</span>
 							</a>
 						</li>
-						<li class="sidebar-dropdown" (click)="clickedFeature(PAGE.CATEGORY)">
-							<a>
+						<li class="sidebar-dropdown">
+							<a [routerLink]="[PAGE.CATEGORY]">
 								<i class="fas fa-folder"></i>
 								<span>Category</span>
 							</a>
@@ -83,10 +83,16 @@
 						<li class="header-menu">
 							<span>General</span>
 						</li>
-						<li class="sidebar-dropdown" (click)="clickedFeature(PAGE.PAYMENT)">
-							<a>
+						<li class="sidebar-dropdown">
+							<a [routerLink]="[PAGE.PAYMENT]">
 								<i class="fas fa-credit-card"></i>
 								<span>Payment</span>
+							</a>
+						</li>
+						<li class="sidebar-dropdown">
+							<a [routerLink]="[PAGE.IMPORT]">
+								<i class="fas fa-warehouse"></i>
+								<span>Import</span>
 							</a>
 						</li>
 					</div>
