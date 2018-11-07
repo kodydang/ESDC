@@ -1,3 +1,4 @@
+import { EmployeeComponent } from './employee.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -12,12 +13,12 @@ import { EmployeeCreateComponent } from './employee-create/employee-create.compo
     FormsModule,
   ],
   declarations: [
+    EmployeeComponent,
     EmployeeCreateComponent,
   ],
   exports: [
-    NgxPaginationModule,
+    EmployeeComponent,
     EmployeeCreateComponent,
-
   ],
 })
 export class EmployeeModule { }

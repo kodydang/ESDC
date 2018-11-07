@@ -4,6 +4,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 
 import { MerchandiseCreateComponent } from './merchandise-create/merchandise-create.component';
+import { MerchandiseComponent } from './merchandise.component';
 
 @NgModule({
   imports: [
@@ -12,10 +13,11 @@ import { MerchandiseCreateComponent } from './merchandise-create/merchandise-cre
     FormsModule,
   ],
   declarations: [
+    MerchandiseComponent,
     MerchandiseCreateComponent,
   ],
   exports: [
-    NgxPaginationModule,
+    MerchandiseComponent,
     MerchandiseCreateComponent,
 
   ],
