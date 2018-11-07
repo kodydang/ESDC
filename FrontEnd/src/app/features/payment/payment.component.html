@@ -30,7 +30,7 @@
         <td>{{ item.name }}</td>
         <td>{{ item.category }}</td>
         <td>{{ item.quantity }}</td>
-        <td>{{ item.price | currency }}</td>
+        <td>{{ item.price | number:'1.0-0' }}</td>
         <td>
           <button type="button" class="btn btn-danger btn-sm btn-block" (click)="delete(item)" tabindex="-1">
             <i class="fas fa-trash-alt"></i> Delete</button>
@@ -61,7 +61,7 @@
         </td>
 
         <td width="15%" class="form-group">
-          <input type="text" class="form-control" id="priceMerchandise" [value]="price | currency" name="priceMerchandise"
+          <input type="text" class="form-control" id="priceMerchandise" [value]="price | number:'1.0-0'" name="priceMerchandise"
             readonly>
         </td>
 
@@ -76,7 +76,7 @@
           <h5>Total</h5>
         </td>
         <td>{{totalQuantity}}</td>
-        <td>{{totalPrice | currency}}</td>
+        <td>{{totalPrice | number:'1.0-0'}}</td>
         <td>
           <button class="btn btn-danger btn-sm btn-block" (click)="clear()">
             <i class="fas fa-times"></i> Clear all</button>
