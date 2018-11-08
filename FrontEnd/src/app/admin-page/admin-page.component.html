@@ -1,10 +1,20 @@
 <div class="page-wrapper chiller-theme toggled">
   <nav id="topbar" class="topbar-wrapper">
-    <div class="topbar-brand">
-      <a>NK Store</a>
+    <a class="topbar-brand">
+      <img [src]="APP.LOGO" class="topbar-logo">
+      {{APP.NAME}}
+    </a>
+    <div class="topbar-breadcrumb">
+      <a class="topbar-link">
+        <i class="fas fa-home"></i> Home
+      </a>
+      <a class="topbar-link-separator">/</a>
+      <a class="topbar-link">{{pageTitle}}</a>
     </div>
   </nav>
-  <nav id="sidebar" class="sidebar-wrapper">
+
+
+  <nav id="sidebar" class="sidebar-wrapper toggled">
     <div class="sidebar-content">
       <div id="toggle-sidebar">
         <div></div>
@@ -27,20 +37,8 @@
           </span>
         </div>
       </div>
-      <!-- sidebar-header  -->
-      <!-- <div class="sidebar-search">
-						<div>
-							<div class="input-group">
-								<input type="text" class="form-control search-menu" placeholder="Search...">
-								<div class="input-group-append">
-									<span class="input-group-text">
-										<i class="fa fa-search" aria-hidden="true"></i>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div> -->
-      <!-- sidebar-search  -->
+
+
       <div class="sidebar-menu">
         <ul>
           <div>
@@ -100,36 +98,35 @@
           </div>
         </ul>
       </div>
-      <!-- sidebar-menu  -->
     </div>
+
+
     <!-- sidebar-content  -->
     <div class="sidebar-footer">
       <a>
-        <!-- <i class="fa fa-bell"></i> -->
-        <!-- <span class="badge badge-pill badge-warning notification">3</span> -->
+        <i class="fa fa-bell"></i>
+        <span class="badge badge-pill badge-warning notification">3</span>
       </a>
       <a>
-        <!-- <i class="fa fa-envelope"></i> -->
-        <!-- <span class="badge badge-pill badge-success notification">7</span> -->
+        <i class="fa fa-envelope"></i>
+        <span class="badge badge-pill badge-success notification">7</span>
       </a>
       <a>
-        <!-- <i class="fa fa-power-off"></i> -->
+        <i class="fa fa-cog"></i>
       </a>
       <a (click)="logout()">
-        <!-- <span class="badge-sonar"></span> -->
+        <span class="badge-sonar"></span>
         <i class="fas fa-sign-out-alt"></i>
       </a>
     </div>
   </nav>
-  <!-- sidebar-wrapper  -->
+
   <main class="page-content">
     <div class="container">
+      <div class="row">
+        <h3 class="mx-auto"><i class="mx-2" [ngClass]=""></i> {{pageTitle | titlecase}}</h3>
+      </div>
       <router-outlet></router-outlet>
-      <!-- <div *ngIf="page === PAGE.WELLCOME"> WELLCOME</div>
-				<app-employee *ngIf="page === PAGE.EMPLOYEE"></app-employee>
-				<app-merchandise *ngIf="page === PAGE.MERCHANDISE"></app-merchandise>
-				<app-report *ngIf="page === PAGE.REPORT"></app-report>
-				<app-customer *ngIf="page === PAGE.CUSTOMER"></app-customer> -->
     </div>
   </main>
   <!-- page-content" -->

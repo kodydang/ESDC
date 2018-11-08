@@ -1,6 +1,6 @@
+import { APP, PAGE } from './../shared/constants';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { PAGE } from '../shared/constants';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 const ELEMENT_SELECTOR = {
   USER_NAME: 'input_Username',
@@ -14,14 +14,28 @@ const ELEMENT_SELECTOR = {
 })
 export class AdminPageComponent implements OnInit {
   readonly PAGE = PAGE;
+  readonly APP = APP;
+
   clicked = false;
+  pageTitle = 'Page title';
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     // this.account = JSON.parse(localStorage.getItem('USER'));
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const url = this.router.url.replace(`/${PAGE.ADMIN.URL}/`, '');
+
+        Object.keys(PAGE).forEach((i) => {
+          if (PAGE[i].URL === url) {
+            return this.pageTitle = PAGE[i].TITLE;
+          }
+        });
+      }
+    });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   logout() {
     this.router.navigate(['/login']);
