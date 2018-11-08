@@ -8,6 +8,7 @@ import { CustomerService } from './customer.service';
 import { MerchandiseService } from './merchandise.service';
 import { CategoryService } from './category.service';
 import { ReportService } from './report.service';
+import { StoreService } from './store.service';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { ReportService } from './report.service';
     MerchandiseService,
     CategoryService,
     ReportService,
+    StoreService,
   ],
 })
 export class ProvidersModule { }
