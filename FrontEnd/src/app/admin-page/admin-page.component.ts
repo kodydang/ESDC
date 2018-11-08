@@ -17,6 +17,12 @@ export class AdminPageComponent implements OnInit {
   readonly APP = APP;
   menu = [
     {
+      title: 'Super Admin',
+      pages: [
+        PAGE.STORE,
+      ],
+    },
+    {
       title: 'Admin',
       pages: [
         PAGE.EMPLOYEE,
@@ -24,6 +30,7 @@ export class AdminPageComponent implements OnInit {
         PAGE.CATEGORY,
         PAGE.CUSTOMER,
         PAGE.REPORT,
+        PAGE.SETTING,
       ],
     },
     {

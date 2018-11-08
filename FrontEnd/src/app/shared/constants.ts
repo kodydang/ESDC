@@ -48,4 +48,14 @@ export const PAGE = {
     TITLE: 'Import Merchandise',
     ICON: 'fas fa-warehouse',
   },
+  STORE: {
+    URL: 'store',
+    TITLE: 'Store',
+    ICON: 'fas fa-store',
+  },
+  SETTING: {
+    URL: 'setting',
+    TITLE: 'Setting',
+    ICON: 'fas fa-cog',
+  },
 };
