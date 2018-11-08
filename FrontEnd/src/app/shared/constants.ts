@@ -1,3 +1,8 @@
+export const APP = {
+  NAME: 'NK Storify',
+  LOGO: 'assets/images/logo-app.png',
+};
+
 export const PAGE = {
   ADMIN: {
     URL: 'admin',
