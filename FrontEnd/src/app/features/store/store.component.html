@@ -1,0 +1,51 @@
+<div class="d-flex">
+  <button type="button" (click)="add()" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal">
+    <i class="fas fa-plus"></i>
+    Add new</button>
+  <div class="form-group form-inline mb-0">
+    <input type="text" class="form-control" placeholder="Search in stores" [(ngModel)]="filter">
+  </div>
+
+</div>
+<div class="table-responsive">
+  <!-- <app-employee-create (submit)="addEvent($event)" [employee]="employee" [isUpdate]="isUpdate"></app-employee-create> -->
+  <table class="table table-bordered table-hover mt-3 mb-3 mr-3">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Logo</th>
+        <th scope="col" (click)="sortBy('name')">
+          <span>Name</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('name')"></i>
+        </th>
+        <th scope="col" (click)="sortBy('owner')">
+          <span>Owner</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('owner')"></i>
+        </th>
+        <th scope="col" (click)="sortBy('address')">
+          <span>Address</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('address')"></i>
+        </th>
+        <th class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of storeSorted | paginate: paginateConfig | filter: filter; let i = index">
+        <th width="5%" scope="row">{{i+1}}</th>
+        <td width="10%"><img [src]="item.data.logo" alt="No Logo" class="logo"></td>
+        <td width="25%">{{ item.name }}</td>
+        <td width="10%">{{ item.owner }}</td>
+        <td width="30%">{{ item.address }}</td>
+        <td width="20%" class="text-center">
+          <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+          <button class="btn btn-danger btn-sm">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls id="paginator" (pageChange)="onPageChange($event)" style="text-align: center;" [responsive]="true"></pagination-controls>
+</div>

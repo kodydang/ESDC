@@ -1,3 +1,4 @@
+import { StoreComponent } from './../features/store/store.component';
 import { AdminPageComponent } from './admin-page.component';
 import { CategoryComponent } from '../features/category/category.component';
 import { CustomerComponent } from '../features/customer/customer.component';
@@ -43,6 +44,10 @@ const routes: Routes = [
       {
         path: PAGE.IMPORT.URL,
         component: ImportComponent,
+      },
+      {
+        path: PAGE.STORE.URL,
+        component: StoreComponent,
       },
       {
         path: '',

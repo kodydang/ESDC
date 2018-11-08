@@ -1,6 +1,6 @@
-import { Base } from './base';
+import { Account } from './account';
 
-export class Employee extends Base {
+export class Employee extends Account {
   'id': number;
   'name': string;
   'gender': string;
@@ -9,7 +9,15 @@ export class Employee extends Base {
   'phone': string;
 
   constructor(item) {
-    super(item.createdBy, item.createdDate, item.updatedBy, item.updatedDate);
+    super({
+      createdBy: item.createdBy,
+      createdDate: item.createdDate,
+      updatedBy: item.updatedBy,
+      updatedDate: item.updatedDate,
+      username: item.username,
+      password: item.password,
+      role: item.role,
+    });
     this.id = item.id;
     this.name = item.name;
     this.gender = item.gender;

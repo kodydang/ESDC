@@ -33,6 +33,7 @@
     "lodash": "^4.17.11",
     "moment": "2.22.2",
     "muuri": "^0.7.0",
+    "ng2-search-filter": "^0.4.7",
     "ngx-bootstrap": "^3.1.1",
     "ngx-mask": "^6.5.18",
     "ngx-pagination": "^3.2.0",
