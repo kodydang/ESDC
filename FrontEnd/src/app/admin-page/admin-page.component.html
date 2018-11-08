@@ -40,62 +40,16 @@
 
 
       <div class="sidebar-menu">
-        <ul>
-          <div>
-            <li class="header-menu">
-              <span>Admin</span>
-            </li>
-            <li class="sidebar-dropdown">
-              <a [routerLink]="[PAGE.EMPLOYEE.URL]">
-                <i class="fas fa-user-secret"></i>
-                <span>{{PAGE.EMPLOYEE.TITLE}}</span>
-                <!-- <span class="badge badge-pill badge-danger">New</span> -->
-              </a>
-            </li>
-            <li class="sidebar-dropdown">
-              <a [routerLink]="[PAGE.REPORT.URL]">
-                <i class="fas fa-flag"></i>
-                <span>{{PAGE.REPORT.TITLE}}</span>
-              </a>
-            </li>
-            <li class="sidebar-dropdown">
-              <a [routerLink]="[PAGE.MERCHANDISE.URL]">
-                <i class="fas fa-shopping-bag"></i>
-                <span>{{PAGE.MERCHANDISE.TITLE}}</span>
-                <!-- <span class="badge badge-pill badge-primary">3</span> -->
-              </a>
-
-            </li>
-            <li class="sidebar-dropdown">
-              <a [routerLink]="[PAGE.CUSTOMER.URL]">
-                <i class="fas fa-user"></i>
-                <span>{{PAGE.CUSTOMER.TITLE}}</span>
-              </a>
-            </li>
-            <li class="sidebar-dropdown">
-              <a [routerLink]="[PAGE.CATEGORY.URL]">
-                <i class="fas fa-folder"></i>
-                <span>{{PAGE.CATEGORY.TITLE}}</span>
-              </a>
-            </li>
-          </div>
-          <div>
-            <li class="header-menu">
-              <span>General</span>
-            </li>
-            <li class="sidebar-dropdown">
-              <a [routerLink]="[PAGE.PAYMENT.URL]">
-                <i class="fas fa-credit-card"></i>
-                <span>{{PAGE.PAYMENT.TITLE}}</span>
-              </a>
-            </li>
-            <li class="sidebar-dropdown">
-              <a [routerLink]="[PAGE.IMPORT.URL]">
-                <i class="fas fa-warehouse"></i>
-                <span>{{PAGE.IMPORT.TITLE}}</span>
-              </a>
-            </li>
-          </div>
+        <ul *ngFor="let section of menu">
+          <li class="header-menu">
+            <span>{{section.title}}</span>
+          </li>
+          <li class="sidebar-dropdown" *ngFor="let page of section.pages">
+            <a [routerLink]="[page.URL]">
+              <i [ngClass]="page.ICON"></i>
+              <span>{{page.TITLE}}</span>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -124,7 +78,7 @@
   <main class="page-content">
     <div class="container">
       <div class="row">
-        <h3 class="mx-auto"><i class="mx-2" [ngClass]=""></i> {{pageTitle | titlecase}}</h3>
+        <h3 class="mx-auto"><i [ngClass]="pageIcon"></i> {{pageTitle | titlecase}}</h3>
       </div>
       <router-outlet></router-outlet>
     </div>

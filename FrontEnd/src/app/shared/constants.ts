@@ -9,35 +9,43 @@ export const PAGE = {
     TITLE: 'Admin',
   },
   EMPLOYEE: {
-    URL: 'employee',
-    TITLE: 'Employee',
+    URL: 'staff',
+    TITLE: 'Staff',
+    ICON: 'fas fa-users',
   },
   MERCHANDISE: {
     URL: 'merchandise',
     TITLE: 'Merchandise',
+    ICON: 'fas fa-shopping-bag',
   },
   CUSTOMER: {
-    URL: 'customer',
-    TITLE: 'Customer',
+    URL: 'client',
+    TITLE: 'Client',
+    ICON: 'fas fa-user',
   },
   REPORT: {
     URL: 'report',
     TITLE: 'Report',
+    ICON: 'fas fa-flag',
   },
-  WELCOME: {
-    URL: 'welcome',
-    TITLE: 'Welcome',
+  DASHBOARD: {
+    URL: 'dashboard',
+    TITLE: 'Dashboard',
+    ICON: 'fas fa-user-secret',
   },
   CATEGORY: {
     URL: 'category',
     TITLE: 'Category',
+    ICON: 'fas fa-folder',
   },
   PAYMENT: {
     URL: 'payment',
     TITLE: 'Payment',
+    ICON: 'fas fa-credit-card',
   },
   IMPORT: {
     URL: 'import',
     TITLE: 'Import Merchandise',
+    ICON: 'fas fa-warehouse',
   },
 };

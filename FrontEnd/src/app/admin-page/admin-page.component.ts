@@ -15,9 +15,29 @@ const ELEMENT_SELECTOR = {
 export class AdminPageComponent implements OnInit {
   readonly PAGE = PAGE;
   readonly APP = APP;
+  menu = [
+    {
+      title: 'Admin',
+      pages: [
+        PAGE.EMPLOYEE,
+        PAGE.MERCHANDISE,
+        PAGE.CATEGORY,
+        PAGE.CUSTOMER,
+        PAGE.REPORT,
+      ],
+    },
+    {
+      title: 'General',
+      pages: [
+        PAGE.PAYMENT,
+        PAGE.IMPORT,
+      ],
+    },
+  ];
 
   clicked = false;
   pageTitle = 'Page title';
+  pageIcon = '';
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     // this.account = JSON.parse(localStorage.getItem('USER'));
@@ -28,7 +48,9 @@ export class AdminPageComponent implements OnInit {
 
         Object.keys(PAGE).forEach((i) => {
           if (PAGE[i].URL === url) {
-            return this.pageTitle = PAGE[i].TITLE;
+            this.pageTitle = PAGE[i].TITLE;
+            this.pageIcon = PAGE[i].ICON;
+            return;
           }
         });
       }
