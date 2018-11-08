@@ -16,6 +16,7 @@ export class Employee extends Account {
       updatedDate: item.updatedDate,
       username: item.username,
       password: item.password,
+      photo: item.photo,
       role: item.role,
     });
     this.id = item.id;

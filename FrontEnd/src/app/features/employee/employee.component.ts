@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { EmployeeService } from '../../provider/employee.service';
 import { Employee } from '../../shared/models/employee';
 import { Router } from '@angular/router';
+import { ROLE } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-employee',
@@ -12,26 +13,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./employee.component.scss'],
 })
 export class EmployeeComponent implements OnInit {
-  listEmployee: Employee[] = [];
-  listEmployeeSorted: Employee[] = [];
-  typeSort = ['', '', '', '', ''];
-  style: boolean[] = [false, false, false, false, false];
+  employee = new Employee({});
+  employees: Employee[] = [];
+  employeeSorted: any[] = [];
   paginateConfig = {
     id: 'paginator',
     itemsPerPage: 10,
     currentPage: 1,
   };
   open = false;
-  employee = {
-    name: '',
-    username: '',
-    gender: '',
-    address: '',
-    email: '',
-    birthday: null,
-    phone: '',
-  };
   isUpdate: boolean;
+
+  sortKey = '';
+  sortReverse = false;
+  filter = '';
+
   constructor(
     private router: Router,
     private employeeService: EmployeeService,
@@ -44,35 +40,38 @@ export class EmployeeComponent implements OnInit {
   getAll() {
     this.employeeService.getAll().subscribe(
       (res: any) => {
-        this.listEmployee = res;
-        this.listEmployeeSorted = this.listEmployee;
-        // console.log(this.listEmployee);
+        this.employees = res;
+        this.employeeSorted = this.employees.map(i => ({
+          username: i.username,
+          gender: i.gender,
+          name: i.name,
+          address: i.address,
+          phone: i.phone,
+          birthday: moment(i.birthday).format('L'),
+          role: this.getRoleTitle(i.role),
+          data: i,
+          onboardDay: i.createdDate,
+        }));
       },
       (er) => {
         console.warn(er);
       });
   }
 
-  formatDate(date) {
-    return moment(date).format('ll');
-  }
-
-  sortBy(type, position) {
-    this.typeSort[position] = type;
-    this.style[position] = !this.style[position];
-
-    if (this.style[position]) {
-      return this.listEmployeeSorted = _.sortBy(this.listEmployeeSorted, [type]);
+  sortBy(type) {
+    if (this.sortKey === type) {
+      this.sortReverse = !this.sortReverse;
+      return this.employeeSorted = _.reverse(this.employeeSorted);
     }
-    return this.listEmployeeSorted = _.reverse(_.sortBy(this.listEmployeeSorted, [type]));
+
+    this.sortKey = type;
+    this.sortReverse = false;
+    return this.employeeSorted = _.sortBy(this.employeeSorted, [type]);
   }
 
-  sortIcon(type, position) {
-    if (this.typeSort[position] === type) {
-      if (this.style[position]) {
-        return 'fa-sort-down';
-      }
-      return 'fa-sort-up';
+  sortIcon(type) {
+    if (this.sortKey === type) {
+      return this.sortReverse ? 'fa-sort-down' : 'fa-sort-up';
     }
     return 'fa-sort';
   }
@@ -83,28 +82,24 @@ export class EmployeeComponent implements OnInit {
 
   add() {
     this.isUpdate = false;
-    this.employee.name = '';
-    this.employee.username = '';
-    this.employee.gender = '';
-    this.employee.address = '';
-    this.employee.email = '';
-    this.employee.birthday = null;
-    this.employee.phone = '';
+    this.employee = new Employee({});
   }
 
   edit(event) {
     this.isUpdate = true;
-    this.employee.name = event.name;
-    this.employee.username = event.username;
-    this.employee.gender = event.gender;
-    this.employee.address = event.address;
-    this.employee.email = event.email;
-    this.employee.birthday = event.birthday;
-    this.employee.phone = event.phone;
+    this.employee = new Employee(event);
   }
 
   addEvent(event) {
     console.log(event);
+  }
 
+  getRole(level: number) {
+    const key = Object.keys(ROLE).find(key => ROLE[key].LEVEL === level);
+    return ROLE[key];
+  }
+  getRoleTitle(level: number) {
+    const role = this.getRole(level);
+    return role ? role.TITLE : 'Unknown';
   }
 }

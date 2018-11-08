@@ -10,24 +10,21 @@ import { CustomerService } from '../../provider/customer.service';
   styleUrls: ['./customer.component.scss'],
 })
 export class CustomerComponent implements OnInit {
-  customer = {
-    name: '',
-    gender: '',
-    address: '',
-    email: '',
-    birthday: null,
-    phone: '',
-  };
-  listCustomer: Customer[] = [];
-  listCustomerSorted: Customer[] = [];
-  typeSort = ['', '', '', ''];
-  style: boolean[] = [false, false, false, false];
+  customer = new Customer({});
+  customers: Customer[] = [];
+  customerSorted: any[] = [];
   paginateConfig = {
     id: 'paginator',
     itemsPerPage: 10,
     currentPage: 1,
   };
+
   isUpdate: boolean;
+
+  sortKey = '';
+  sortReverse = false;
+  filter = '';
+
   constructor(
     private customerService: CustomerService,
   ) { }
@@ -39,36 +36,34 @@ export class CustomerComponent implements OnInit {
   getAll() {
     this.customerService.getAll().subscribe(
       (res: any) => {
-        this.listCustomer = res;
-        this.listCustomerSorted = this.listCustomer;
-        // console.log(this.listCustomer);
+        this.customers = res;
+        this.customerSorted = this.customers.map(i => ({
+          name: i.name,
+          gender: i.gender,
+          address: i.address,
+          phone: i.phone,
+          birthday:  moment(i.birthday).format('L'),
+        }));
       },
       (er) => {
         console.warn(er);
       });
   }
 
-  formatDate(date) {
-    return moment(date).format('ll');
-  }
-
-  sortBy(type, position) {
-    this.typeSort[position] = type;
-    this.style[position] = !this.style[position];
-    // console.log(this.typeSort);
-
-    if (this.style[position]) {
-      return this.listCustomerSorted = _.sortBy(this.listCustomerSorted, [type]);
+  sortBy(type) {
+    if (this.sortKey === type) {
+      this.sortReverse = !this.sortReverse;
+      return this.customerSorted = _.reverse(this.customerSorted);
     }
-    return this.listCustomerSorted = _.reverse(_.sortBy(this.listCustomerSorted, [type]));
+
+    this.sortKey = type;
+    this.sortReverse = false;
+    return this.customerSorted = _.sortBy(this.customerSorted, [type]);
   }
 
-  sortIcon(type, position) {
-    if (this.typeSort[position] === type) {
-      if (this.style[position]) {
-        return 'fa-sort-down';
-      }
-      return 'fa-sort-up';
+  sortIcon(type) {
+    if (this.sortKey === type) {
+      return this.sortReverse ? 'fa-sort-down' : 'fa-sort-up';
     }
     return 'fa-sort';
   }
@@ -83,21 +78,11 @@ export class CustomerComponent implements OnInit {
   }
   add() {
     this.isUpdate = false;
-    this.customer.name = '';
-    this.customer.gender = '';
-    this.customer.address = '';
-    this.customer.email = '';
-    this.customer.birthday = null;
-    this.customer.phone = '';
+    this.customer = new Customer({});
   }
 
   edit(event) {
     this.isUpdate = true;
-    this.customer.name = event.name;
-    this.customer.gender = event.gender;
-    this.customer.address = event.address;
-    this.customer.email = event.email;
-    this.customer.birthday = event.birthday;
-    this.customer.phone = event.phone;
+    this.customer = new Customer(event);
   }
 }
