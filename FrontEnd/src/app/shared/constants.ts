@@ -59,3 +59,26 @@ export const PAGE = {
     ICON: 'fas fa-cog',
   },
 };
+
+export const ROLE = {
+  SUPER_ADMIN: {
+    LEVEL: 16,
+    TITLE: 'Super Admin',
+  },
+  OWNER: {
+    LEVEL: 8,
+    TITLE: 'General Manager',
+  },
+  AREA_MANAGER: {
+    LEVEL: 4,
+    TITLE: 'Area Manager',
+  },
+  MANAGER: {
+    LEVEL: 2,
+    TITLE: 'Manager',
+  },
+  STAFF: {
+    LEVEL: 1,
+    TITLE: 'Staff',
+  },
+};
