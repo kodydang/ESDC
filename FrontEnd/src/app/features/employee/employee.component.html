@@ -46,7 +46,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of employeeSorted | paginate: paginateConfig | filter: filter; let i = index">
+      <tr *ngFor="let item of employeeSorted | filter: filter | paginate: paginateConfig; let i = index">
         <th width="50px" scope="row">{{i+1}}</th>
         <td width="80px">
             <img [src]="item.data.photo" alt="No photo" class="logo logo-square">
