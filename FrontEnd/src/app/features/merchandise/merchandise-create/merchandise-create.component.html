@@ -62,7 +62,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameMerchandise.valid && address.valid && quantity.valid && price.valid && phone.valid)">{{
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="addForm.invalid">{{
               isUpdate ? 'Update' : 'Add' }}</button>
           </div>
 
