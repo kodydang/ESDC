@@ -9,6 +9,12 @@ import { Store } from '../shared/models';
 export class StoreService {
   constructor(private httpClient: HttpClient) {}
 
+  get currentStore() {
+    return new Store({
+      idCuahang: 2,
+    });
+  }
+
   getAll(): Observable<Store[]> {
     return this.httpClient
       .get(`${API.BYPASS}${API.ROOT}/store`)

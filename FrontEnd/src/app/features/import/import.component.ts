@@ -1,3 +1,4 @@
+import { Category } from './../../shared/models/category';
 import { Component, OnInit } from '@angular/core';
 import { Merchandise } from 'src/app/shared/models';
 import { MerchandiseService } from 'src/app/provider/merchandise.service';
@@ -11,6 +12,7 @@ import { NgForm } from '@angular/forms';
 })
 export class ImportComponent implements OnInit {
   cart: Merchandise[] = [];
+  category: Category[] = [];
   merchandises: Merchandise[] = [];
   newMerchandise = this.defaultMerchandise;
   sortKey = '';
@@ -39,7 +41,11 @@ export class ImportComponent implements OnInit {
   }
 
   getAll() {
-    this.merchandiseService.getAll().subscribe(
+    this.merchandiseService.getCategory().toPromise().then(
+      (res: Category[]) => this.category = res,
+    );
+
+    this.merchandiseService.getAll().toPromise().then(
       (res: any) => {
         this.merchandises = res;
         this.cart = [];
@@ -96,5 +102,23 @@ export class ImportComponent implements OnInit {
     this.newMerchandise = this.defaultMerchandise;
     this.clear();
     form.reset();
+  }
+
+  onSubmit() {
+    if (this.filterNewItems().length) {
+      return;
+    }
+
+    console.log('BEGIN UPDATE PRODUCTS');
+    this.merchandiseService.importMerchandise(this.cart).then(
+      () => console.log('Import success'),
+    );
+  }
+
+  filterNewItems() {
+    let result: Merchandise[];
+    result = this.cart.filter(i => !this.merchandises.find(x => x.id === i.id));
+
+    return result;
   }
 }

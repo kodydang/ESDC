@@ -4,11 +4,12 @@ import { Category } from './../shared/models/category';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Merchandise } from '../shared/models';
-import { of } from 'rxjs';
+import { of, forkJoin } from 'rxjs';
+import { StoreService } from './store.service';
 
 @Injectable()
 export class MerchandiseService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private storeService: StoreService) { }
 
   getAll() {
     return this.httpClient.get(`${API.BYPASS}${API.ROOT}/product`)
@@ -28,5 +29,18 @@ export class MerchandiseService {
           catchError(() => of('Error, could not load category from server')),
         ),
       );
+  }
+
+  importMerchandise(items: Merchandise[]) {
+    return forkJoin(
+      items.map(i => this.httpClient.post(
+        `${API.ROOT}/product/goodsrecept`,
+        {
+          storeId: this.storeService.currentStore.id,
+          productId: i.id,
+          quantity: i.quantity,
+        },
+      )),
+    ).toPromise();
   }
 }
