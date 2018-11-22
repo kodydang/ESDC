@@ -1,38 +1,31 @@
-import { Injectable } from '@angular/core';
+import { API } from './../shared/constants';
+import { catchError, map } from 'rxjs/operators';
+import { Category } from './../shared/models/category';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Merchandise } from '../shared/models';
+import { of } from 'rxjs';
 
-const API_URL = './../../assets/data-json/list-merchandise.json';
-const API_CATEGORY = './../../assets/data-json/list-category.json';
 @Injectable()
 export class MerchandiseService {
   constructor(private httpClient: HttpClient) { }
 
   getAll() {
-    return this.httpClient.get(`${API_URL}`)
+    return this.httpClient.get(`${API.BYPASS}${API.ROOT}/product`)
       .pipe(
-        map((body: any[]) => {
-          body.forEach((value, index, array) => {
-            array[index] = new Merchandise(value);
-            // console.log(value);
-            // console.log(array[index]);
-          });
-          return body;
-        },
-            catchError(() => of('Error, could not load joke :-(')),
+        map(
+          (body: any) => body['data'].map(i => new Merchandise(i)),
+          catchError(() => of('Error, could not load product from server')),
         ),
       );
   }
 
   getCategory() {
-    return this.httpClient.get(`${API_CATEGORY}`)
+    return this.httpClient.get(`${API.BYPASS}${API.ROOT}/category`)
       .pipe(
-        map((body: any[]) => {
-          return body;
-        },
-            catchError(() => of('Error, could not load joke :-(')),
+        map(
+          (body: any) => body['data'].map(i => new Category(i)),
+          catchError(() => of('Error, could not load category from server')),
         ),
       );
   }
