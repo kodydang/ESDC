@@ -1,10 +1,10 @@
-import { Category } from './../shared/models/category';
 import { API } from './../shared/constants';
-import { Injectable } from '@angular/core';
+import { catchError, map } from 'rxjs/operators';
+import { Category } from './../shared/models/category';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Merchandise } from '../shared/models';
+import { of } from 'rxjs';
 
 @Injectable()
 export class MerchandiseService {
