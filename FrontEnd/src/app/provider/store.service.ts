@@ -1,22 +1,29 @@
+import { API } from './../shared/constants';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
 import { Store } from '../shared/models';
 
-const API_URL = './../../assets/data-json/list-store.json';
 @Injectable()
 export class StoreService {
   constructor(private httpClient: HttpClient) {}
 
-  getAll() {
+  getAll(): Observable<Store[]> {
     return this.httpClient
-      .get(`${API_URL}`)
+      .get(`${API.BYPASS}${API.ROOT}/store`)
       .pipe(
+        tap(
+          (body: any) => console.log(body.data),
+        ),
         map(
-          (body: any[]) => body.map(i => new Store(i)),
-          catchError(() => of('Error, could not load store list'))
+          (body: any[]) => body['data'].map(i => new Store(i)),
+          catchError(() => of('Error, could not load store list')),
         ),
       );
+  }
+
+  getById(id: string) {
+
   }
 }

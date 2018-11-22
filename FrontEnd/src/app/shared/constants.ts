@@ -62,23 +62,29 @@ export const PAGE = {
 
 export const ROLE = {
   SUPER_ADMIN: {
-    LEVEL: 16,
+    KEY: 'super_admin',
     TITLE: 'Super Admin',
   },
   OWNER: {
-    LEVEL: 8,
+    KEY: 'general_manager',
     TITLE: 'General Manager',
   },
-  AREA_MANAGER: {
-    LEVEL: 4,
-    TITLE: 'Area Manager',
-  },
+  // TEMPORARILY DISABLE THE BELOW UNTIL WE FINISH ALL OTHER THINGS
+  // AREA_MANAGER: {
+  //   KEY: 'area_manager',
+  //   TITLE: 'Area Manager',
+  // },
   MANAGER: {
-    LEVEL: 2,
+    KEY: 'admin',
     TITLE: 'Manager',
   },
   STAFF: {
-    LEVEL: 1,
+    KEY: 'employee',
     TITLE: 'Staff',
   },
+};
+
+export const API = {
+  ROOT: 'https://dptore.herokuapp.com',
+  BYPASS: 'https://bypasscors.herokuapp.com/api/?url=',
 };

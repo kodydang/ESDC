@@ -12,31 +12,31 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th scope="col"></th>
-        <th scope="col">Logo</th>
-        <th scope="col" (click)="sortBy('name')">
+        <th></th>
+        <!-- <th>Logo</th> -->
+        <th [style.minWidth.px]="200" (click)="sortBy('name')">
           <span>Name</span>
           <i class="fas i-sort" [ngClass]="sortIcon('name')"></i>
         </th>
-        <th scope="col" (click)="sortBy('owner')">
+        <th [style.minWidth.px]="200" (click)="sortBy('owner')">
           <span>Owner</span>
           <i class="fas i-sort" [ngClass]="sortIcon('owner')"></i>
         </th>
-        <th scope="col" (click)="sortBy('address')">
+        <th [style.minWidth.px]="200" (click)="sortBy('address')">
           <span>Address</span>
           <i class="fas i-sort" [ngClass]="sortIcon('address')"></i>
         </th>
-        <th class="text-center">Action</th>
+        <th [style.minWidth.px]="200" class="text-center">Action</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of storeSorted | paginate: paginateConfig | filter: filter; let i = index">
-        <th width="50px" scope="row">{{i+1}}</th>
-        <td width="80px"><img [src]="item.data.logo" alt="No Logo" class="logo"></td>
-        <td width="200px">{{ item.name }}</td>
-        <td width="200px">{{ item.owner }}</td>
+        <th>{{i+1}}</th>
+        <!-- <td><img [src]="item.data.logo" alt="No Logo" class="logo" ></td> -->
+        <td>{{ item.name }}</td>
+        <td>{{ owner[i] }}</td>
         <td>{{ item.address }}</td>
-        <td width="200px" class="text-center">
+        <td class="text-center">
           <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
             <i class="fas fa-edit"></i> Edit
           </button>

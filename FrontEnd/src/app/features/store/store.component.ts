@@ -1,3 +1,5 @@
+import { ROLE } from 'src/app/shared/constants';
+import { Employee } from './../../shared/models/employee';
 import * as _ from 'lodash';
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from './../../provider/store.service';
@@ -12,6 +14,7 @@ export class StoreComponent implements OnInit {
   store = new Store({});
   stores: Store[] = [];
   storeSorted: {}[] = [];
+  owner: string[] = [];
 
   sortKey = '';
   sortReverse = false;
@@ -33,13 +36,19 @@ export class StoreComponent implements OnInit {
 
   getAll() {
     this.storeService.getAll().subscribe(
-      (res: any) => {
+      (res) => {
         this.stores = res;
+        this.owner = res.map((i) => {
+          const owner = i.employees.find(x => x.roleKey === ROLE.OWNER.KEY);
+          return owner ? owner.name : '';
+        });
+        console.log(res);
+
         this.storeSorted = this.stores.map(i => ({
           data: i,
           name: i.name,
           address: i.address,
-          owner: i.owner,
+          owner: i.ownerName,
         }));
       },
       (er) => {

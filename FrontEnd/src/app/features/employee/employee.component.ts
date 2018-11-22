@@ -48,7 +48,7 @@ export class EmployeeComponent implements OnInit {
           address: i.address,
           phone: i.phone,
           birthday: moment(i.birthday).format('L'),
-          role: this.getRoleTitle(i.role),
+          role: this.getRoleTitle(i.roleKey),
           data: i,
           onboardDay: i.createdDate,
         }));
@@ -94,12 +94,12 @@ export class EmployeeComponent implements OnInit {
     console.log(event);
   }
 
-  getRole(level: number) {
-    const key = Object.keys(ROLE).find(key => ROLE[key].LEVEL === level);
-    return ROLE[key];
+  getRole(key: string) {
+    const index = Object.keys(ROLE).find(key => ROLE[key].LEVEL === key);
+    return ROLE[index];
   }
-  getRoleTitle(level: number) {
-    const role = this.getRole(level);
+  getRoleTitle(key: string) {
+    const role = this.getRole(key);
     return role ? role.TITLE : 'Unknown';
   }
 }

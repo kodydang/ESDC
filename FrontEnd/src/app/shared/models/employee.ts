@@ -4,25 +4,16 @@ export class Employee extends Account {
   'id': number;
   'name': string;
   'gender': string;
-  'birthday': string;
+  'birthday': Date;
   'address': string;
   'phone': string;
 
   constructor(item) {
-    super({
-      createdBy: item.createdBy,
-      createdDate: item.createdDate,
-      updatedBy: item.updatedBy,
-      updatedDate: item.updatedDate,
-      username: item.username,
-      password: item.password,
-      photo: item.photo,
-      role: item.role,
-    });
-    this.id = item.id;
+    super(item['userByUserName']);
+    this.id = item.id || item['idNv'];
     this.name = item.name;
     this.gender = item.gender;
-    this.birthday = item.birthday;
+    this.birthday = new Date(item.birthday || item['bday']);
     this.address = item.address;
     this.phone = item.phone;
   }
