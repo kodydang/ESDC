@@ -64,23 +64,28 @@ export const ROLE = {
   SUPER_ADMIN: {
     KEY: 'super_admin',
     TITLE: 'Super Admin',
+    LEVEL: 16,
   },
   OWNER: {
     KEY: 'general_manager',
     TITLE: 'General Manager',
+    LEVEL: 8,
   },
   // TEMPORARILY DISABLE THE BELOW UNTIL WE FINISH ALL OTHER THINGS
   // AREA_MANAGER: {
   //   KEY: 'area_manager',
   //   TITLE: 'Area Manager',
+  //   LEVEL: 4,
   // },
   MANAGER: {
     KEY: 'admin',
     TITLE: 'Manager',
+    LEVEL: 2,
   },
   STAFF: {
     KEY: 'employee',
     TITLE: 'Staff',
+    LEVEL: 1,
   },
 };
 

@@ -1,3 +1,4 @@
+import { AuthenticationService } from './authentication.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -25,6 +26,7 @@ import { StoreService } from './store.service';
     CategoryService,
     ReportService,
     StoreService,
+    AuthenticationService,
   ],
 })
 export class ProvidersModule { }

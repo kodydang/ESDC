@@ -39,7 +39,7 @@ export class StoreComponent implements OnInit {
       (res) => {
         this.stores = res;
         this.owner = res.map((i) => {
-          const owner = i.employees.find(x => x.roleKey === ROLE.OWNER.KEY);
+          const owner = i.employees.find(x => x.isOwner);
           return owner ? owner.name : '';
         });
         console.log(res);
