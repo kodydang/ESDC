@@ -1,4 +1,5 @@
-import { APP, PAGE } from './../shared/constants';
+import { AuthenticationService } from './../provider/authentication.service';
+import { APP, PAGE, ROLE } from './../shared/constants';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
@@ -18,12 +19,14 @@ export class AdminPageComponent implements OnInit {
   menu = [
     {
       title: 'Super Admin',
+      permissionLevel: ROLE.SUPER_ADMIN.LEVEL,
       pages: [
         PAGE.STORE,
       ],
     },
     {
       title: 'Admin',
+      permissionLevel: ROLE.MANAGER.LEVEL,
       pages: [
         PAGE.EMPLOYEE,
         PAGE.MERCHANDISE,
@@ -35,18 +38,23 @@ export class AdminPageComponent implements OnInit {
     },
     {
       title: 'General',
+      permissionLevel: ROLE.STAFF.LEVEL,
       pages: [
         PAGE.PAYMENT,
         PAGE.IMPORT,
       ],
     },
-  ];
+  ].filter(i => this.authService.havePermission(i.permissionLevel));
 
   clicked = false;
   pageTitle = 'Page title';
   pageIcon = '';
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthenticationService,
+  ) {
     // this.account = JSON.parse(localStorage.getItem('USER'));
 
     this.router.events.subscribe((event) => {

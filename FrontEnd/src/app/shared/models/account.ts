@@ -24,4 +24,20 @@ export class Account extends Base {
     });
     return role;
   }
+
+  get isEmployee() {
+    return this.roleKey === ROLE.STAFF.KEY;
+  }
+
+  get isOwner() {
+    return this.roleKey === ROLE.OWNER.KEY;
+  }
+
+  get isManager() {
+    return this.roleKey === ROLE.MANAGER.KEY;
+  }
+
+  get isSuperAdmin() {
+    return this.roleKey === ROLE.SUPER_ADMIN.KEY;
+  }
 }
