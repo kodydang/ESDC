@@ -4,6 +4,7 @@ import { Merchandise } from 'src/app/shared/models';
 import { MerchandiseService } from 'src/app/provider/merchandise.service';
 import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
+import { NotificationBarService, NotificationType } from 'ngx-notification-bar/release';
 
 @Component({
   selector: 'app-import',
@@ -34,7 +35,11 @@ export class ImportComponent implements OnInit {
     return total;
   }
 
-  constructor(private merchandiseService: MerchandiseService) { }
+  constructor(
+    private merchandiseService: MerchandiseService,
+    private notifyService: NotificationBarService,
+
+  ) { }
 
   ngOnInit() {
     this.getAll();
@@ -109,10 +114,19 @@ export class ImportComponent implements OnInit {
       return;
     }
 
-    console.log('BEGIN UPDATE PRODUCTS');
-    this.merchandiseService.importMerchandise(this.cart).then(
-      () => console.log('Import success'),
-    );
+    this.merchandiseService.importMerchandise(this.cart)
+      .then(
+        () => this.notifyService.create({
+          message: 'Import completed successfully.',
+          type: NotificationType.Success,
+        }),
+      )
+      .catch(
+        () => this.notifyService.create({
+          message: 'Failed to import merchandises.',
+          type: NotificationType.Error,
+        },
+      ));
   }
 
   filterNewItems() {

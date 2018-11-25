@@ -12,7 +12,7 @@ export class MerchandiseService {
   constructor(private httpClient: HttpClient, private storeService: StoreService) { }
 
   getAll() {
-    return this.httpClient.get(`${API.BYPASS}${API.ROOT}/product`)
+    return this.httpClient.get(`${API.ROOT}/product`)
       .pipe(
         map(
           (body: any) => body['data'].map(i => new Merchandise(i)),
@@ -22,7 +22,7 @@ export class MerchandiseService {
   }
 
   getCategory() {
-    return this.httpClient.get(`${API.BYPASS}${API.ROOT}/category`)
+    return this.httpClient.get(`${API.ROOT}/category`)
       .pipe(
         map(
           (body: any) => body['data'].map(i => new Category(i)),
@@ -34,7 +34,7 @@ export class MerchandiseService {
   importMerchandise(items: Merchandise[]) {
     return forkJoin(
       items.map(i => this.httpClient.post(
-        `${API.ROOT}/product/goodsrecept`,
+        `${API.ROOT}/product/goodsrecept/`,
         {
           storeId: this.storeService.currentStore.id,
           productId: i.id,
