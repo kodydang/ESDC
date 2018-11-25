@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { Merchandise } from '../shared/models';
 import { of, forkJoin } from 'rxjs';
 import { StoreService } from './store.service';
+import { ProductMapper } from '../shared/models/product-mapper';
 
 @Injectable()
 export class MerchandiseService {
@@ -31,8 +32,18 @@ export class MerchandiseService {
       map(
         (res) => {
           const all: Merchandise[] = res[0];
-          const mapper: any[] = res[1]['data'].map(i => i['id']);
-          return all.filter(i => mapper.find(x => x.productId === i.id && x.storeId === storeId));
+          const mapper: ProductMapper[] = res[1]['data'];
+          // tslint:disable-next-line:max-line-length
+          const findMap = x => mapper.find(y => y.id.productId === x.id && y.id.storeId === storeId);
+
+          return all.filter(
+            i => findMap(i),
+          ).map(
+            (i) => {
+              i.quantity = findMap(i).quantities || 0;
+              return i;
+            },
+          );
         },
       ),
       catchError((err) => {
@@ -73,10 +84,15 @@ export class MerchandiseService {
     return this.addProductToStore(items, this.storeService.currentStore.id);
   }
 
-  // updateProduct() {
-  //   return this.httpClient.post(
-  //     `${API.ROOT}/product/update`,
-  //     {},
-  //   ).toPromise();
-  // }
+  updateProduct(items: Merchandise[]) {
+    return this.httpClient.post(
+      `${API.ROOT}/product/update`,
+      items.map(i => ({
+        ...i,
+        idSanpham: i.id,
+        createDay: i.createdDate,
+        sellQuantities: 0,
+      })),
+    ).toPromise();
+  }
 }

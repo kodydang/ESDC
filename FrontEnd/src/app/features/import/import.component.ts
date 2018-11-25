@@ -50,7 +50,7 @@ export class ImportComponent implements OnInit {
       (res: Category[]) => this.category = res,
     );
 
-    this.merchandiseService.getAll().toPromise().then(
+    this.merchandiseService.getProductsOfCurrentStore().toPromise().then(
       (res: any) => {
         this.merchandises = res;
         this.cart = [];

@@ -1,6 +1,7 @@
+import { NotificationBarService, NotificationType } from 'ngx-notification-bar/release';
 import { MerchandiseService } from './../../provider/merchandise.service';
 import { Customer } from './../../shared/models/customer';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
 import { Merchandise } from 'src/app/shared/models';
@@ -11,6 +12,9 @@ import { Merchandise } from 'src/app/shared/models';
   styleUrls: ['./payment.component.scss'],
 })
 export class PaymentComponent implements OnInit {
+  @ViewChild('cartForm') cartForm: NgForm;
+  @ViewChild('customerForm') customerForm: NgForm;
+
   customer: Customer = new Customer({});
   cart: Merchandise[] = [];
   merchandises: Merchandise[] = [];
@@ -32,7 +36,9 @@ export class PaymentComponent implements OnInit {
 
   get stock() {
     const merchandise = this.merchandises.find(i => i.id === this.newMerchandise.id);
-    return merchandise ? merchandise.quantity : 0;
+    const inCart = this.cart.find(i => i.id === this.newMerchandise.id);
+    const toBuy = inCart ? inCart.quantity : 0;
+    return merchandise ? merchandise.quantity - toBuy : 0;
   }
 
   get price() {
@@ -48,11 +54,12 @@ export class PaymentComponent implements OnInit {
   }
 
   get isItemValid() {
-    return this.newMerchandise.id !== undefined;
+    return (this.newMerchandise.id !== undefined && this.newMerchandise.quantity <= this.stock);
   }
 
   constructor(
     private merchandiseService: MerchandiseService,
+    private notifyService: NotificationBarService,
   ) { }
 
   ngOnInit() {
@@ -63,7 +70,7 @@ export class PaymentComponent implements OnInit {
     this.merchandiseService.getProductsOfCurrentStore().subscribe(
       (res: any) => {
         this.merchandises = res;
-        this.cart = [{ ...res[0], quantity: 1 }, { quanlity: 1, ...res[2] }];
+        this.cart = [];
       },
       (er) => {
         console.warn(er);
@@ -121,14 +128,23 @@ export class PaymentComponent implements OnInit {
 
   formSubmit(form: NgForm) {
     this.merchandiseService.addProductToCurrentStore(
-      this.cart.slice().map((i) => {
-        i.quantity = - i.quantity;
+      _.cloneDeep(this.cart).map((i) => {
+        i.quantity = -i.quantity;
         return i;
-      }),
-    )
+      }))
       .then(
-        () => console.log('OK'),
-
-      );
+        () => {
+          this.notifyService.create({
+            message: 'Process completed successfully.',
+            type: NotificationType.Success,
+          });
+          this.resetForm(this.cartForm);
+        })
+      .catch(
+        () => this.notifyService.create({
+          message: 'Failed to create payment bill.',
+          type: NotificationType.Error,
+        },
+      ));
   }
 }
