@@ -33,7 +33,7 @@ export class AdminPageComponent implements OnInit {
         PAGE.CATEGORY,
         PAGE.CUSTOMER,
         PAGE.REPORT,
-        PAGE.SETTING,
+        // PAGE.SETTING,
       ],
     },
     {
