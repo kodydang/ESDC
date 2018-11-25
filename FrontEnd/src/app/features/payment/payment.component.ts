@@ -120,10 +120,15 @@ export class PaymentComponent implements OnInit {
   }
 
   formSubmit(form: NgForm) {
-    console.log(
-      form.value, this.cart,
-      new Customer({ name: form.value.nameCustomer, ...form.value },
-    ));
+    this.merchandiseService.addProductToCurrentStore(
+      this.cart.slice().map((i) => {
+        i.quantity = - i.quantity;
+        return i;
+      }),
+    )
+      .then(
+        () => console.log('OK'),
 
+      );
   }
 }

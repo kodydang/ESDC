@@ -73,7 +73,10 @@ export class MerchandiseService {
     return this.addProductToStore(items, this.storeService.currentStore.id);
   }
 
-  updateProduct(productId, storeId) {
-
-  }
+  // updateProduct() {
+  //   return this.httpClient.post(
+  //     `${API.ROOT}/product/update`,
+  //     {},
+  //   ).toPromise();
+  // }
 }
