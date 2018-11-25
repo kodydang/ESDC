@@ -60,10 +60,10 @@ export class PaymentComponent implements OnInit {
   }
 
   getAll() {
-    this.merchandiseService.getAll().subscribe(
+    this.merchandiseService.getProductsOfCurrentStore().subscribe(
       (res: any) => {
         this.merchandises = res;
-        this.cart = [];
+        this.cart = [{ ...res[0], quantity: 1 }, { quanlity: 1, ...res[2] }];
       },
       (er) => {
         console.warn(er);
@@ -120,6 +120,10 @@ export class PaymentComponent implements OnInit {
   }
 
   formSubmit(form: NgForm) {
+    console.log(
+      form.value, this.cart,
+      new Customer({ name: form.value.nameCustomer, ...form.value },
+    ));
 
   }
 }

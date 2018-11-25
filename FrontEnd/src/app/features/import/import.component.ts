@@ -114,7 +114,7 @@ export class ImportComponent implements OnInit {
       return;
     }
 
-    this.merchandiseService.importMerchandise(this.cart)
+    this.merchandiseService.addProductToCurrentStore(this.cart)
       .then(
         () => this.notifyService.create({
           message: 'Import completed successfully.',
