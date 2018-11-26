@@ -14,6 +14,7 @@ import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { NgxMaskModule } from 'ngx-mask';
 import { TypeaheadModule } from 'ngx-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { TypeaheadModule } from 'ngx-bootstrap';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
+    BrowserAnimationsModule,
 
     // 3rd Libary
     MomentModule,

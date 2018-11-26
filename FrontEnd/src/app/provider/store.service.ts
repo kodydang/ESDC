@@ -17,7 +17,7 @@ export class StoreService {
 
   getAll(): Observable<Store[]> {
     return this.httpClient
-      .get(`${API.BYPASS}${API.ROOT}/store`)
+      .get(`${API.ROOT}/store`)
       .pipe(
         tap(
           (body: any) => console.log(body.data),
