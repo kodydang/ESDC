@@ -5,7 +5,9 @@ export class Category extends Base {
   'name': string;
 
   constructor(item) {
-    super(item.createdBy, item.createdDate || item['createDay'], item.updatedBy, item.updatedDate);
+    // super(item.createdBy, item.createdDate || item['createDay'],
+    //  item.updatedBy, item.updatedDate);
+    super(item.createdDate || item.createDay);
     this.id = item.id || item['idCategory'];
     this.name = item.name;
   }

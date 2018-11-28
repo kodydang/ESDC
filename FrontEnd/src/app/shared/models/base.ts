@@ -5,8 +5,10 @@ export class Base {
   // 'updatedDate': Date;
 
   constructor(
-    createdBy: string, createdDate: string,
-    updatedBy: string, updatedDate: string,
+    // createdBy: string,
+    createdDate: string,
+    // updatedBy: string,
+    // updatedDate: string,
   ) {
     // this.createdBy = createdBy;
     this.createdDate = new Date(createdDate);
