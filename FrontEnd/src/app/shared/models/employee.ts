@@ -7,14 +7,18 @@ export class Employee extends Account {
   'birthday': Date;
   'address': string;
   'phone': string;
+  'user': any;
+  'idStore': number;
 
   constructor(item) {
-    super(item['userByUserName']);
+    super(item['createDay']);
     this.id = item.id || item['idNv'];
     this.name = item.name;
     this.gender = item.gender;
-    this.birthday = new Date(item.birthday || item['bday']);
+    this.birthday = new Date(item['bday']);
     this.address = item.address;
     this.phone = item.phone;
+    this.user = item.userByUserName;
+    this.idStore = item.idStore;
   }
 }

@@ -40,17 +40,16 @@ export class EmployeeComponent implements OnInit {
   getAll() {
     this.employeeService.getAll().subscribe(
       (res: any) => {
-        this.employees = res;
+        this.employees = res.data;
         this.employeeSorted = this.employees.map(i => ({
-          username: i.username,
+          username: i.user.username,
           gender: i.gender,
           name: i.name,
           address: i.address,
           phone: i.phone,
           birthday: moment(i.birthday).format('L'),
-          role: this.getRoleTitle(i.roleKey),
+          role: this.getRoleTitle(i.user.roleName),
           data: i,
-          onboardDay: i.createdDate,
         }));
       },
       (er) => {
