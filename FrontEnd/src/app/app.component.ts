@@ -9,7 +9,7 @@ export class AppComponent {
   title = 'app';
 
   constructor() { 
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('role');
+    // sessionStorage.removeItem('username');
+    // sessionStorage.removeItem('role');
   }
 }

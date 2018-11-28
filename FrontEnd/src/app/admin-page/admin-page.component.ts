@@ -47,18 +47,8 @@ export class AdminPageComponent implements OnInit {
   ].filter(i => this.authService.havePermission(i.permissionLevel));
 
   clicked = false;
-<<<<<<< HEAD
-  page = PAGE.WELLCOME;
-  PAGE = PAGE;
-  username :string;
-  role : string;
-
-  constructor(private router: Router) {
-    // this.account = JSON.parse(localStorage.getItem('USER'));
-    this.username = sessionStorage.getItem('username');
-    this.role = sessionStorage.getItem('role');
-  }
-=======
+  username: string;
+  role: string;
   pageTitle = 'Page title';
   pageIcon = '';
 
@@ -67,8 +57,9 @@ export class AdminPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService,
   ) {
+    this.username = sessionStorage.getItem('username');
+    this.role = sessionStorage.getItem('role');
     // this.account = JSON.parse(localStorage.getItem('USER'));
->>>>>>> 405094fcb438a9a656782bbaf6bb1c7fed7c8af8
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -85,43 +76,14 @@ export class AdminPageComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   logout() {
     this.router.navigate(['/login']);
-<<<<<<< HEAD
-     // remove user from local storage to log user out
-     localStorage.removeItem('currentUser');
-     sessionStorage.removeItem('username');
-     sessionStorage.removeItem('role');
-  }
-
-  clickedFeature(page) {
-    // this.page = event;
-    if (page === PAGE.WELLCOME) {
-      this.router.navigate(['admin' , 'wellcome']);
-    }
-    if (page === PAGE.EMPLOYEE) {
-      this.router.navigate(['admin' , 'employee']);
-    }
-    if (page === PAGE.REPORT) {
-      this.router.navigate(['admin' , 'report']);
-    }
-    if (page === PAGE.CUSTOMER) {
-      this.router.navigate(['admin' , 'customer']);
-    }
-    if (page === PAGE.MERCHANDISE) {
-      this.router.navigate(['admin' , 'merchandise']);
-    }
-    if (page === PAGE.CATEGORY) {
-      this.router.navigate(['admin' , 'category']);
-    }
-    if (page === PAGE.PAYMENT) {
-      this.router.navigate(['admin' , 'payment']);
-    }
-=======
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
->>>>>>> 405094fcb438a9a656782bbaf6bb1c7fed7c8af8
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('role');
   }
+
 }
