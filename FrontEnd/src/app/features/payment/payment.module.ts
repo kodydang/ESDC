@@ -1,23 +1,23 @@
+import { NgxMaskModule } from 'ngx-mask';
+import { PaymentComponent } from './payment.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
-
-// import { CategoryCreateComponent } from './category-create/category-create.component';
+import { TypeaheadModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
     NgxPaginationModule,
     FormsModule,
+    TypeaheadModule,
   ],
   declarations: [
-    // CategoryCreateComponent,
+    PaymentComponent,
   ],
   exports: [
-    NgxPaginationModule,
-    // CategoryCreateComponent,
-
+    PaymentComponent,
   ],
 })
-export class CategoryModule { }
+export class PaymentModule { }

@@ -1,0 +1,30 @@
+[
+	{
+		"id": 1,
+		"name": "YAME",
+		"address": "19 Đường Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Hồ Chí Minh",
+		"logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOhIryxhX536CNJN4QHyO1rcOP-ginkkU3_gX-JuUOQnNiNcQD",
+    "owner": "vinhnguyen"
+	},
+	{
+		"id": 2,
+		"name": "Thế Giới Di Động",
+		"address": "19 Đường Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Hồ Chí Minh",
+		"logo": "https://cdn4.tgdd.vn/Products/Images/1784/71142/Thegioididong-icon.png",
+    "owner": "namngo"
+  },
+	{
+		"id": 3,
+		"name": "Yamaha",
+		"address": "19 Đường Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Hồ Chí Minh",
+		"logo": "https://i.pinimg.com/originals/a4/f9/d7/a4f9d794f26478e1a7be1ae2ebcee61e.gif",
+    "owner": "namngo"
+  },
+	{
+		"id": 4,
+		"name": "The Coffee House",
+		"address": "19 Đường Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Hồ Chí Minh",
+		"logo": "http://dichvuxedap.com/wp-content/uploads/2017/07/the-coffee-house-logo.jpg",
+    "owner": "diepnguyen"
+  }
+]

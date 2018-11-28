@@ -1,6 +1,9 @@
 [
 	{
-		"id": 1,
+    "id": 1,
+    "username": "khanhdang",
+    "photo": "http://icons-for-free.com/free-icons/png/512/131629.png",
+    "role": 1,
 		"name": "Khanh Đặng",
 		"gender": "Male",
 		"birthday": "1997-04-26T17:00:00.000Z",
@@ -8,7 +11,10 @@
 		"phone": "0912345678"
 	},
 	{
-		"id": 2,
+    "id": 2,
+    "username": "namngo",
+    "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeWA1tWbl9sacUIad6WBM3xYR6o-H9TXJFhF9-ctsz0M-V17d1",
+    "role": 8,
 		"name": "Nam Ngô",
 		"gender": "Male",
 		"birthday": "1997-03-24T17:00:00.000Z",
@@ -16,7 +22,10 @@
 		"phone": "0912345678"
 	},
 	{
-		"id": 3,
+    "id": 3,
+    "username": "haotran",
+    "photo": "https://cdn1.iconfinder.com/data/icons/IconsLandVistaPeopleIconsDemo/256/Client_Female_Light.png",
+    "role": 2,
 		"name": "Trần Ngô Tiểu Hảo",
 		"gender": "Female",
 		"birthday": "1997-08-09T17:00:00.000Z",
@@ -24,7 +33,10 @@
 		"phone": "0912345678"
 	},
 	{
-		"id": 4,
+    "id": 4,
+    "username": "hieule",
+    "photo": "http://icons.iconarchive.com/icons/icons-land/vista-people/256/Person-Male-Dark-icon.png",
+    "role": 1,
 		"name": "Lê Trung Hiếu",
 		"gender": "Male",
 		"birthday": "1997-09-10T17:00:00.000Z",
@@ -32,7 +44,10 @@
 		"phone": "0912345678"
 	},
 	{
-		"id": 5,
+    "id": 5,
+    "username": "diepnguyen",
+    "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZbrmQthFtZcCL5lEubF-4eCJBAi5xLbvnyuqS_fikMvlPQk8H",
+    "role": 4,
 		"name": "Nguyễn Thị Diệp",
 		"gender": "Female",
 		"birthday": "1997-11-15T17:00:00.000Z",

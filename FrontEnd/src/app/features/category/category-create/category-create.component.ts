@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import * as moment from 'moment';
+import { CategoryService } from '../../../provider/category.service';
 
 @Component({
   selector: 'app-category-create',
@@ -12,7 +13,9 @@ export class CategoryCreateComponent implements OnInit {
   @Input() category;
   @Input() isUpdate;
   submitted = false;
-  constructor() { }
+  constructor(
+    private categoryService: CategoryService,
+  ) { }
 
   ngOnInit() {
   }
@@ -22,10 +25,13 @@ export class CategoryCreateComponent implements OnInit {
     this.submitted = true;
   }
   add() {
-    this.category.birthday = moment(this.category.birthday).toDate();
+    this.category.createdDate = moment(this.category.createdDate);
     this.submit.emit(this.category);
-  }
-  onGenderClick(value) {
-    this.category.gender = value;
+    const category = this.category;
+    if (this.isUpdate) {
+      this.categoryService.update(category.id, category.name);
+    } else {
+      this.categoryService.add(category.name);
+    }
   }
 }

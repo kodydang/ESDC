@@ -5,16 +5,13 @@ import { AdminPageComponent } from './admin-page.component';
 import { EmployeeModule } from '../features/employee/employee.module';
 import { AdminRoutingModule } from './admin-page-routing.module';
 
-import { EmployeeComponent } from '../features/employee/employee.component';
-import { ReportComponent } from '../features/report/report.component';
-import { MerchandiseComponent } from '../features/merchandise/merchandise.component';
 import { MerchandiseModule } from '../features/merchandise/merchandise.module';
-import { CustomerComponent } from '../features/customer/customer.component';
 import { CustomerModule } from '../features/customer/customer.module';
-import { CategoryComponent } from '../features/category/category.component';
 import { CategoryModule } from '../features/category/category.module';
-import { PaymentComponent } from '../features/payment/payment.component';
 import { ReportModule } from '../features/report/report.module';
+import { PaymentModule } from '../features/payment/payment.module';
+import { ImportModule } from '../features/import/import.module';
+import { StoreModule } from '../features/store/store.module';
 
 @NgModule({
   imports: [
@@ -24,16 +21,13 @@ import { ReportModule } from '../features/report/report.module';
     MerchandiseModule,
     CategoryModule,
     ReportModule,
+    PaymentModule,
+    ImportModule,
+    StoreModule,
     AdminRoutingModule,
   ],
   declarations: [
     AdminPageComponent,
-    EmployeeComponent,
-    MerchandiseComponent,
-    CategoryComponent,
-    ReportComponent,
-    CustomerComponent,
-    PaymentComponent,
   ],
   exports: [
     AdminPageComponent,

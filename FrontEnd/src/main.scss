@@ -1,0 +1,42 @@
+@import './styles/theme.scss';
+
+.custab{
+  border: 1px solid #ccc;
+  padding: 5px;
+  box-shadow: 3px 3px 2px #ccc;
+  transition: 0.5s;
+  }
+.custab:hover{
+  box-shadow: 3px 3px 0px transparent;
+  transition: 0.5s;
+  }
+
+.i-sort {
+  float: right;
+  padding-top: 5px;
+}
+
+.td-noborder {
+  border-width: 0px !important;
+}
+
+.k-required {
+  color: rgb(79, 104, 248);
+}
+.ng-valid[required], .ng-valid.required  {
+  border: 1px solid #42A948; /* green */
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border: 1px solid #a94442; /* red */
+  border-left: 5px solid #a94442; /* red */
+}
+
+.logo {
+  height: 40px;
+
+  &.logo-square {
+    width: 40px;
+  }
+}

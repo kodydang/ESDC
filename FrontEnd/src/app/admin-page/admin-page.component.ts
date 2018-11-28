@@ -1,19 +1,11 @@
+import { AuthenticationService } from './../provider/authentication.service';
+import { APP, PAGE, ROLE } from './../shared/constants';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 const ELEMENT_SELECTOR = {
   USER_NAME: 'input_Username',
   PASSWORD: 'input_Password',
-};
-const PAGE = {
-  EMPLOYEE: 'employee',
-  MERCHANDISE: 'merchandise',
-  CUSTOMER: 'customer',
-  REPORT: 'report',
-  WELLCOME: 'wellcome',
-  CATEGORY: 'category',
-  PAYMENT: 'payment',
 };
 
 @Component({
@@ -22,7 +14,40 @@ const PAGE = {
   styleUrls: ['./admin-page.component.scss'],
 })
 export class AdminPageComponent implements OnInit {
+  readonly PAGE = PAGE;
+  readonly APP = APP;
+  menu = [
+    {
+      title: 'Super Admin',
+      permissionLevel: ROLE.SUPER_ADMIN.LEVEL,
+      pages: [
+        PAGE.STORE,
+      ],
+    },
+    {
+      title: 'Admin',
+      permissionLevel: ROLE.MANAGER.LEVEL,
+      pages: [
+        PAGE.EMPLOYEE,
+        PAGE.MERCHANDISE,
+        PAGE.CATEGORY,
+        PAGE.CUSTOMER,
+        PAGE.REPORT,
+        // PAGE.SETTING,
+      ],
+    },
+    {
+      title: 'General',
+      permissionLevel: ROLE.STAFF.LEVEL,
+      pages: [
+        PAGE.PAYMENT,
+        PAGE.IMPORT,
+      ],
+    },
+  ].filter(i => this.authService.havePermission(i.permissionLevel));
+
   clicked = false;
+<<<<<<< HEAD
   page = PAGE.WELLCOME;
   PAGE = PAGE;
   username :string;
@@ -33,12 +58,38 @@ export class AdminPageComponent implements OnInit {
     this.username = sessionStorage.getItem('username');
     this.role = sessionStorage.getItem('role');
   }
+=======
+  pageTitle = 'Page title';
+  pageIcon = '';
 
-  ngOnInit() {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthenticationService,
+  ) {
+    // this.account = JSON.parse(localStorage.getItem('USER'));
+>>>>>>> 405094fcb438a9a656782bbaf6bb1c7fed7c8af8
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const url = this.router.url.replace(`/${PAGE.ADMIN.URL}/`, '');
+
+        Object.keys(PAGE).forEach((i) => {
+          if (PAGE[i].URL === url) {
+            this.pageTitle = PAGE[i].TITLE;
+            this.pageIcon = PAGE[i].ICON;
+            return;
+          }
+        });
+      }
+    });
   }
+
+  ngOnInit() {}
 
   logout() {
     this.router.navigate(['/login']);
+<<<<<<< HEAD
      // remove user from local storage to log user out
      localStorage.removeItem('currentUser');
      sessionStorage.removeItem('username');
@@ -68,5 +119,9 @@ export class AdminPageComponent implements OnInit {
     if (page === PAGE.PAYMENT) {
       this.router.navigate(['admin' , 'payment']);
     }
+=======
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+>>>>>>> 405094fcb438a9a656782bbaf6bb1c7fed7c8af8
   }
 }

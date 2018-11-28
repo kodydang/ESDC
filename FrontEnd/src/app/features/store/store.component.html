@@ -1,0 +1,51 @@
+<!-- <app-employee-create (submit)="addEvent($event)" [employee]="employee" [isUpdate]="isUpdate"></app-employee-create> -->
+<div class="d-flex">
+  <button type="button" (click)="add()" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal">
+    <i class="fas fa-plus"></i>
+    Add new</button>
+  <div class="form-group form-inline mb-0">
+    <input type="text" class="form-control" placeholder="Search in stores" [(ngModel)]="filter">
+  </div>
+
+</div>
+<div class="table-responsive mt-3">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th></th>
+        <!-- <th>Logo</th> -->
+        <th [style.minWidth.px]="200" (click)="sortBy('name')">
+          <span>Name</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('name')"></i>
+        </th>
+        <th [style.minWidth.px]="200" (click)="sortBy('owner')">
+          <span>Owner</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('owner')"></i>
+        </th>
+        <th [style.minWidth.px]="200" (click)="sortBy('address')">
+          <span>Address</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('address')"></i>
+        </th>
+        <th [style.minWidth.px]="200" class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of storeSorted | paginate: paginateConfig | filter: filter; let i = index">
+        <th>{{i+1}}</th>
+        <!-- <td><img [src]="item.data.logo" alt="No Logo" class="logo" ></td> -->
+        <td>{{ item.name }}</td>
+        <td>{{ owner[i] }}</td>
+        <td>{{ item.address }}</td>
+        <td class="text-center">
+          <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+          <button class="btn btn-danger btn-sm">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls id="paginator" (pageChange)="onPageChange($event)" style="text-align: center;" [responsive]="true"></pagination-controls>
+</div>

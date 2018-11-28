@@ -1,3 +1,4 @@
+import { AuthenticationService } from './authentication.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +9,7 @@ import { CustomerService } from './customer.service';
 import { MerchandiseService } from './merchandise.service';
 import { CategoryService } from './category.service';
 import { ReportService } from './report.service';
+import { StoreService } from './store.service';
 
 @NgModule({
   imports: [
@@ -23,6 +25,8 @@ import { ReportService } from './report.service';
     MerchandiseService,
     CategoryService,
     ReportService,
+    StoreService,
+    AuthenticationService,
   ],
 })
 export class ProvidersModule { }
