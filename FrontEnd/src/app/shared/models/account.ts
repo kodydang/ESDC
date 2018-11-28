@@ -8,7 +8,9 @@ export class Account extends Base {
   'roleKey': string;
 
   constructor(item) {
-    super(item.createdBy, item.createdDate || item['createDay'], item.updatedBy, item.updatedDate);
+    // super(item.createdBy, item.createdDate || item['createDay'],
+    //  item.updatedBy, item.updatedDate);
+    super(item.createdDate || item.createDay);
     this.username = item.username || item['nameUser'];
     this.password = item.password || item['userPassword'];
     this.photo = item.photo;

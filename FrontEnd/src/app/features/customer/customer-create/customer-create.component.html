@@ -19,33 +19,33 @@
               'has-error': nameCustomer.invalid && (nameCustomer.dirty || nameCustomer.touched)}">
               <label for="name">Name: <span class="k-required">*</span></label>
               <input type="text" class="form-control" id="nameCustomer" placeholder="Enter customer's name" [(ngModel)]="customer.name"
-                name="nameCustomer" #nameCustomer="ngModel" required pattern="^[a-z A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$">
+                name="nameCustomer" #nameCustomer="ngModel" required>
               <div [hidden]="nameCustomer.valid || nameCustomer.pristine" class="alert alert-danger">
                 <strong>Please enter customer's name</strong>
               </div>
             </div>
 
-            <div class="form-group" [ngClass]="{
+            <!-- <div class="form-group" [ngClass]="{
               'has-success': address.valid,
               'has-error': address.invalid && (address.dirty || address.touched)}">
               <label for="address">Address: <span class="k-required">*</span></label>
               <input class="form-control" type="text" id="address" placeholder="Enter customer's address" [(ngModel)]="customer.address"
-                name="address" #address="ngModel" required pattern="^[0-9a-z A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ,./]+$">
+                name="address" #address="ngModel" required>
               <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
                 <strong>You should enter customer's address</strong>
               </div>
-            </div>
+            </div> -->
 
             <div class="form-group">
               <label>Birthday: <span class="k-required">*</span></label>
-              <input class="form-control" type="date" id="input_Date" [(ngModel)]="customer.birthday" name="birthday"
+              <input class="form-control" type="date" id="input_Date" [(ngModel)]="dateTime" name="birthday"
                 #birthday="ngModel" required>
               <div [hidden]="birthday.valid || birthday.pristine" class="alert alert-warning">
                 <strong>You should enter customer's birthday!!</strong>
               </div>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label class="mr-3">Gender: <span class="k-required">*</span></label>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="male" id="male" value="Male" [(ngModel)]="customer.gender" required>
@@ -55,7 +55,7 @@
                 <input class="form-check-input" type="radio" name="female" id="female" value="Female" [(ngModel)]="customer.gender" required>
                 <label class="form-check-label" for="female">Female</label>
               </div>
-            </div>
+            </div> -->
 
             <div class="form-group" [ngClass]="{
             'has-success': email.valid,
@@ -76,7 +76,7 @@
           }">
               <label>Phone: <span class="k-required">*</span></label>
               <input class="form-control" type="phone" id="input_Phone" placeholder="Phone" [(ngModel)]="customer.phone"
-                name="phone" #phone="ngModel" required pattern="^([0][0-9]{9,10})$" minlength="10">
+                name="phone" #phone="ngModel" required minlength="10">
               <div [hidden]="phone.valid || phone.pristine" class="alert alert-warning">
                 <strong>Phone must be at least 10 number [0-9] and begin number 0 or +</strong>
                 <p>Example: 0912345678</p>
@@ -85,7 +85,7 @@
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameCustomer.valid && address.valid && email.valid && birthday.valid && phone.valid)">{{ isUpdate ? 'Update' : 'Add' }}</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameCustomer.valid && email.valid && birthday.valid && phone.valid)">{{ isUpdate ? 'Update' : 'Add' }}</button>
               <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()">Add</button> -->
             </div>
 

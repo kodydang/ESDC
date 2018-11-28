@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import * as moment from 'moment';
+import { Customer } from '../../../shared/models/customer';
 
 @Component({
   selector: 'app-customer-create',
@@ -12,9 +13,13 @@ export class CustomerCreateComponent implements OnInit {
   @Input() customer;
   @Input() isUpdate;
   submitted = false;
+  @Input() dateTime: string;
   constructor() { }
 
   ngOnInit() {
+  }
+  mapDate(date) {
+    return moment(date, 'YYYY-MM-DD').toDate();
   }
 
   formSubmit(res: NgForm) {
@@ -22,7 +27,7 @@ export class CustomerCreateComponent implements OnInit {
     this.submitted = true;
   }
   add() {
-    this.customer.birthday = moment(this.customer.birthday).toDate();
+    this.customer.birthday = this.mapDate(this.dateTime);
     this.submit.emit(this.customer);
   }
   onGenderClick(value) {

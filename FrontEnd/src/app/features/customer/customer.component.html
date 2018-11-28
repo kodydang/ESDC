@@ -1,4 +1,8 @@
-<app-customer-create (submit)="addEvent($event)" [customer]="customer" [isUpdate]="isUpdate"></app-customer-create>
+<div *ngIf="openDiaglog">
+  <app-customer-create (submit)="addEvent($event)" [customer]="customer" [isUpdate]="isUpdate" [dateTime]="dataTime"></app-customer-create>
+
+</div>
+
 <div class="d-flex">
   <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal" (click)="add()">
     <i class="fas fa-plus"></i>
@@ -17,17 +21,17 @@
           <span>Name</span>
           <i class="fas i-sort" [ngClass]="sortIcon('name')"></i>
         </th>
-        <th scope="col" (click)="sortBy('gender')">
+        <!-- <th scope="col" (click)="sortBy('gender')">
           <span>Gender</span>
           <i class="fas i-sort" [ngClass]="sortIcon('gender')"></i>
-        </th>
+        </th> -->
         <th scope="col" (click)="sortBy('birthday')">
           <span>Birthday</span>
           <i class="fas i-sort" [ngClass]="sortIcon('birthday')"></i>
         </th>
-        <th scope="col" (click)="sortBy('address')">
+        <th scope="col" (click)="sortBy('email')">
           <span>Address</span>
-          <i class="fas i-sort" [ngClass]="sortIcon('address')"></i>
+          <i class="fas i-sort" [ngClass]="sortIcon('email')"></i>
         </th>
         <th scope="col" (click)="sortBy('phone')">
           <span>Phone</span>
@@ -40,12 +44,12 @@
       <tr *ngFor="let item of customerSorted | filter: filter | paginate: paginateConfig; let i = index">
         <th width="50px" scope="row">{{i+1}}</th>
         <td width="200px">{{ item.name }}</td>
-        <td width="100px">{{ item.gender }}</td>
-        <td width="120px">{{ item.birthday }} </td>
-        <td>{{ item.address }}</td>
+        <!-- <td width="100px">{{ item.gender }}</td> -->
+        <td width="120px">{{ formatDate(item.birthday) }} </td>
+        <td width="120px">{{ item.email }}</td>
         <td width="120px">{{ item.phone }}</td>
-        <td width="200px" class="text-center">
-          <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
+        <td width="150px" class="text-center">
+          <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item.fullData)">
             <i class="fas fa-edit"></i> Edit
           </button>
           <button class="btn btn-danger btn-sm">
