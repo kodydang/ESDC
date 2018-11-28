@@ -25,8 +25,13 @@ export class AdminPageComponent implements OnInit {
   clicked = false;
   page = PAGE.WELLCOME;
   PAGE = PAGE;
+  username :string;
+  role : string;
+
   constructor(private router: Router) {
     // this.account = JSON.parse(localStorage.getItem('USER'));
+    this.username = sessionStorage.getItem('username');
+    this.role = sessionStorage.getItem('role');
   }
 
   ngOnInit() {
@@ -36,6 +41,8 @@ export class AdminPageComponent implements OnInit {
     this.router.navigate(['/login']);
      // remove user from local storage to log user out
      localStorage.removeItem('currentUser');
+     sessionStorage.removeItem('username');
+     sessionStorage.removeItem('role');
   }
 
   clickedFeature(page) {
