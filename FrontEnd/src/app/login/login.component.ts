@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
           console.log(this.username);
           this.router.navigate(['/admin']);
           sessionStorage.setItem('username',this.username);
-          sessionStorage.setItem('role',this.data.data);
+          sessionStorage.setItem('role',this.data.data.roleName);
         }
         else {
           this.isSuccess = true;

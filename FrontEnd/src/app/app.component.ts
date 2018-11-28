@@ -7,9 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-
-  constructor() { 
-    // sessionStorage.removeItem('username');
-    // sessionStorage.removeItem('role');
-  }
 }
