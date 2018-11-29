@@ -1,3 +1,6 @@
+import { Bill } from './../../shared/models/bill';
+import { Customer } from './../../shared/models/customer';
+import { CustomerService } from './../../provider/customer.service';
 import { Router } from '@angular/router';
 import { BillService } from './../../provider/bill.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,9 +15,13 @@ import * as _ from 'lodash';
   styleUrls: ['./bill.component.scss'],
 })
 export class BillComponent implements OnInit {
-  employee = new Employee({});
+  data: any[];
+  dataSorted: any[] = [];
+
   employees: Employee[] = [];
-  employeeSorted: any[] = [];
+  bills: Bill[] = [];
+  customers: Customer[] = [];
+
   paginateConfig = {
     id: 'paginator',
     itemsPerPage: 10,
@@ -31,42 +38,69 @@ export class BillComponent implements OnInit {
     private router: Router,
     private employeeService: EmployeeService,
     private billService: BillService,
+    private customerService: CustomerService,
   ) { }
 
   ngOnInit() {
-    this.getAll();
+    Promise.all([
+      this.getCustomers(),
+      this.getEmployees(),
+      this.getBills(),
+    ]).then((res) => {
+      this.customers = res[0];
+      this.employees = res[1];
+      this.bills = res[2];
+
+      this.data = this.bills.map(i => ({
+        ...i,
+        customer: this.customers.find(x => x.id === i.customerId),
+        employee: this.employees.find(x => x.id === i.employeeId),
+      }));
+      this.data = this.data.filter(i => i.customer && i.employee);
+
+      this.dataSorted = this.data.map(i => ({
+        ...i,
+        createdDate: moment(i.createdDate).format('L'),
+      }));
+    });
   }
 
-  getAll() {
-    this.employeeService.getFromCurrentStore().then(
-      (res: Employee[]) => {
-        this.employees = res;
-        this.employeeSorted = this.employees.map(i => ({
-          username: i.username,
-          gender: i.gender,
-          name: i.name,
-          address: i.address,
-          phone: i.phone,
-          birthday: moment(i.birthday).format('L'),
-          role: i.role,
-          data: i,
-          onboardDay: i.createdDate,
-        }));
-      },
+  getCustomers() {
+    return this.customerService.getFromCurrentStore().then(
+      (res: Customer[]) => res,
       (er) => {
-        console.warn(er);
+        console.error(er);
+        return [];
+      });
+  }
+
+  getBills() {
+    return this.billService.getAll().then(
+      (res: Bill[]) => res,
+      (er) => {
+        console.error(er);
+        return [];
+      });
+  }
+
+  getEmployees() {
+    return this.employeeService.getFromCurrentStore().then(
+      (res: Employee[]) => res,
+      (er) => {
+        console.error(er);
+        return [];
       });
   }
 
   sortBy(type) {
     if (this.sortKey === type) {
       this.sortReverse = !this.sortReverse;
-      return this.employeeSorted = _.reverse(this.employeeSorted);
+      return this.dataSorted = _.reverse(this.dataSorted);
     }
 
     this.sortKey = type;
     this.sortReverse = false;
-    return this.employeeSorted = _.sortBy(this.employeeSorted, [type]);
+    return this.dataSorted = _.sortBy(this.dataSorted, [type]);
   }
 
   sortIcon(type) {
@@ -78,19 +112,5 @@ export class BillComponent implements OnInit {
 
   onPageChange(number) {
     this.paginateConfig.currentPage = number;
-  }
-
-  add() {
-    this.isUpdate = false;
-    this.employee = new Employee({});
-  }
-
-  edit(event) {
-    this.isUpdate = true;
-    this.employee = new Employee(event);
-  }
-
-  addEvent(event) {
-    console.log(event);
   }
 }

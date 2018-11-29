@@ -12,60 +12,46 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th scope="col"></th>
-        <!-- <th scope="col">Photo</th> -->
-        <th scope="col" (click)="sortBy('name')">
-          <span>Name</span>
-          <i class="fas i-sort" [ngClass]="sortIcon('name')"></i>
+        <th></th>
+        <th (click)="sortBy('customer.name')">
+          <span>Client's Name</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('customer.name')"></i>
         </th>
-        <th scope="col" (click)="sortBy('username')">
-          <span>Username</span>
-          <i class="fas i-sort" [ngClass]="sortIcon('username')"></i>
+        <th (click)="sortBy('customer.email')">
+          <span>Client's Email</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('customer.email')"></i>
         </th>
-        <!-- <th scope="col" (click)="sortBy('gender')">
-          <span>Gender</span>
-          <i class="fas i-sort" [ngClass]="sortIcon('gender')"></i>
-        </th> -->
-        <th scope="col" (click)="sortBy('birthday')">
-          <span>Birthday</span>
-          <i class="fas i-sort" [ngClass]="sortIcon('birthday')"></i>
+        <th (click)="sortBy('employee.name')">
+          <span>Seller</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('employee.name')"></i>
         </th>
-        <!-- <th scope="col" (click)="sortBy('address')">
-          <span>Address</span>
-          <i class="fas i-sort" [ngClass]="sortIcon('address')"></i>
-        </th> -->
-        <th scope="col" (click)="sortBy('phone')">
-          <span>Phone</span>
-          <i class="fas i-sort" [ngClass]="sortIcon('phone')"></i>
+        <th (click)="sortBy('totalPrice')">
+          <span>Total Payment</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('totalPrice')"></i>
         </th>
-        <th scope="col" (click)="sortBy('role')">
-          <span>Role</span>
-          <i class="fas i-sort" [ngClass]="sortIcon('role')"></i>
+        <th (click)="sortBy('createdDate')">
+          <span>Created Time</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('createdDate')"></i>
         </th>
-        <th class="text-center">Action</th>
+        <!-- <th class="text-center">Action</th> -->
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of employeeSorted | filter: filter | paginate: paginateConfig; let i = index">
+      <tr *ngFor="let item of dataSorted | filter: filter | paginate: paginateConfig; let i = index">
         <th width="50px" scope="row">{{i+1}}</th>
-        <!-- <td width="80px">
-          <img [src]="item.data.photo" alt="No photo" class="logo logo-square">
-        </td> -->
-        <td width="200px">{{ item.name }}</td>
-        <td width="120px">{{ item.username }}</td>
-        <!-- <td width="100px">{{ item.gender }}</td> -->
-        <td width="120px">{{ item.birthday }} </td>
-        <!-- <td>{{ item.address }}</td> -->
-        <td width="120px">{{ item.phone }}</td>
-        <td width="100px">{{ item.role }}</td>
-        <td width="200px" class="text-center">
+        <td width="200px">{{ item?.customer?.name }}</td>
+        <td width="120px">{{ item?.customer?.email }}</td>
+        <td width="200px">{{ item?.employee?.name }} </td>
+        <td width="120px">{{ item?.totalPrice | currency }}</td>
+        <td width="150px">{{ item?.createdDate }}</td>
+        <!-- <td width="200px" class="text-center">
           <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
             <i class="fas fa-edit"></i> Edit
           </button>
           <button class="btn btn-danger btn-sm">
             <i class="fas fa-trash-alt"></i> Delete
           </button>
-        </td>
+        </td> -->
       </tr>
     </tbody>
   </table>

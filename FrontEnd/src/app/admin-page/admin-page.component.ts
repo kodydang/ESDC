@@ -32,7 +32,7 @@ export class AdminPageComponent implements OnInit {
         PAGE.MERCHANDISE,
         PAGE.CATEGORY,
         PAGE.CUSTOMER,
-        // PAGE.BILL,
+        PAGE.BILL,
         PAGE.REPORT,
         // PAGE.SETTING,
       ],
