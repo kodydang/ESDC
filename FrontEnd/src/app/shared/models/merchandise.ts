@@ -1,5 +1,4 @@
 import { Base } from './base';
-import { ProductMapper } from './product-mapper';
 
 export class Merchandise extends Base {
   'id': number;
@@ -7,7 +6,6 @@ export class Merchandise extends Base {
   'category': string;
   'price': number;
   'quantity': number;
-  'setStoreHaveProduct': ProductMapper[];
 
   constructor(item) {
     super(item.createdBy, item.createdDate || item['createDay'], item.updatedBy, item.updatedDate);
@@ -16,9 +14,5 @@ export class Merchandise extends Base {
     this.category = item.category;
     this.quantity = item.quantity;
     this.price = item.price;
-    const productMappers = item['setStoreHaveProduct'];
-    if (productMappers) {
-      this.setStoreHaveProduct = productMappers.map(i => new ProductMapper(i));
-    }
   }
 }

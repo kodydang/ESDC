@@ -1,3 +1,4 @@
+import { CustomerService } from './../../provider/customer.service';
 import { NotificationBarService, NotificationType } from 'ngx-notification-bar/release';
 import { MerchandiseService } from './../../provider/merchandise.service';
 import { Customer } from './../../shared/models/customer';
@@ -60,6 +61,7 @@ export class PaymentComponent implements OnInit {
   constructor(
     private merchandiseService: MerchandiseService,
     private notifyService: NotificationBarService,
+    private customerService: CustomerService,
   ) { }
 
   ngOnInit() {
@@ -67,8 +69,8 @@ export class PaymentComponent implements OnInit {
   }
 
   getAll() {
-    this.merchandiseService.getProductsOfCurrentStore().subscribe(
-      (res: any) => {
+    this.merchandiseService.getFromCurrentStore().then(
+      (res: Merchandise[]) => {
         this.merchandises = res;
         this.cart = [];
       },
@@ -127,7 +129,12 @@ export class PaymentComponent implements OnInit {
   }
 
   formSubmit(form: NgForm) {
-    this.merchandiseService.addProductToCurrentStore(
+    console.log(form.value);
+    this.customerService.create(form.value).then(
+      res => console.log(res),
+    );
+
+    this.merchandiseService.addToCurrentStore(
       _.cloneDeep(this.cart).map((i) => {
         i.quantity = -i.quantity;
         return i;

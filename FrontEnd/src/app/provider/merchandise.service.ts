@@ -1,12 +1,10 @@
 import { API } from './../shared/constants';
 import { catchError, map } from 'rxjs/operators';
-import { Category } from './../shared/models/category';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Merchandise } from '../shared/models';
 import { of, forkJoin } from 'rxjs';
 import { StoreService } from './store.service';
-import { ProductMapper } from '../shared/models/product-mapper';
 
 @Injectable()
 export class MerchandiseService {
@@ -22,52 +20,21 @@ export class MerchandiseService {
       );
   }
 
-  getProductsByStore(storeId) {
-    const obs = [
-      this.getAll(),
-      this.httpClient.get(`${API.ROOT}/store/product/${storeId}`),
-    ];
-
-    return forkJoin(obs).pipe(
-      map(
-        (res) => {
-          const all: Merchandise[] = res[0];
-          const mapper: ProductMapper[] = res[1]['data'];
-          // tslint:disable-next-line:max-line-length
-          const findMap = x => mapper.find(y => y.id.productId === x.id && y.id.storeId === storeId);
-
-          return all.filter(
-            i => findMap(i),
-          ).map(
-            (i) => {
-              i.quantity = findMap(i).quantities || 0;
-              return i;
-            },
-          );
-        },
-      ),
+  getByStore(storeId): Promise<Merchandise[]> {
+    return this.httpClient.get(`${API.ROOT}/store/product/${storeId}`).pipe(
+      map(res => res['data'].map(i => new Merchandise(i))),
       catchError((err) => {
         console.error('Error, could not load product from server', err);
         return null;
       }),
-    );
+    ).toPromise();
   }
 
-  getProductsOfCurrentStore() {
-    return this.getProductsByStore(this.storeService.currentStore.id);
+  getFromCurrentStore() {
+    return this.getByStore(this.storeService.currentStore.id);
   }
 
-  getCategory() {
-    return this.httpClient.get(`${API.ROOT}/category`)
-      .pipe(
-        map(
-          (body: any) => body['data'].map(i => new Category(i)),
-          catchError(() => of('Error, could not load category from server')),
-        ),
-      );
-  }
-
-  addProductToStore(items: Merchandise[], storeId) {
+  addToStore(items: Merchandise[], storeId) {
     return forkJoin(
       items.map(i => this.httpClient.post(
         `${API.ROOT}/product/goodsrecept/`,
@@ -80,11 +47,11 @@ export class MerchandiseService {
     ).toPromise();
   }
 
-  addProductToCurrentStore(items: Merchandise[]) {
-    return this.addProductToStore(items, this.storeService.currentStore.id);
+  addToCurrentStore(items: Merchandise[]) {
+    return this.addToStore(items, this.storeService.currentStore.id);
   }
 
-  updateProduct(items: Merchandise[]) {
+  update(items: Merchandise[]) {
     return this.httpClient.post(
       `${API.ROOT}/product/update`,
       items.map(i => ({
