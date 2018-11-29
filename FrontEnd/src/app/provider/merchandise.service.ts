@@ -1,6 +1,5 @@
 import { API } from './../shared/constants';
 import { catchError, map } from 'rxjs/operators';
-import { Category } from './../shared/models/category';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Merchandise } from '../shared/models';
@@ -21,42 +20,21 @@ export class MerchandiseService {
       );
   }
 
-  getProductsByStore(storeId) {
-    const obs = [
-      this.getAll(),
-      this.httpClient.get(`${API.ROOT}/store/product/${storeId}`),
-    ];
-
-    return forkJoin(obs).pipe(
-      map(
-        (res) => {
-          const all: Merchandise[] = res[0];
-          const mapper: any[] = res[1]['data'].map(i => i['id']);
-          return all.filter(i => mapper.find(x => x.productId === i.id && x.storeId === storeId));
-        },
-      ),
+  getByStore(storeId): Promise<Merchandise[]> {
+    return this.httpClient.get(`${API.ROOT}/store/product/${storeId}`).pipe(
+      map(res => res['data'].map(i => new Merchandise(i))),
       catchError((err) => {
         console.error('Error, could not load product from server', err);
         return null;
       }),
-    );
+    ).toPromise();
   }
 
-  getProductsOfCurrentStore() {
-    return this.getProductsByStore(this.storeService.currentStore.id);
+  getFromCurrentStore() {
+    return this.getByStore(this.storeService.currentStore.id);
   }
 
-  getCategory() {
-    return this.httpClient.get(`${API.ROOT}/category`)
-      .pipe(
-        map(
-          (body: any) => body['data'].map(i => new Category(i)),
-          catchError(() => of('Error, could not load category from server')),
-        ),
-      );
-  }
-
-  addProductToStore(items: Merchandise[], storeId) {
+  addToStore(items: Merchandise[], storeId) {
     return forkJoin(
       items.map(i => this.httpClient.post(
         `${API.ROOT}/product/goodsrecept/`,
@@ -69,14 +47,19 @@ export class MerchandiseService {
     ).toPromise();
   }
 
-  addProductToCurrentStore(items: Merchandise[]) {
-    return this.addProductToStore(items, this.storeService.currentStore.id);
+  addToCurrentStore(items: Merchandise[]) {
+    return this.addToStore(items, this.storeService.currentStore.id);
   }
 
-  // updateProduct() {
-  //   return this.httpClient.post(
-  //     `${API.ROOT}/product/update`,
-  //     {},
-  //   ).toPromise();
-  // }
+  update(items: Merchandise[]) {
+    return this.httpClient.post(
+      `${API.ROOT}/product/update`,
+      items.map(i => ({
+        ...i,
+        idSanpham: i.id,
+        createDay: i.createdDate,
+        sellQuantities: 0,
+      })),
+    ).toPromise();
+  }
 }

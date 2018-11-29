@@ -1,3 +1,4 @@
+import { CategoryService } from './../../provider/category.service';
 import { Category } from './../../shared/models/category';
 import { Component, OnInit } from '@angular/core';
 import { Merchandise } from 'src/app/shared/models';
@@ -38,6 +39,7 @@ export class ImportComponent implements OnInit {
   constructor(
     private merchandiseService: MerchandiseService,
     private notifyService: NotificationBarService,
+    private categoryService: CategoryService,
 
   ) { }
 
@@ -46,11 +48,11 @@ export class ImportComponent implements OnInit {
   }
 
   getAll() {
-    this.merchandiseService.getCategory().toPromise().then(
+    this.categoryService.getFromCurrentStore().then(
       (res: Category[]) => this.category = res,
     );
 
-    this.merchandiseService.getAll().toPromise().then(
+    this.merchandiseService.getFromCurrentStore().then(
       (res: any) => {
         this.merchandises = res;
         this.cart = [];
@@ -114,7 +116,7 @@ export class ImportComponent implements OnInit {
       return;
     }
 
-    this.merchandiseService.addProductToCurrentStore(this.cart)
+    this.merchandiseService.addToCurrentStore(this.cart)
       .then(
         () => this.notifyService.create({
           message: 'Import completed successfully.',
