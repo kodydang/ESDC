@@ -1,3 +1,4 @@
+import { BillService } from './../../provider/bill.service';
 import * as _ from 'lodash';
 import { AuthenticationService } from './../../provider/authentication.service';
 import { Bill, Merchandise } from 'src/app/shared/models';
@@ -10,6 +11,7 @@ import { NgForm } from '@angular/forms';
 import { NotificationBarService, NotificationType } from 'ngx-notification-bar/release';
 import { StoreService } from 'src/app/provider/store.service';
 import { promise } from 'protractor';
+import { BillDetails } from 'src/app/shared/models/bill-details';
 
 @Component({
   selector: 'app-payment',
@@ -67,6 +69,7 @@ export class PaymentComponent implements OnInit {
     private notifyService: NotificationBarService,
     private customerService: CustomerService,
     private storeService: StoreService,
+    private billService: BillService,
     private authService: AuthenticationService,
   ) { }
 
@@ -139,9 +142,9 @@ export class PaymentComponent implements OnInit {
       this.updateCustomer(form.value),
       this.updateProduct(),
     ])
+      .then(res => this.createBill(res[0], this.cart))
       .then(
-        (res) => {
-          this.createBill(res[0], res[1]);
+        () => {
           this.notifyService.create({
             message: 'Process completed successfully.',
             type: NotificationType.Success,
@@ -175,14 +178,21 @@ export class PaymentComponent implements OnInit {
     return itemsToUpdate;
   }
 
-  createBill(customer: Customer, items: Merchandise[]): Promise<Bill> {
+  createBill(customer: Customer, items: Merchandise[]) {
     const bill = new Bill({
       employeeId: this.authService.currentAccount.id,
       storeId: this.storeService.currentStore.id,
       customerId: customer.id,
       totalPrice: items.map(i => i.price * i.quantity).reduce((x, y) => x + y),
     });
-    console.log(bill);
-    return Promise.reject();
+    return this.billService.create(bill)
+      .then(res => Promise.all(items.map(i => this.billService.createDetails(
+        new BillDetails({
+          ...i,
+          billId: res.id,
+          productId: i.id,
+          id: null,
+        }),
+      ))));
   }
 }

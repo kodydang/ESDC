@@ -1,18 +1,17 @@
+import { Router } from '@angular/router';
+import { BillService } from './../../provider/bill.service';
 import { Component, OnInit } from '@angular/core';
-
+import { Employee } from 'src/app/shared/models';
+import { EmployeeService } from 'src/app/provider/employee.service';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { EmployeeService } from '../../provider/employee.service';
-import { Employee } from '../../shared/models/employee';
-import { Router } from '@angular/router';
-import { ROLE } from 'src/app/shared/constants';
 
 @Component({
-  selector: 'app-employee',
-  templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss'],
+  selector: 'app-bill',
+  templateUrl: './bill.component.html',
+  styleUrls: ['./bill.component.scss'],
 })
-export class EmployeeComponent implements OnInit {
+export class BillComponent implements OnInit {
   employee = new Employee({});
   employees: Employee[] = [];
   employeeSorted: any[] = [];
@@ -31,6 +30,7 @@ export class EmployeeComponent implements OnInit {
   constructor(
     private router: Router,
     private employeeService: EmployeeService,
+    private billService: BillService,
   ) { }
 
   ngOnInit() {

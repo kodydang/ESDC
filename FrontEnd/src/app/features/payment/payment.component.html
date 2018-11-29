@@ -170,8 +170,7 @@
     <div class="card-footer d-flex">
       <button type="button" class="btn btn-primary" (click)="resetForm(customerForm)">New Payment</button>
       <div class="ml-auto">
-        <button type="submit" class="btn btn-primary mx-1">Place Payment</button>
-        <!-- [disabled]="customerForm.invalid || cart.length === 0" -->
+        <button type="submit" class="btn btn-primary mx-1" [disabled]="customerForm.invalid || cart.length === 0">Place Payment</button>
       </div>
     </div>
   </div>
