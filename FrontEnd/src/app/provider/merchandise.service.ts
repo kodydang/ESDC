@@ -1,3 +1,5 @@
+import { Category } from './../shared/models/category';
+import { CategoryService } from './category.service';
 import { API } from './../shared/constants';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -8,7 +10,11 @@ import { StoreService } from './store.service';
 
 @Injectable()
 export class MerchandiseService {
-  constructor(private httpClient: HttpClient, private storeService: StoreService) { }
+  constructor(
+    private httpClient: HttpClient,
+    private storeService: StoreService,
+    private categoryService: CategoryService,
+  ) { }
 
   getAll() {
     return this.httpClient.get(`${API.ROOT}/product`)
@@ -17,16 +23,32 @@ export class MerchandiseService {
           (body: any) => body['data'].map(i => new Merchandise(i)),
           catchError(() => of('Error, could not load product from server')),
         ),
-      );
+      ).toPromise();
   }
 
   getByStore(storeId): Promise<Merchandise[]> {
-    return this.httpClient.get(`${API.ROOT}/store/product/${storeId}`).pipe(
-      map(res => res['data'].map(i => new Merchandise(i))),
-      catchError((err) => {
-        console.error('Error, could not load product from server', err);
-        return null;
+    const observers = [
+      this.categoryService.getFromCurrentStore(),
+      this.httpClient.get(`${API.ROOT}/store/product/${storeId}`),
+    ];
+
+    return forkJoin(observers).pipe(
+      map((res) => {
+        const categories: any = res[0];
+        const products = res[1]['data'].map((i) => {
+          const category = categories.find(x => x.id === i.category);
+          return new Merchandise({
+            ...i,
+            categoryId: i.category,
+            category: category ? category.name : 'Unclassified',
+          });
+        });
+        return products;
       }),
+      // catchError((err) => {
+      //   console.error('Error, could not load product from server', err);
+      //   return null;
+      // }),
     ).toPromise();
   }
 
@@ -52,14 +74,16 @@ export class MerchandiseService {
   }
 
   update(items: Merchandise[]) {
-    return this.httpClient.post(
-      `${API.ROOT}/product/update`,
-      items.map(i => ({
-        ...i,
-        idSanpham: i.id,
-        createDay: i.createdDate,
-        sellQuantities: 0,
-      })),
+    return forkJoin(
+      items.map(i => this.httpClient.put(
+        `${API.ROOT}/product/${i.id}`,
+        {
+          name: i.name,
+          category: i.categoryId,
+          quantity: i.quantity,
+          price: i.price,
+        },
+      )),
     ).toPromise();
   }
 }

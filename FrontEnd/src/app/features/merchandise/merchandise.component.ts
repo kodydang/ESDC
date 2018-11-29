@@ -37,7 +37,7 @@ export class MerchandiseComponent implements OnInit {
   }
 
   getAll() {
-    this.merchandiseService.getAll().subscribe(
+    this.merchandiseService.getAll().then(
       (res: any) => {
         this.listMerchandise = res;
         this.listMerchandiseSorted = this.listMerchandise;

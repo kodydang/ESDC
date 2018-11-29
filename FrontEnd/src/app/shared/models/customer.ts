@@ -13,12 +13,11 @@ export class Customer extends Base {
   'email': string;
 
   constructor(item) {
-    // super(item.createdBy, item.createdDate || item.createDay, item.updatedBy, item.updatedDate);
     super(item.createdDate || item.createDay);
     this.id = item.idKhachhang;
     this.name = item.name;
     this.gender = item.gender || '';
-    this.birthday = new Date(item.birthDay);
+    this.birthday = new Date(item.birthDay || item.birthday);
     this.address = item.address || '';
     this.phone = item.phone;
     this.email = item.email;
