@@ -28,7 +28,6 @@ export class EmployeeService {
       name: employee.name,
       birthDay: employee.birthday.toJSON(),
       phone: employee.phone,
-      email: employee.email,
     };
     return this.httpClient.post(`${API.ROOT}/employee/create`, dataObj).toPromise();
   }
@@ -39,7 +38,6 @@ export class EmployeeService {
       name: employee.name,
       birthDay: employee.birthday.toJSON(),
       phone: employee.phone,
-      email: employee.email,
       createDay: employee.createdDate.toJSON(),
     };
     return this.httpClient.put(`${API.ROOT}/employee/update/${employee.id}`, dataObj).toPromise();

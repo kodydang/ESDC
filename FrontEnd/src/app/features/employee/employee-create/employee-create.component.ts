@@ -21,6 +21,7 @@ export class EmployeeCreateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.dateTime);
   }
 
   mapDate(date) {
@@ -60,7 +61,6 @@ export class EmployeeCreateComponent implements OnInit {
 
   }
 
- 
   onGenderClick(value) {
     this.employee.gender = value;
   }

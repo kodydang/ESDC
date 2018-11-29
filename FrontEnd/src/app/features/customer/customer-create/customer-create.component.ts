@@ -19,13 +19,14 @@ export class CustomerCreateComponent implements OnInit {
 
   ngOnInit() {
   }
+
   mapDate(date) {
     return moment(date, 'YYYY-MM-DD').toDate();
   }
 
   add() {
     this.customer.birthday = this.mapDate(this.dateTime);
-    this.customerService.add(this.customer)
+    this.customerService.create(this.customer)
       .then(() => {
         window.location.reload();
       })

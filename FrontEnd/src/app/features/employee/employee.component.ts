@@ -27,7 +27,7 @@ export class EmployeeComponent implements OnInit {
   sortKey = '';
   sortReverse = false;
   filter = '';
-  dataTime: string;
+  dateTime: string;
   openDiaglog: boolean = false;
 
   constructor(
@@ -88,14 +88,14 @@ export class EmployeeComponent implements OnInit {
   add() {
     this.isUpdate = false;
     this.employee = new Employee({});
-    this.dataTime = this.format(new Date());
+    this.dateTime = this.format(new Date());
     this.openDiaglog = true;
   }
 
   edit(event) {
     this.isUpdate = true;
-    this.employee = new Employee(event);
-    this.dataTime = this.format(this.employee.birthday);
+    this.employee = event;
+    this.dateTime = this.format(this.employee.birthday);
     this.openDiaglog = true;
   }
 

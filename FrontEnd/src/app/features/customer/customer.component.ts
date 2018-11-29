@@ -25,7 +25,7 @@ export class CustomerComponent implements OnInit {
   sortKey = '';
   sortReverse = false;
   filter = '';
-  dataTime: string;
+  dateTime: string;
 
   constructor(
     private customerService: CustomerService,
@@ -51,7 +51,6 @@ export class CustomerComponent implements OnInit {
           birthday: this.formatDate(i.birthday),
           fullData: i,
         }));
-        console.log(this.customerSorted);
       },
       (er) => {
         console.warn(er);
@@ -83,14 +82,14 @@ export class CustomerComponent implements OnInit {
   add() {
     this.isUpdate = false;
     this.customer = new Customer({});
-    this.dataTime = this.format(new Date());
+    this.dateTime = this.format(new Date());
     this.openDiaglog = true;
   }
 
   edit(event) {
     this.isUpdate = true;
     this.customer = event;
-    this.dataTime = this.format(this.customer.birthday);
+    this.dateTime = this.format(this.customer.birthday);
     this.openDiaglog = true;
   }
 

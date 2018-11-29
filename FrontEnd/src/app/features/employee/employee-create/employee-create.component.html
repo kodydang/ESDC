@@ -27,7 +27,7 @@
 
           <div class="form-group">
             <label>Birthday: <span class="k-required">*</span></label>
-            <input class="form-control" type="date" id="input_Date" [(ngModel)]="employee.birthday" name="birthday"
+            <input class="form-control" type="date" id="birthday" [(ngModel)]="dateTime" name="birthday"
               #birthday="ngModel" required>
             <div [hidden]="birthday.valid || birthday.pristine" class="alert alert-warning">
               <strong>You should enter employee's birthday!!</strong>
@@ -74,8 +74,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameEmployee.valid && address.valid && email.valid && birthday.valid && phone.valid)">{{
-              isUpdate ? 'Update' : 'Add' }}</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameEmployee.valid)">{{isUpdate ? 'Update' : 'Add' }}</button>
             <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()">Add</button> -->
           </div>
 
