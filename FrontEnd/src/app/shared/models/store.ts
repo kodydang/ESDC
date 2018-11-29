@@ -11,7 +11,8 @@ export class Store extends Base {
   'employees': Employee[];
 
   constructor(item) {
-    super(item.createdBy, item.createDay, item.updatedBy, item.updatedDate);
+    // super(item.createdBy, item.createDay, item.updatedBy, item.updatedDate);
+    super(item.createdDate || item.createDay);
     this.id = item.id || item['idCuahang'];
     this.name = item.name;
     this.address = item.address;

@@ -8,7 +8,9 @@ export class Merchandise extends Base {
   'quantity': number;
 
   constructor(item) {
-    super(item.createdBy, item.createdDate || item['createDay'], item.updatedBy, item.updatedDate);
+    // super(item.createdBy, item.createdDate || item['createDay'],
+    //  item.updatedBy, item.updatedDate);
+    super(item.createdDate || item.createDay);
     this.id = item.id || item['idSanpham'];
     this.name = item.name;
     this.category = item.category;

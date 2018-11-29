@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { Category } from '../shared/models';
-import { StoreService } from './store.service';
 import { API } from '../shared/constants';
+import { catchError, map } from 'rxjs/operators';
+import { Category } from '../shared/models';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
+import { StoreService } from './store.service';
 
-const API_URL = './../../assets/data-json/list-category.json';
 @Injectable()
 export class CategoryService {
   constructor(
@@ -34,5 +33,19 @@ export class CategoryService {
 
   getFromCurrentStore() {
     return this.getByStore(this.storeSerice.currentStore.id);
+  }
+
+  add(category) {
+    return this.httpClient.post(`${API.ROOT}/category/create/`, category)
+      .pipe(
+          catchError(() => of('Error, could not add category')),
+      );
+  }
+
+  update(id, newNameCategory) {
+    return this.httpClient.put(`${API.ROOT}/category/${id}`, newNameCategory)
+      .pipe(
+          catchError(() => of('Error, could not update category')),
+      );
   }
 }

@@ -13,6 +13,7 @@ export class CustomerComponent implements OnInit {
   customer = new Customer({});
   customers: Customer[] = [];
   customerSorted: any[] = [];
+  openDiaglog: boolean = false;
   paginateConfig = {
     id: 'paginator',
     itemsPerPage: 10,
@@ -24,6 +25,7 @@ export class CustomerComponent implements OnInit {
   sortKey = '';
   sortReverse = false;
   filter = '';
+  dataTime: string;
 
   constructor(
     private customerService: CustomerService,
@@ -33,17 +35,23 @@ export class CustomerComponent implements OnInit {
     this.getAll();
   }
 
+  formatDate(date) {
+    return moment(date).format('MM/DD/YYYY');
+  }
   getAll() {
     this.customerService.getAll().subscribe(
       (res: any) => {
-        this.customers = res;
+        // console.log(res);
+        this.customers = res.data;
         this.customerSorted = this.customers.map(i => ({
           name: i.name,
-          gender: i.gender,
-          address: i.address,
+          // gender: i.gender,
+          email: i.email,
           phone: i.phone,
-          birthday:  moment(i.birthday).format('L'),
+          birthday: this.formatDate(i.birthday),
+          fullData: i,
         }));
+        console.log(this.customerSorted);
       },
       (er) => {
         console.warn(er);
@@ -74,15 +82,23 @@ export class CustomerComponent implements OnInit {
 
   addEvent(event) {
     console.log(event);
-
+    this.openDiaglog = false;
   }
   add() {
     this.isUpdate = false;
     this.customer = new Customer({});
+    this.dataTime = this.format(new Date());
+    this.openDiaglog = true;
   }
 
   edit(event) {
     this.isUpdate = true;
-    this.customer = new Customer(event);
+    this.customer = event;
+    this.dataTime = this.format(this.customer.birthday);
+    this.openDiaglog = true;
+  }
+
+  format(date) {
+    return moment(date).format('YYYY-MM-DD');
   }
 }

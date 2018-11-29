@@ -11,17 +11,15 @@ import { CategoryService } from '../../provider/category.service';
 })
 export class CategoryComponent implements OnInit {
   category = {
+    id: -1,
     name: '',
-    gender: '',
-    address: '',
-    email: '',
-    birthday: null,
-    phone: '',
+    createdDate: new Date,
+    data: {},
   };
   listCategory: Category[] = [];
   listCategorySorted: Category[] = [];
-  typeSort = ['', '', '', ''];
-  style: boolean[] = [false, false, false, false];
+  typeSort = ['', ''];
+  style: boolean[] = [false, false];
   paginateConfig = {
     id: 'paginator',
     itemsPerPage: 10,
@@ -41,7 +39,7 @@ export class CategoryComponent implements OnInit {
       (res: any) => {
         this.listCategory = res;
         this.listCategorySorted = this.listCategory;
-        // console.log(this.listCategory);
+        console.log(this.listCategory);
       },
       (er) => {
         console.warn(er);
@@ -49,7 +47,7 @@ export class CategoryComponent implements OnInit {
   }
 
   formatDate(date) {
-    return moment(date).format('ll');
+    return moment(date).format('MMM Do, YYYY');
   }
 
   sortBy(type, position) {
@@ -83,21 +81,17 @@ export class CategoryComponent implements OnInit {
   }
   add() {
     this.isUpdate = false;
+    this.category.id = -1;
     this.category.name = '';
-    this.category.gender = '';
-    this.category.address = '';
-    this.category.email = '';
-    this.category.birthday = null;
-    this.category.phone = '';
+    this.category.createdDate = null;
+    this.category.data = {};
   }
 
   edit(event) {
     this.isUpdate = true;
+    this.category.id = event.id;
     this.category.name = event.name;
-    this.category.gender = event.gender;
-    this.category.address = event.address;
-    this.category.email = event.email;
-    this.category.birthday = event.birthday;
-    this.category.phone = event.phone;
+    this.category.createdDate = event.createdDate;
+    this.category.data = event;
   }
 }
