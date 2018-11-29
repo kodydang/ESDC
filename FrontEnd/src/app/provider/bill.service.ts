@@ -19,9 +19,8 @@ export class BillService {
       .pipe(
         map(
           (body: any) => body['data'].map(i => new Bill(i)),
-          catchError(() => of('Error, could not load bill from server')),
         ),
-      );
+      ).toPromise();
   }
 
   getById(id) {
