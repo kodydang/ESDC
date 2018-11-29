@@ -5,9 +5,9 @@ import { ROLE } from '../shared/constants';
 @Injectable()
 export class AuthenticationService {
   private credential : Account = new Account({
-    username: 'vinh',
-    password: '1',
-    role: 'super_admin',
+    username: sessionStorage.getItem('username'),
+    password: '',
+    role: sessionStorage.getItem('role'),
   });
 
   get currentAccount() {

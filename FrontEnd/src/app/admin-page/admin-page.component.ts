@@ -47,6 +47,8 @@ export class AdminPageComponent implements OnInit {
   ].filter(i => this.authService.havePermission(i.permissionLevel));
 
   clicked = false;
+  username: string;
+  role: string;
   pageTitle = 'Page title';
   pageIcon = '';
 
@@ -55,6 +57,8 @@ export class AdminPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService,
   ) {
+    this.username = sessionStorage.getItem('username');
+    this.role = sessionStorage.getItem('role');
     // this.account = JSON.parse(localStorage.getItem('USER'));
 
     this.router.events.subscribe((event) => {
@@ -72,11 +76,14 @@ export class AdminPageComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   logout() {
     this.router.navigate(['/login']);
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('role');
   }
+
 }
