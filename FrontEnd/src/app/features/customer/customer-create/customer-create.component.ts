@@ -1,7 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import * as moment from 'moment';
 import { Customer } from '../../../shared/models/customer';
+import { CustomerService } from '../../../provider/customer.service';
 
 @Component({
   selector: 'app-customer-create',
@@ -9,12 +9,13 @@ import { Customer } from '../../../shared/models/customer';
   styleUrls: ['./customer-create.component.scss'],
 })
 export class CustomerCreateComponent implements OnInit {
-  @Output() submit = new EventEmitter();
-  @Input() customer;
+  @Input() customer: Customer;
   @Input() isUpdate;
-  submitted = false;
   @Input() dateTime: string;
-  constructor() { }
+  constructor(
+    private customerService: CustomerService,
+    private ref: ChangeDetectorRef,
+  ) { }
 
   ngOnInit() {
   }
@@ -22,13 +23,39 @@ export class CustomerCreateComponent implements OnInit {
     return moment(date, 'YYYY-MM-DD').toDate();
   }
 
-  formSubmit(res: NgForm) {
-    console.log(res);
-    this.submitted = true;
-  }
   add() {
     this.customer.birthday = this.mapDate(this.dateTime);
-    this.submit.emit(this.customer);
+    this.customerService.add(this.customer)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  }
+
+  update() {
+    this.customer.birthday = this.mapDate(this.dateTime);
+    this.customerService.update(this.customer)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  }
+
+  delete() {
+
+  }
+
+  submit() {
+    if (this.isUpdate) {
+      this.update();
+    } else {
+      this.add();
+    }
+    this.ref.markForCheck();
   }
   onGenderClick(value) {
     this.customer.gender = value;

@@ -13,7 +13,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form #addForm="ngForm" (ngSubmit)="formSubmit(addForm)" data-toggle="validator" role="form">
+          <form #addForm="ngForm" data-toggle="validator" role="form">
             <div class="form-group" [ngClass]="{
               'has-success': nameCustomer.valid,
               'has-error': nameCustomer.invalid && (nameCustomer.dirty || nameCustomer.touched)}">
@@ -85,7 +85,7 @@
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameCustomer.valid && email.valid && birthday.valid && phone.valid)">{{ isUpdate ? 'Update' : 'Add' }}</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="submit()" [disabled]="!(nameCustomer.valid && email.valid && birthday.valid && phone.valid)">{{ isUpdate ? 'Update' : 'Add' }}</button>
               <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()">Add</button> -->
             </div>
 

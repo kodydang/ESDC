@@ -11,7 +11,7 @@ export class Base {
     // updatedDate: string,
   ) {
     // this.createdBy = createdBy;
-    this.createdDate = new Date(createdDate);
+    this.createdDate = createdDate ? new Date(createdDate) : new Date();
     // this.updatedBy = updatedBy;
     // this.updatedDate = new Date(updatedDate);
   }

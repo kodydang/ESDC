@@ -1,9 +1,9 @@
-import { API } from './../shared/constants';
-import { catchError, map } from 'rxjs/operators';
-import { Customer } from './../shared/models/customer';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { Customer } from '../shared/models';
+import { API } from '../shared/constants';
 
 @Injectable()
 export class CustomerService {
@@ -12,19 +12,44 @@ export class CustomerService {
   getAll() {
     return this.httpClient.get(`${API.ROOT}/customer`)
       .pipe(
-        map((body: any) => {
-          body.data.forEach((value, index, array) => {
-            array[index] = new Customer(value);
-            // console.log(value);
-            // console.log(array[index]);
-          });
-          console.log(body);
-
-          return body;
-        },
-            catchError(() => of('Error, could not load joke :-(')),
+        map(
+          (body: any) => {
+            body.data.forEach((value, index, array) => {
+              array[index] = new Customer(value);
+              // console.log(value);
+              // console.log(array[index]);
+            });
+            return body;
+          },
+          catchError(() => of('Error, could not load joke :-(')),
         ),
       );
+  }
+
+  add(customer: Customer) {
+    const dataObj = {
+      name: customer.name,
+      birthDay: customer.birthday.toJSON(),
+      phone: customer.phone,
+      email: customer.email,
+    };
+    return this.httpClient.post(`${API.ROOT}/customer/create`, dataObj).toPromise();
+  }
+
+  update(customer: Customer) {
+    const dataObj = {
+      idKhachhang: customer.id,
+      name: customer.name,
+      birthDay: customer.birthday.toJSON(),
+      phone: customer.phone,
+      email: customer.email,
+      createDay: customer.createdDate.toJSON(),
+    };
+    return this.httpClient.put(`${API.ROOT}/customer/update/${customer.id}`, dataObj).toPromise();
+  }
+
+  delete(id) {
+    return this.httpClient.get(`${API.ROOT}/customer/delete/${id}`).toPromise();
   }
 
   create(customer: Customer) {

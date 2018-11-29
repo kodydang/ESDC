@@ -11,14 +11,14 @@ export class Employee extends Account {
   'idStore': number;
 
   constructor(item) {
-    super(item['createDay']);
-    this.id = item.id || item['idNv'];
-    this.name = item.name;
-    this.gender = item.gender;
-    this.birthday = new Date(item['bday']);
-    this.address = item.address;
-    this.phone = item.phone;
-    this.user = item.userByUserName;
-    this.idStore = item.idStore;
+    super(item.createDay || new Date().toJSON());
+    this.id = item.idNv || -1;
+    this.name = item.name || '';
+    this.gender = item.gender || '';
+    this.birthday = new Date(item.bday);
+    this.address = item.address || '';
+    this.phone = item.phone || '';
+    this.user = item.userByUserName || {};
+    this.idStore = item.idStore || -1;
   }
 }

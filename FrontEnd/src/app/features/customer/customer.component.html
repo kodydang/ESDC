@@ -1,5 +1,5 @@
 <div *ngIf="openDiaglog">
-  <app-customer-create (submit)="addEvent($event)" [customer]="customer" [isUpdate]="isUpdate" [dateTime]="dataTime"></app-customer-create>
+  <app-customer-create [customer]="customer" [isUpdate]="isUpdate" [dateTime]="dataTime"></app-customer-create>
 
 </div>
 
@@ -52,7 +52,7 @@
           <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item.fullData)">
             <i class="fas fa-edit"></i> Edit
           </button>
-          <button class="btn btn-danger btn-sm">
+          <button class="btn btn-danger btn-sm" (click)="delete(item.id)">
             <i class="fas fa-trash-alt"></i> Delete
           </button>
         </td>

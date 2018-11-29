@@ -1,9 +1,6 @@
 import { Base } from './base';
 
 export class Customer extends Base {
-  map(arg0: string): any {
-    throw new Error('Method not implemented.');
-  }
   'id': number;
   'name': string;
   'gender': string;
@@ -13,8 +10,7 @@ export class Customer extends Base {
   'email': string;
 
   constructor(item) {
-    // super(item.createdBy, item.createdDate || item.createDay, item.updatedBy, item.updatedDate);
-    super(item.createdDate || item.createDay);
+    super(item.createDay);
     this.id = item.idKhachhang;
     this.name = item.name;
     this.gender = item.gender || '';

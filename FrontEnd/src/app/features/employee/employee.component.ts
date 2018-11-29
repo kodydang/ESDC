@@ -27,9 +27,10 @@ export class EmployeeComponent implements OnInit {
   sortKey = '';
   sortReverse = false;
   filter = '';
+  dataTime: string;
+  openDiaglog: boolean = false;
 
   constructor(
-    private router: Router,
     private employeeService: EmployeeService,
   ) { }
 
@@ -40,21 +41,26 @@ export class EmployeeComponent implements OnInit {
   getAll() {
     this.employeeService.getAll().subscribe(
       (res: any) => {
+        console.log(res);
         this.employees = res.data;
         this.employeeSorted = this.employees.map(i => ({
-          username: i.user.username,
-          gender: i.gender,
+          username: i.user.nameUser,
+          // gender: i.gender,
           name: i.name,
-          address: i.address,
+          // address: i.address,
           phone: i.phone,
-          birthday: moment(i.birthday).format('L'),
-          role: this.getRoleTitle(i.user.roleName),
+          birthday: this.formatDate(i.birthday),
+          role: i.user.roleName,
           data: i,
         }));
       },
       (er) => {
         console.warn(er);
       });
+  }
+
+  formatDate(date) {
+    return moment(date).format('MM/DD/YYYY');
   }
 
   sortBy(type) {
@@ -82,15 +88,19 @@ export class EmployeeComponent implements OnInit {
   add() {
     this.isUpdate = false;
     this.employee = new Employee({});
+    this.dataTime = this.format(new Date());
+    this.openDiaglog = true;
   }
 
   edit(event) {
     this.isUpdate = true;
     this.employee = new Employee(event);
+    this.dataTime = this.format(this.employee.birthday);
+    this.openDiaglog = true;
   }
 
-  addEvent(event) {
-    console.log(event);
+  format(date) {
+    return moment(date).format('YYYY-MM-DD');
   }
 
   getRole(key: string) {

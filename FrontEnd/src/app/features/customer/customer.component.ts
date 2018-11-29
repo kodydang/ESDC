@@ -44,6 +44,7 @@ export class CustomerComponent implements OnInit {
         // console.log(res);
         this.customers = res.data;
         this.customerSorted = this.customers.map(i => ({
+          id: i.id,
           name: i.name,
           // gender: i.gender,
           email: i.email,
@@ -80,10 +81,6 @@ export class CustomerComponent implements OnInit {
     this.paginateConfig.currentPage = number;
   }
 
-  addEvent(event) {
-    console.log(event);
-    this.openDiaglog = false;
-  }
   add() {
     this.isUpdate = false;
     this.customer = new Customer({});
@@ -100,5 +97,16 @@ export class CustomerComponent implements OnInit {
 
   format(date) {
     return moment(date).format('YYYY-MM-DD');
+  }
+
+  delete(id) {
+    this.customerService.delete(id)
+      .then(() => {
+        // window.location.reload();
+        console.log('deteled ', id);
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
   }
 }

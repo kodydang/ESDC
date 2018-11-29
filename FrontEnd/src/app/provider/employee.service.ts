@@ -10,18 +10,42 @@ export class EmployeeService {
   constructor(private httpClient: HttpClient) { }
 
   getAll() {
-    return this.httpClient.get(`${API.ROOT}/employee`)
+    return this.httpClient.get(`${API.ROOT}/employee/`)
       .pipe(
         map((body: any) => {
           body.data.forEach((value, index, array) => {
             array[index] = new Employee(value);
-            // console.log(value);
-            // console.log(array[index]);
           });
           return body;
         },
             catchError(() => of('Error, could not load joke :-(')),
         ),
       );
+  }
+
+  add(employee: Employee) {
+    const dataObj = {
+      name: employee.name,
+      birthDay: employee.birthday.toJSON(),
+      phone: employee.phone,
+      email: employee.email,
+    };
+    return this.httpClient.post(`${API.ROOT}/employee/create`, dataObj).toPromise();
+  }
+
+  update(employee: Employee) {
+    const dataObj = {
+      idKhachhang: employee.id,
+      name: employee.name,
+      birthDay: employee.birthday.toJSON(),
+      phone: employee.phone,
+      email: employee.email,
+      createDay: employee.createdDate.toJSON(),
+    };
+    return this.httpClient.put(`${API.ROOT}/employee/update/${employee.id}`, dataObj).toPromise();
+  }
+
+  delete(id) {
+    return this.httpClient.get(`${API.ROOT}/employee/delete/${id}`).toPromise();
   }
 }
