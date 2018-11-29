@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import * as moment from 'moment';
 import { MerchandiseService } from '../../../provider/merchandise.service';
+import { CategoryService } from 'src/app/provider/category.service';
 
 @Component({
   selector: 'app-merchandise-create',
@@ -17,6 +18,7 @@ export class MerchandiseCreateComponent implements OnInit {
   submitted = false;
   constructor(
     private merchandiseService: MerchandiseService,
+    private categoryService: CategoryService,
   ) {
   }
 
@@ -25,7 +27,7 @@ export class MerchandiseCreateComponent implements OnInit {
   }
 
   getCategory() {
-    this.merchandiseService.getCategory().subscribe((res: any) => {
+    this.categoryService.getFromCurrentStore().then((res: any) => {
       this.categories = res;
     });
   }
