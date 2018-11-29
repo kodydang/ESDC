@@ -6,15 +6,15 @@ export class Account extends Base {
   'password': string;
   'photo': string;
   'roleKey': string;
+  'id': number;
 
   constructor(item) {
-    // super(item.createdBy, item.createdDate || item['createDay'],
-    //  item.updatedBy, item.updatedDate);
     super(item.createdDate || item.createDay);
     this.username = item.username || item['nameUser'];
     this.password = item.password || item['userPassword'];
     this.photo = item.photo;
     this.roleKey = item.role || item['roleName'];
+    this.id = item.id;
   }
 
   get role() {

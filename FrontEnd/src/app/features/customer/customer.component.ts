@@ -39,10 +39,9 @@ export class CustomerComponent implements OnInit {
     return moment(date).format('MM/DD/YYYY');
   }
   getAll() {
-    this.customerService.getAll().subscribe(
+    this.customerService.getFromCurrentStore().then(
       (res: any) => {
-        // console.log(res);
-        this.customers = res.data;
+        this.customers = res;
         this.customerSorted = this.customers.map(i => ({
           name: i.name,
           // gender: i.gender,
