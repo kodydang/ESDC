@@ -25,7 +25,9 @@ export class LoginComponent implements OnInit {
   isSuccess = false;
 
   constructor(private router: Router, private formBuilder: FormBuilder, private loginService: LoginService) {
-    // this.account = JSON.parse(localStorage.getItem('USER'));
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('role');
+    sessionStorage.removeItem('storeId');
   }
 
   ngOnInit() {
@@ -53,6 +55,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/admin']);
           sessionStorage.setItem('username',this.username);
           sessionStorage.setItem('role',this.data.data.roleName);
+          sessionStorage.setItem('storeId',this.data.data.storeId.toString());
         }
         else {
           this.isSuccess = true;
