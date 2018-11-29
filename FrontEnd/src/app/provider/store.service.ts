@@ -11,7 +11,7 @@ export class StoreService {
 
   get currentStore() {
     return new Store({
-      idCuahang: 2,
+      idCuahang: sessionStorage.getItem('storeId'),
     });
   }
 

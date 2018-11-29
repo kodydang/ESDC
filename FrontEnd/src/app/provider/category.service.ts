@@ -23,6 +23,13 @@ export class CategoryService {
       );
   }
 
+  getById(id) {
+    return this.httpClient.get(`${API.ROOT}/category/${id}`)
+      .pipe(
+        map((body: any) => new Category(body['data'])),
+      ).toPromise();
+  }
+
   getByStore(storeId): Promise<Category[]> {
     return this.httpClient.get(`${API.ROOT}/store/category/${storeId}`)
       .pipe(
