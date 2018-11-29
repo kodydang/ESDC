@@ -8,7 +8,7 @@ export class AuthenticationService {
     username: sessionStorage.getItem('username'),
     password: '',
     role: sessionStorage.getItem('role'),
-    id: sessionStorage.getItem('id'),
+    id: +sessionStorage.getItem('employeeId'),
   });
 
   get currentAccount() {

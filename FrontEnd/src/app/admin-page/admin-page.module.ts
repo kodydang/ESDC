@@ -1,3 +1,4 @@
+import { BillModule } from './../features/bill/bill.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -24,6 +25,7 @@ import { StoreModule } from '../features/store/store.module';
     PaymentModule,
     ImportModule,
     StoreModule,
+    BillModule,
     AdminRoutingModule,
   ],
   declarations: [

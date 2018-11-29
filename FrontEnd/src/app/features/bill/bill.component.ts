@@ -1,18 +1,17 @@
+import { Router } from '@angular/router';
+import { BillService } from './../../provider/bill.service';
 import { Component, OnInit } from '@angular/core';
-
+import { Employee } from 'src/app/shared/models';
+import { EmployeeService } from 'src/app/provider/employee.service';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { EmployeeService } from '../../provider/employee.service';
-import { Employee } from '../../shared/models/employee';
-import { Router } from '@angular/router';
-import { ROLE } from 'src/app/shared/constants';
 
 @Component({
-  selector: 'app-employee',
-  templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss'],
+  selector: 'app-bill',
+  templateUrl: './bill.component.html',
+  styleUrls: ['./bill.component.scss'],
 })
-export class EmployeeComponent implements OnInit {
+export class BillComponent implements OnInit {
   employee = new Employee({});
   employees: Employee[] = [];
   employeeSorted: any[] = [];
@@ -27,11 +26,11 @@ export class EmployeeComponent implements OnInit {
   sortKey = '';
   sortReverse = false;
   filter = '';
-  dateTime: string;
-  openDiaglog: boolean = false;
 
   constructor(
+    private router: Router,
     private employeeService: EmployeeService,
+    private billService: BillService,
   ) { }
 
   ngOnInit() {
@@ -43,23 +42,20 @@ export class EmployeeComponent implements OnInit {
       (res: Employee[]) => {
         this.employees = res;
         this.employeeSorted = this.employees.map(i => ({
-          username: i.user.nameUser,
-          // gender: i.gender,
+          username: i.username,
+          gender: i.gender,
           name: i.name,
-          // address: i.address,
+          address: i.address,
           phone: i.phone,
-          birthday: this.formatDate(i.birthday),
-          role: i.user.roleName,
+          birthday: moment(i.birthday).format('L'),
+          role: i.role,
           data: i,
+          onboardDay: i.createdDate,
         }));
       },
       (er) => {
         console.warn(er);
       });
-  }
-
-  formatDate(date) {
-    return moment(date).format('MM/DD/YYYY');
   }
 
   sortBy(type) {
@@ -87,18 +83,14 @@ export class EmployeeComponent implements OnInit {
   add() {
     this.isUpdate = false;
     this.employee = new Employee({});
-    this.dateTime = this.format(new Date());
-    this.openDiaglog = true;
   }
 
   edit(event) {
     this.isUpdate = true;
-    this.employee = event;
-    this.dateTime = this.format(this.employee.birthday);
-    this.openDiaglog = true;
+    this.employee = new Employee(event);
   }
 
-  format(date) {
-    return moment(date).format('YYYY-MM-DD');
+  addEvent(event) {
+    console.log(event);
   }
 }

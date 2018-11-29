@@ -1,3 +1,4 @@
+import { BillService } from './bill.service';
 import { AuthenticationService } from './authentication.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -26,6 +27,7 @@ import { StoreService } from './store.service';
     CategoryService,
     ReportService,
     StoreService,
+    BillService,
     AuthenticationService,
   ],
 })

@@ -1,0 +1,73 @@
+<!-- <app-employee-create (submit)="addEvent($event)" [employee]="employee" [isUpdate]="isUpdate"></app-employee-create>
+<div class="d-flex">
+  <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal" (click)="add()">
+    <i class="fas fa-plus"></i>
+    Add new</button>
+  <div class="form-group form-inline mb-0">
+    <input type="text" class="form-control" placeholder="Search in staffs" [(ngModel)]="filter">
+  </div>
+</div> -->
+
+<div class="table-responsive mt-3">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <!-- <th scope="col">Photo</th> -->
+        <th scope="col" (click)="sortBy('name')">
+          <span>Name</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('name')"></i>
+        </th>
+        <th scope="col" (click)="sortBy('username')">
+          <span>Username</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('username')"></i>
+        </th>
+        <!-- <th scope="col" (click)="sortBy('gender')">
+          <span>Gender</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('gender')"></i>
+        </th> -->
+        <th scope="col" (click)="sortBy('birthday')">
+          <span>Birthday</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('birthday')"></i>
+        </th>
+        <!-- <th scope="col" (click)="sortBy('address')">
+          <span>Address</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('address')"></i>
+        </th> -->
+        <th scope="col" (click)="sortBy('phone')">
+          <span>Phone</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('phone')"></i>
+        </th>
+        <th scope="col" (click)="sortBy('role')">
+          <span>Role</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('role')"></i>
+        </th>
+        <th class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of employeeSorted | filter: filter | paginate: paginateConfig; let i = index">
+        <th width="50px" scope="row">{{i+1}}</th>
+        <!-- <td width="80px">
+          <img [src]="item.data.photo" alt="No photo" class="logo logo-square">
+        </td> -->
+        <td width="200px">{{ item.name }}</td>
+        <td width="120px">{{ item.username }}</td>
+        <!-- <td width="100px">{{ item.gender }}</td> -->
+        <td width="120px">{{ item.birthday }} </td>
+        <!-- <td>{{ item.address }}</td> -->
+        <td width="120px">{{ item.phone }}</td>
+        <td width="100px">{{ item.role }}</td>
+        <td width="200px" class="text-center">
+          <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+          <button class="btn btn-danger btn-sm">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls id="paginator" (pageChange)="onPageChange($event)" style="text-align: center;" [responsive]="true"></pagination-controls>
+</div>
