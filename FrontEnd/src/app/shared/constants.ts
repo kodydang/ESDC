@@ -53,6 +53,11 @@ export const PAGE = {
     TITLE: 'Store',
     ICON: 'fas fa-store',
   },
+  BILL: {
+    URL: 'bill',
+    TITLE: 'Bill',
+    ICON: 'fas fa-clipboard-list',
+  },
   SETTING: {
     URL: 'setting',
     TITLE: 'Setting',

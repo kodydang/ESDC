@@ -9,12 +9,14 @@ export class Account extends Base {
   'id': number;
 
   constructor(item) {
-    super(item.createdDate || item.createDay);
-    this.username = item.username || item['nameUser'];
-    this.password = item.password || item['userPassword'];
-    this.photo = item.photo;
-    this.roleKey = item.role || item['roleName'];
-    this.id = item.id;
+    super(item ? item.createdDate || item.createDay : null);
+    if (item) {
+      this.username = item.username || item['nameUser'];
+      this.password = item.password || item['userPassword'];
+      this.photo = item.photo;
+      this.roleKey = item.role || item['roleName'];
+      this.id = item.id;
+    }
   }
 
   get role() {

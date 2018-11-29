@@ -1,3 +1,4 @@
+import { BillDetails } from './../shared/models/bill-details';
 import { API } from '../shared/constants';
 import { catchError, map } from 'rxjs/operators';
 import { Bill } from '../shared/models';
@@ -10,7 +11,7 @@ import { StoreService } from './store.service';
 export class BillService {
   constructor(
     private httpClient: HttpClient,
-    private storeSerice: StoreService,
+    private storeService: StoreService,
   ) { }
 
   getAll() {
@@ -39,7 +40,7 @@ export class BillService {
   }
 
   getFromCurrentStore() {
-    return this.getByStore(this.storeSerice.currentStore.id);
+    return this.getByStore(this.storeService.currentStore.id);
   }
 
   create(bill: Bill) {
@@ -48,13 +49,23 @@ export class BillService {
       totalPrice: bill.totalPrice,
       idStore: bill.storeId,
       createDay: bill.createdDate,
-      khachhangByIdCustomer: {
-        idKhachhang: bill.customerId,
-      },
+      idCustomer: bill.customerId,
     })
     .pipe(
-        catchError(() => of('Error, could not add bill')),
-    );
+      map(res => new Bill(res['data'])),
+    ).toPromise();
+  }
+
+  createDetails(details: BillDetails) {
+    return this.httpClient.post(
+      `${API.ROOT}/bill-infor/create`,
+      {
+        idProduct: details.productId,
+        quantities: details.quantity,
+        price: details.price,
+        idBill: details.billId,
+      },
+    ).toPromise();
   }
 
   update(bill: Bill) {
