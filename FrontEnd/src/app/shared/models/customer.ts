@@ -6,7 +6,7 @@ export class Customer extends Base {
   'gender': string;
   'birthday': Date;
   'address': string;
-  'phone': string;
+  'phone': number;
   'email': string;
 
   constructor(item) {

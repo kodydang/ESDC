@@ -23,7 +23,7 @@ export class PaymentComponent implements OnInit {
   @ViewChild('customerForm') customerForm: NgForm;
 
   customer: Customer = new Customer({});
-  cart: Merchandise[] = [];
+  cart: any[] = [];
   merchandises: Merchandise[] = [];
   newMerchandise = this.defaultMerchandise;
   sortKey = '';

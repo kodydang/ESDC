@@ -51,7 +51,7 @@ export class CustomerService {
       `${API.ROOT}/customer/create`,
       {
         name: customer.name,
-        phone: customer.phone,
+        phone: +customer.phone,
         email: customer.email,
         birthDay: customer.birthday,
         idStore: this.storeService.currentStore.id,
@@ -65,7 +65,7 @@ export class CustomerService {
     if (found) {
       return this.httpClient.put(`${API.ROOT}/customer/update/${found.id}`, {
         name: customer.name,
-        phone: customer.phone,
+        phone: +customer.phone,
         email: customer.email,
         birthDay: customer.birthday,
         idStore: this.storeService.currentStore.id,

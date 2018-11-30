@@ -1,3 +1,4 @@
+import { Account } from './../shared/models/account';
 import { AuthenticationService } from './../provider/authentication.service';
 import { APP, PAGE, ROLE } from './../shared/constants';
 import { Component, OnInit } from '@angular/core';
@@ -48,8 +49,7 @@ export class AdminPageComponent implements OnInit {
   ].filter(i => this.authService.havePermission(i.permissionLevel));
 
   clicked = false;
-  username: string;
-  role: string;
+  account: Account;
   pageTitle = 'Page title';
   pageIcon = '';
 
@@ -58,9 +58,10 @@ export class AdminPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService,
   ) {
-    this.username = sessionStorage.getItem('username');
-    this.role = sessionStorage.getItem('role');
-    // this.account = JSON.parse(localStorage.getItem('USER'));
+    this.account = new Account({
+      username: sessionStorage.getItem('username'),
+      role: sessionStorage.getItem('role'),
+    });
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

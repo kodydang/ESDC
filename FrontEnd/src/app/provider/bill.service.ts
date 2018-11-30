@@ -30,10 +30,23 @@ export class BillService {
       ).toPromise();
   }
 
+  getAllDetails(): Promise<BillDetails[]> {
+    return this.httpClient.get(`${API.ROOT}/bill-infor`).pipe(
+      map(
+        (body: any) => body['data'].map(i => new BillDetails(i)),
+      ),
+    ).toPromise();
+  }
+
+  getDetailsOfBill(billId) {
+    return this.getAllDetails()
+      .then(res => res.filter(x => x.billId === billId));
+  }
+
   getByStore(storeId): Promise<Bill[]> {
-    return this.httpClient.get(`${API.ROOT}/store/bill/${storeId}`)
+    return this.httpClient.get(`${API.ROOT}/store/list-bill/${storeId}`)
       .pipe(
-        map((body: any) => body['data'].map(i => new Bill(i)),
+        map((body: any) => body.map(i => new Bill(i)),
       ),
       ).toPromise();
   }
