@@ -34,7 +34,7 @@ export class EmployeeService {
     return this.httpClient.get(`${API.ROOT}/store/employee/${storeId}`)
       .pipe(
         map((body: any) => body['data'].map(i => new Employee(i)),
-      ),
+        ),
       ).toPromise();
   }
 
@@ -42,24 +42,38 @@ export class EmployeeService {
     return this.getByStore(this.storeService.currentStore.id);
   }
 
-  add(employee: Employee) {
+  add(employee: Employee, user) {
     const dataObj = {
       name: employee.name,
-      birthDay: employee.birthday.toJSON(),
+      bday: employee.birthday.toJSON(),
       phone: employee.phone,
+      email: employee.email,
+      idStore: this.storeService.currentStore.id,
+      userByUserName: {
+        nameUser: user.nameUser,
+        userPassword: '123456',
+      },
     };
     return this.httpClient.post(`${API.ROOT}/employee/create`, dataObj).toPromise();
+  }
+  addUser(user) {
+    const dataObj = {
+      nameUser: user.nameUser,
+      userPassword: '123456',
+      roleName: user.roleName,
+      status: 1,
+    };
+    return this.httpClient.post(`${API.ROOT}/user/create`, dataObj).toPromise();
   }
 
   update(employee: Employee) {
     const dataObj = {
-      idKhachhang: employee.id,
       name: employee.name,
-      birthDay: employee.birthday.toJSON(),
+      bday: employee.birthday.toJSON(),
       phone: employee.phone,
-      createDay: employee.createdDate.toJSON(),
+      email: employee.email,
     };
-    return this.httpClient.put(`${API.ROOT}/employee/update/${employee.id}`, dataObj).toPromise();
+    return this.httpClient.put(`${API.ROOT}/employee/${employee.id}`, dataObj).toPromise();
   }
 
   delete(id) {

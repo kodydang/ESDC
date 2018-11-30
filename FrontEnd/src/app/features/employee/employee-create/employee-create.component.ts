@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import * as moment from 'moment';
 import { Employee } from 'src/app/shared/models';
 import { EmployeeService } from '../../../provider/employee.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-employee-create',
@@ -12,16 +13,17 @@ export class EmployeeCreateComponent implements OnInit {
   @Input() employee: Employee;
   @Input() isUpdate;
   @Input() dateTime: string;
+  @Input() user: any;
 
   checkUsername = false;
   submitted = false;
   constructor(
-    private employeeService : EmployeeService,
+    private employeeService: EmployeeService,
     private ref: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
-    console.log(this.dateTime);
+    console.log(this.employee);
   }
 
   mapDate(date) {
@@ -35,11 +37,18 @@ export class EmployeeCreateComponent implements OnInit {
     }
     this.ref.markForCheck();
   }
+
   add() {
     this.employee.birthday = this.mapDate(this.dateTime);
-    this.employeeService.add(this.employee)
+    this.employeeService.addUser(this.user)
       .then(() => {
-        window.location.reload();
+        this.employeeService.add(this.employee, this.user)
+          .then(() => {
+            window.location.reload();
+          })
+          .catch((err) => {
+            console.warn(err);
+          });
       })
       .catch((err) => {
         console.warn(err);
@@ -55,14 +64,6 @@ export class EmployeeCreateComponent implements OnInit {
       .catch((err) => {
         console.warn(err);
       });
-  }
-
-  delete() {
-
-  }
-
-  onGenderClick(value) {
-    this.employee.gender = value;
   }
 
   checkAccountUser(username) {

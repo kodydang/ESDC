@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -6,6 +6,7 @@ import { EmployeeService } from '../../provider/employee.service';
 import { Employee } from '../../shared/models/employee';
 import { Router } from '@angular/router';
 import { ROLE } from 'src/app/shared/constants';
+import { NotificationType, NotificationBarService } from 'ngx-notification-bar/release';
 
 @Component({
   selector: 'app-employee',
@@ -32,6 +33,8 @@ export class EmployeeComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeeService,
+    private notifyService: NotificationBarService,
+    private ref: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -42,12 +45,14 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.getFromCurrentStore().then(
       (res: Employee[]) => {
         this.employees = res;
+        console.log(this.employees);
         this.employeeSorted = this.employees.map(i => ({
           username: i.user.nameUser,
           // gender: i.gender,
           name: i.name,
           // address: i.address,
           phone: i.phone,
+          email: i.email,
           birthday: this.formatDate(i.birthday),
           role: i.user.roleName,
           data: i,
@@ -93,12 +98,34 @@ export class EmployeeComponent implements OnInit {
 
   edit(event) {
     this.isUpdate = true;
-    this.employee = event;
+    this.employee = event.data;
     this.dateTime = this.format(this.employee.birthday);
     this.openDiaglog = true;
   }
 
   format(date) {
     return moment(date).format('YYYY-MM-DD');
+  }
+
+  delete(item) {
+    const id = item.id;
+    this.employeeService.delete(id)
+      .then(() => {
+        // window.location.reload();
+        this.employeeSorted.splice(this.employeeSorted.indexOf(item), 1);
+        this.ref.markForCheck();
+
+        this.notifyService.create({
+          message: 'Process deleted successfully.',
+          type: NotificationType.Success,
+        });
+      })
+      .catch((err) => {
+        this.notifyService.create({
+          message: 'Failed to delete.',
+          type: NotificationType.Error,
+        }),
+          console.warn(err);
+      });
   }
 }

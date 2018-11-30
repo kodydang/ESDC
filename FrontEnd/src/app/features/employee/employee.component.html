@@ -1,5 +1,5 @@
 <div *ngIf="openDiaglog">
-  <app-employee-create [employee]="employee" [isUpdate]="isUpdate" [dateTime]="dateTime"></app-employee-create>
+  <app-employee-create [user]="employee.user" [employee]="employee" [isUpdate]="isUpdate" [dateTime]="dateTime"></app-employee-create>
 </div>
 
 <div class="d-flex">
@@ -33,10 +33,10 @@
           <span>Birthday</span>
           <i class="fas i-sort" [ngClass]="sortIcon('birthday')"></i>
         </th>
-        <!-- <th scope="col" (click)="sortBy('address')">
-            <span>Address</span>
-            <i class="fas i-sort" [ngClass]="sortIcon('address')"></i>
-          </th> -->
+        <th scope="col" (click)="sortBy('email')">
+            <span>Email</span>
+            <i class="fas i-sort" [ngClass]="sortIcon('email')"></i>
+          </th>
         <th scope="col" (click)="sortBy('phone')">
           <span>Phone</span>
           <i class="fas i-sort" [ngClass]="sortIcon('phone')"></i>
@@ -58,16 +58,16 @@
         <td width="120px">{{ item.username }}</td>
         <!-- <td width="100px">{{ item.gender }}</td> -->
         <td width="120px">{{ item.birthday }} </td>
-        <!-- <td>{{ item.address }}</td> -->
+        <td width="120px">{{ item.email }}</td>
         <td width="120px">{{ item.phone }}</td>
         <td width="100px">{{ item.role }}</td>
         <td width="200px" class="text-center">
           <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
             <i class="fas fa-edit"></i> Edit
           </button>
-          <button class="btn btn-danger btn-sm">
+          <!-- <button class="btn btn-danger btn-sm">
             <i class="fas fa-trash-alt"></i> Delete
-          </button>
+          </button> -->
         </td>
       </tr>
     </tbody>

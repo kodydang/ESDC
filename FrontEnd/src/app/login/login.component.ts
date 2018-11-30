@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
       if (this.data.status === 'SUCCESS') {
         this.isLoading = true;
         this.router.navigate(['/admin']);
+        window.location.reload();
         sessionStorage.setItem('username', this.username);
         sessionStorage.setItem('role', this.data.data.roleName);
         sessionStorage.setItem('employeeId', `${this.data.data.employee}`);

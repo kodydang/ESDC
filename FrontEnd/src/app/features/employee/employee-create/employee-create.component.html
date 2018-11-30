@@ -25,6 +25,28 @@
             </div>
           </div>
 
+          <div class="form-group" [ngClass]="{
+            'has-success': username.valid,
+            'has-error': username.invalid && (username.dirty || username.touched)}">
+            <label for="name">Username: <span class="k-required">*</span></label>
+            <input type="text" class="form-control" id="username" placeholder="Enter employee's username" [(ngModel)]="user.nameUser"
+              name="username" #username="ngModel" required [disabled]="isUpdate">
+            <div [hidden]="nameEmployee.valid || nameEmployee.pristine" class="alert alert-danger">
+              <strong>Please enter employee's name</strong>
+            </div>
+          </div>
+
+          <div class="form-group" [ngClass]="{
+            'has-success': role.valid,
+            'has-error': role.invalid && (role.dirty || role.touched)}">
+            <label for="name">Role: <span class="k-required">*</span></label>
+            <input type="text" class="form-control" id="role" placeholder="Enter employee's role" [(ngModel)]="user.roleName"
+              name="role" #role="ngModel" required [disabled]="isUpdate">
+            <div [hidden]="nameEmployee.valid || nameEmployee.pristine" class="alert alert-danger">
+              <strong>Please enter employee's name</strong>
+            </div>
+          </div>
+
           <div class="form-group">
             <label>Birthday: <span class="k-required">*</span></label>
             <input class="form-control" type="date" id="birthday" [(ngModel)]="dateTime" name="birthday"
@@ -46,7 +68,7 @@
             </div>
           </div> -->
 
-          <!-- <div class="form-group" [ngClass]="{
+          <div class="form-group" [ngClass]="{
           'has-success': email.valid,
           'has-warning': email.invalid && (email.dirty || email.touched)
         }">
@@ -57,7 +79,7 @@
               <strong>Please enter a valid email </strong>
               <p>Example: you@example.com</p>
             </div>
-          </div> -->
+          </div>
 
           <div class="form-group" [ngClass]="{
           'has-success': phone.valid,
@@ -65,7 +87,7 @@
         }">
             <label>Phone: <span class="k-required">*</span></label>
             <input class="form-control" type="phone" id="input_Phone" placeholder="Phone" [(ngModel)]="employee.phone"
-              name="phone" #phone="ngModel" required pattern="^([0][0-9]{9,10})$" minlength="10">
+              name="phone" #phone="ngModel" required length="10" pattern="[0-9]{10}">
             <div [hidden]="phone.valid || phone.pristine" class="alert alert-warning">
               <strong>Phone must be at least 10 number [0-9] and begin number 0 or +</strong>
               <p>Example: 0912345678</p>
@@ -74,7 +96,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameEmployee.valid)">{{isUpdate ? 'Update' : 'Add' }}</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="submit()" [disabled]="!(nameEmployee.valid)">{{isUpdate ? 'Update' : 'Add' }}</button>
             <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()">Add</button> -->
           </div>
 
