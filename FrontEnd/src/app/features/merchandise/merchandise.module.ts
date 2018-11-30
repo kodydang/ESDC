@@ -1,3 +1,4 @@
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -11,6 +12,7 @@ import { MerchandiseComponent } from './merchandise.component';
     CommonModule,
     NgxPaginationModule,
     FormsModule,
+    Ng2SearchPipeModule,
   ],
   declarations: [
     MerchandiseComponent,

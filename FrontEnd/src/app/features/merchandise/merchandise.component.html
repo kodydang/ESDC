@@ -1,11 +1,15 @@
-<div class="table-responsive">
-  <!-- <button type="button" class="btn btn-primary" (click)="add()"><i class="fas fa-plus"></i> Add new</button> -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="add()">
+<div class="d-flex">
+  <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal" (click)="add()">
     <i class="fas fa-plus"></i>
     Add new</button>
   <app-merchandise-create [merchandise]="merchandise" [isUpdate]="isUpdate" (submit)="addEvent($event)"></app-merchandise-create>
-  <table class="table table-bordered table-hover mt-3 mb-3 mr-3 small" style="width:100%">
+  <div class="form-group form-inline mb-0">
+    <input type="text" class="form-control" placeholder="Search in merchandises" [(ngModel)]="filter">
+  </div>
+</div>
 
+<div class="table-responsive">
+  <table class="table table-bordered table-hover mt-3 mb-3 mr-3 small" style="width:100%">
     <thead class="thead-light">
       <tr>
         <th scope="col"></th>
@@ -28,7 +32,7 @@
         <th scope="col" class="text-center">Action</th>
       </tr>
     </thead>
-    <tbody *ngFor="let item of listMerchandiseSorted | paginate: paginateConfig; let i = index">
+    <tbody *ngFor="let item of listMerchandiseSorted | filter: filter | paginate: paginateConfig; let i = index">
       <tr>
         <th width="5%" class="text-truncate">{{i+1}}</th>
         <td width="30%" class="text-truncate">{{ item.name }}</td>

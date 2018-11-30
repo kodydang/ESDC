@@ -15,6 +15,7 @@ export class MerchandiseComponent implements OnInit {
   listMerchandiseSorted: any[] = [];
   typeSort = ['', '', '', ''];
   style: boolean[] = [false, false, false, false];
+  filter = '';
   paginateConfig = {
     id: 'paginator',
     itemsPerPage: 10,
@@ -27,6 +28,7 @@ export class MerchandiseComponent implements OnInit {
     price: 0,
     quantity: 0,
   };
+
   isUpdate: boolean;
   constructor(
     private merchandiseService: MerchandiseService,
