@@ -1,50 +1,54 @@
-<div class="table-responsive">
-    <!-- <button type="button" class="btn btn-primary" (click)="add()"><i class="fas fa-plus"></i> Add new</button> -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="add()">
-      <i class="fas fa-plus"></i>
-      Add new</button>
-    <app-merchandise-create [merchandise]="merchandise" [isUpdate]="isUpdate" (submit)="addEvent($event)"></app-merchandise-create>
-    <table class="table table-bordered table-hover mt-3 mb-3 mr-3 small" style="width:100%">
-
-      <thead class="thead-light">
-        <tr>
-          <th scope="col"></th>
-          <th scope="col" (click)="sortBy('name', 0)">
-            <span>Name</span>
-            <i class="fas i-sort" [ngClass]="sortIcon('name', 0)"></i>
-          </th>
-          <th scope="col" (click)="sortBy('category', 1)">
-            <span>Category</span>
-            <i class="fas i-sort" [ngClass]="sortIcon('category', 1)"></i>
-          </th>
-          <th scope="col" (click)="sortBy('price', 2)">
-            <span>Price</span>
-            <i class="fas i-sort" [ngClass]="sortIcon('price', 2)"></i>
-          </th>
-          <th scope="col" (click)="sortBy('quantity', 3)">
-            <span>Quantities</span>
-            <i class="fas i-sort" [ngClass]="sortIcon('quantity', 3)"></i>
-          </th>
-          <th scope="col" class="text-center">Action</th>
-        </tr>
-      </thead>
-      <tbody *ngFor="let item of listMerchandiseSorted | paginate: paginateConfig; let i = index">
-        <tr>
-          <th width="5%" scope="row">{{i+1}}</th>
-          <td width="30%">{{ item.name }}</td>
-          <td width="15%">{{ item.category }} </td>
-          <td width="15%">{{ item.price | currency }}</td>
-          <td width="15%">{{ item.quantity }}</td>
-          <td width="20%" class="text-center d-flex td-noborder">
-              <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
-              <i class="fas fa-edit"></i> Edit
-            </button>
-            <button class="btn btn-danger btn-sm">
-              <i class="fas fa-trash-alt"></i> Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <pagination-controls id="paginator" (pageChange)="onPageChange($event)" style="text-align: center;" [responsive]="true"></pagination-controls>
+<div class="d-flex">
+  <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal" (click)="add()">
+    <i class="fas fa-plus"></i>
+    Add new</button>
+  <app-merchandise-create [merchandise]="merchandise" [isUpdate]="isUpdate" (submit)="addEvent($event)"></app-merchandise-create>
+  <div class="form-group form-inline mb-0">
+    <input type="text" class="form-control" placeholder="Search in merchandises" [(ngModel)]="filter">
   </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-hover mt-3 mb-3 mr-3 small" style="width:100%">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col" (click)="sortBy('name', 0)">
+          <span>Name</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('name', 0)"></i>
+        </th>
+        <th scope="col" (click)="sortBy('category', 1)">
+          <span>Category</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('category', 1)"></i>
+        </th>
+        <th scope="col" (click)="sortBy('price', 2)">
+          <span>Price</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('price', 2)"></i>
+        </th>
+        <th scope="col" (click)="sortBy('quantity', 3)">
+          <span>Quantities</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('quantity', 3)"></i>
+        </th>
+        <th scope="col" class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let item of listMerchandiseSorted | filter: filter | paginate: paginateConfig; let i = index">
+      <tr>
+        <th width="5%" class="text-truncate">{{i+1}}</th>
+        <td width="30%" class="text-truncate">{{ item.name }}</td>
+        <td width="15%" class="text-truncate">{{ item.category }} </td>
+        <td width="15%" class="text-right text-truncate">{{ item.price | currency }}</td>
+        <td width="15%" class="text-right">{{ item.quantity }}</td>
+        <td width="20%" class="text-center">
+          <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+          <button class="btn btn-danger btn-sm">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls id="paginator" (pageChange)="onPageChange($event)" style="text-align: center;" [responsive]="true"></pagination-controls>
+</div>
