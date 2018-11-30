@@ -116,7 +116,7 @@ export class ImportComponent implements OnInit {
       return;
     }
 
-    this.merchandiseService.addToCurrentStore(this.cart)
+    this.updateProduct()
       .then(
         () => this.notifyService.create({
           message: 'Import completed successfully.',
@@ -129,6 +129,20 @@ export class ImportComponent implements OnInit {
           type: NotificationType.Error,
         },
       ));
+  }
+
+  async updateProduct(): Promise<Merchandise[]> {
+    const itemsToUpdate = this.merchandises.filter(i => this.cart.find(x => i.id === x.id));
+    itemsToUpdate.forEach((i) => {
+      const item = this.cart.find(x => i.id === x.id);
+      if (item) {
+        i.quantity += item.quantity;
+        i.price = item.price;
+        i.categoryId = item.categoryId;
+      }
+    });
+    await this.merchandiseService.update(itemsToUpdate);
+    return itemsToUpdate;
   }
 
   filterNewItems() {

@@ -4,20 +4,20 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <th scope="col"></th>
-          <th scope="col" (click)="sortBy('name')">
+          <th></th>
+          <th (click)="sortBy('name')">
             <span>Name</span>
             <i class="fas i-sort" [ngClass]="sortIcon('name')"></i>
           </th>
-          <th scope="col" (click)="sortBy('category')">
+          <th (click)="sortBy('category')">
             <span>Category</span>
             <i class="fas i-sort" [ngClass]="sortIcon('category')"></i>
           </th>
-          <th scope="col" (click)="sortBy('quantity')">
+          <th (click)="sortBy('quantity')">
             <span>Quantity</span>
             <i class="fas i-sort" [ngClass]="sortIcon('quantity')"></i>
           </th>
-          <th scope="col" (click)="sortBy('price')">
+          <th (click)="sortBy('price')">
             <span>Price</span>
             <i class="fas i-sort" [ngClass]="sortIcon('price')"></i>
           </th>
@@ -49,8 +49,9 @@
 
           <td width="15%">
             <div class="form-group">
-              <input type="text" class="form-control" id="categoryMerchandise" placeholder="Category" [(ngModel)]="newMerchandise.category" name="categoryMerchandise"
-                #categoryMerchandise="ngModel" required [typeahead]="category" typeaheadOptionField="name">
+              <select class="form-control" name="categoryMerchandise" id="categoryMerchandise" [(ngModel)]="newMerchandise.categoryId" placeholder="Unclassified" required>
+                <option [value]="item.id" *ngFor="let item of category">{{item.name}}</option>
+              </select>
             </div>
           </td>
 
