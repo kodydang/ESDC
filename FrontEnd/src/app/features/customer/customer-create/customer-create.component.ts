@@ -47,7 +47,13 @@ export class CustomerCreateComponent implements OnInit {
   }
 
   delete() {
-
+    this.customerService.delete(this.customer)
+    .then(() => {
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.warn(err);
+    });
   }
 
   submit() {

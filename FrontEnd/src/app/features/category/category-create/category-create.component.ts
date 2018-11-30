@@ -9,7 +9,6 @@ import { CategoryService } from '../../../provider/category.service';
   styleUrls: ['./category-create.component.scss'],
 })
 export class CategoryCreateComponent implements OnInit {
-  @Output() submit = new EventEmitter();
   @Input() category;
   @Input() isUpdate;
   submitted = false;
@@ -20,18 +19,30 @@ export class CategoryCreateComponent implements OnInit {
   ngOnInit() {
   }
 
-  formSubmit(res: NgForm) {
-    console.log(res);
-    this.submitted = true;
-  }
   add() {
-    this.category.createdDate = moment(this.category.createdDate);
-    this.submit.emit(this.category);
-    const category = this.category;
+    this.categoryService.add(this.category)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  }
+
+  update() {
+    this.categoryService.update(this.category.id, this.category.name)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  }
+  submit() {
     if (this.isUpdate) {
-      this.categoryService.update(category.id, category.name);
+      this.update();
     } else {
-      this.categoryService.add(category.name);
+      this.add();
     }
   }
 }

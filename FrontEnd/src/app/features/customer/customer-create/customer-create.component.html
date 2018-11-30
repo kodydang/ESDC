@@ -76,7 +76,7 @@
           }">
               <label>Phone: <span class="k-required">*</span></label>
               <input class="form-control" type="phone" id="input_Phone" placeholder="Phone" [(ngModel)]="customer.phone"
-                name="phone" #phone="ngModel" required minlength="10">
+                name="phone" #phone="ngModel" required length="10" pattern="[0-9]{10}" >
               <div [hidden]="phone.valid || phone.pristine" class="alert alert-warning">
                 <strong>Phone must be at least 10 number [0-9] and begin number 0 or +</strong>
                 <p>Example: 0912345678</p>

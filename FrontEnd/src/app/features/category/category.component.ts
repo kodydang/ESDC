@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Category } from '../../shared/models';
 import { CategoryService } from '../../provider/category.service';
+import { NotificationBarService, NotificationType } from 'ngx-notification-bar/release';
 
 @Component({
   selector: 'app-category',
@@ -28,6 +29,8 @@ export class CategoryComponent implements OnInit {
   isUpdate: boolean;
   constructor(
     private categoryService: CategoryService,
+    private notifyService: NotificationBarService,
+    private ref: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -35,7 +38,7 @@ export class CategoryComponent implements OnInit {
   }
 
   getAll() {
-    this.categoryService.getAll().subscribe(
+    this.categoryService.getFromCurrentStore().then(
       (res: any) => {
         this.listCategory = res;
         this.listCategorySorted = this.listCategory;
@@ -75,10 +78,6 @@ export class CategoryComponent implements OnInit {
     this.paginateConfig.currentPage = number;
   }
 
-  addEvent(event) {
-    console.log(event);
-
-  }
   add() {
     this.isUpdate = false;
     this.category.id = -1;
@@ -93,5 +92,27 @@ export class CategoryComponent implements OnInit {
     this.category.name = event.name;
     this.category.createdDate = event.createdDate;
     this.category.data = event;
+  }
+
+  delete(item) {
+    const id = item.id;
+    this.categoryService.delete(id)
+      .then(() => {
+        // window.location.reload();
+        this.listCategorySorted.splice(this.listCategorySorted.indexOf(item), 1);
+        this.ref.markForCheck();
+
+        this.notifyService.create({
+          message: 'Process deleted successfully.',
+          type: NotificationType.Success,
+        });
+      })
+      .catch((err) => {
+        this.notifyService.create({
+          message: 'Failed to delete.',
+          type: NotificationType.Error,
+        }),
+          console.warn(err);
+      });
   }
 }

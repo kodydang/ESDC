@@ -43,16 +43,22 @@ export class CategoryService {
   }
 
   add(category) {
-    return this.httpClient.post(`${API.ROOT}/category/create/`, category)
-      .pipe(
-          catchError(() => of('Error, could not add category')),
-      );
+    const obj = {
+      name: category.name,
+      idStore: this.storeSerice.currentStore.id,
+    };
+    return this.httpClient.post(`${API.ROOT}/category/create`, obj).toPromise();
   }
 
   update(id, newNameCategory) {
-    return this.httpClient.put(`${API.ROOT}/category/${id}`, newNameCategory)
-      .pipe(
-          catchError(() => of('Error, could not update category')),
-      );
+    const obj = {
+      name: newNameCategory,
+      idStore: this.storeSerice.currentStore.id,
+    };
+    return this.httpClient.put(`${API.ROOT}/category/${id}`, obj).toPromise();
+  }
+
+  delete(id) {
+    return this.httpClient.delete(`${API.ROOT}/category/${id}`).toPromise();
   }
 }

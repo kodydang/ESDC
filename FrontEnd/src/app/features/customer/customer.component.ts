@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Customer } from '../../shared/models';
 import { CustomerService } from '../../provider/customer.service';
+import { NotificationBarService, NotificationType } from 'ngx-notification-bar/release';
 
 @Component({
   selector: 'app-customer',
@@ -29,6 +30,8 @@ export class CustomerComponent implements OnInit {
 
   constructor(
     private customerService: CustomerService,
+    private notifyService: NotificationBarService,
+    private ref: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -51,6 +54,7 @@ export class CustomerComponent implements OnInit {
           birthday: this.formatDate(i.birthday),
           fullData: i,
         }));
+        console.log(this.customers);
       },
       (er) => {
         console.warn(er);
@@ -97,14 +101,25 @@ export class CustomerComponent implements OnInit {
     return moment(date).format('YYYY-MM-DD');
   }
 
-  delete(id) {
+  delete(item) {
+    const id = item.id;
     this.customerService.delete(id)
       .then(() => {
         // window.location.reload();
-        console.log('deteled ', id);
+        this.customerSorted.splice(this.customerSorted.indexOf(item), 1);
+        this.ref.markForCheck();
+
+        this.notifyService.create({
+          message: 'Process deleted successfully.',
+          type: NotificationType.Success,
+        });
       })
       .catch((err) => {
-        console.warn(err);
+        this.notifyService.create({
+          message: 'Failed to delete.',
+          type: NotificationType.Error,
+        }),
+          console.warn(err);
       });
   }
 }

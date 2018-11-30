@@ -43,7 +43,7 @@ export class CustomerService {
   }
 
   delete(id) {
-    return this.httpClient.get(`${API.ROOT}/customer/delete/${id}`).toPromise();
+    return this.httpClient.delete(`${API.ROOT}/customer/delete/${id}`).toPromise();
   }
 
   create(customer: Customer) {
