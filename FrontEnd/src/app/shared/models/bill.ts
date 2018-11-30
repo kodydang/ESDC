@@ -1,3 +1,4 @@
+import { BillDetails } from './bill-details';
 import { Employee } from './employee';
 import { Customer } from './customer';
 import { Base } from './base';
@@ -10,6 +11,7 @@ export class Bill extends Base {
   customerId: number;
   customer?: Customer;
   employee?: Employee;
+  details?: BillDetails[];
 
   constructor(item) {
     super(item.createdDate || item.createDay);
@@ -21,5 +23,6 @@ export class Bill extends Base {
 
     item.employee ? this.employee = new Employee(item.employee) : null;
     item.customer ? this.customer = new Customer(item.customer) : null;
+    item.details ? this.details = item.details : null;
   }
 }

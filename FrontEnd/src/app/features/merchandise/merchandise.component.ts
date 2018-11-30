@@ -12,7 +12,7 @@ import { MerchandiseService } from '../../provider/merchandise.service';
 })
 export class MerchandiseComponent implements OnInit {
   listMerchandise: Merchandise[] = [];
-  listMerchandiseSorted: Merchandise[] = [];
+  listMerchandiseSorted: any[] = [];
   typeSort = ['', '', '', ''];
   style: boolean[] = [false, false, false, false];
   paginateConfig = {
@@ -37,11 +37,11 @@ export class MerchandiseComponent implements OnInit {
   }
 
   getAll() {
-    this.merchandiseService.getAll().then(
+    this.merchandiseService.getFromCurrentStore().then(
       (res: any) => {
         this.listMerchandise = res;
         this.listMerchandiseSorted = this.listMerchandise;
-        // console.log(this.listMerchandise);
+        // console.log(this.listMerchandiseSorted);
       },
       (er) => {
         console.warn(er);

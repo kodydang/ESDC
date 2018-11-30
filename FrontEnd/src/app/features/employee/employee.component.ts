@@ -47,14 +47,14 @@ export class EmployeeComponent implements OnInit {
         this.employees = res;
         console.log(this.employees);
         this.employeeSorted = this.employees.map(i => ({
-          username: i.user.nameUser,
+          username: i.user.username,
           // gender: i.gender,
           name: i.name,
           // address: i.address,
           phone: i.phone,
           email: i.email,
           birthday: this.formatDate(i.birthday),
-          role: i.user.roleName,
+          role: i.user.role,
           data: i,
         }));
       },

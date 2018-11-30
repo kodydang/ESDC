@@ -7,7 +7,7 @@ export class Employee extends Account {
   'birthday': Date;
   'email': string;
   'phone': string;
-  'user': any;
+  'user': Account;
   'idStore': number;
   'status': string;
 
@@ -19,7 +19,7 @@ export class Employee extends Account {
     this.birthday = new Date(item.bday);
     this.email = item.email || '';
     this.phone = item.phone || '';
-    this.user = item.userByUserName || {};
+    this.user = new Account(item.userByUserName || {});
     this.idStore = item.idStore || -1;
     this.status = item.status || 0;
   }

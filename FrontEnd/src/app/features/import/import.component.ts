@@ -13,7 +13,7 @@ import { NotificationBarService, NotificationType } from 'ngx-notification-bar/r
   styleUrls: ['./import.component.scss'],
 })
 export class ImportComponent implements OnInit {
-  cart: Merchandise[] = [];
+  cart: any[] = [];
   category: Category[] = [];
   merchandises: Merchandise[] = [];
   newMerchandise = this.defaultMerchandise;

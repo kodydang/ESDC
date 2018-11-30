@@ -18,7 +18,7 @@ export class CategoryComponent implements OnInit {
     data: {},
   };
   listCategory: Category[] = [];
-  listCategorySorted: Category[] = [];
+  listCategorySorted: any[] = [];
   typeSort = ['', ''];
   style: boolean[] = [false, false];
   paginateConfig = {
