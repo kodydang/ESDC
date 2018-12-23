@@ -40,8 +40,11 @@
             'has-success': role.valid,
             'has-error': role.invalid && (role.dirty || role.touched)}">
             <label for="name">Role: <span class="k-required">*</span></label>
-            <input type="text" class="form-control" id="role" placeholder="Enter employee's role" [(ngModel)]="user.roleName"
-              name="role" #role="ngModel" required [disabled]="isUpdate">
+            <select class="form-control" name="role" placeholder="Enter employee's role" [(ngModel)]="user.roleKey" #role="ngModel" required [disabled]="isUpdate">
+              <option value="item.value" *ngFor="let item of roles">{{item.title}}</option>
+            </select>
+            <!-- <input type="text" class="form-control" id="role" placeholder="Enter employee's role" [(ngModel)]="user.roleName"
+              name="role" #role="ngModel" required [disabled]="isUpdate"> -->
             <div [hidden]="nameEmployee.valid || nameEmployee.pristine" class="alert alert-danger">
               <strong>Please enter employee's name</strong>
             </div>
