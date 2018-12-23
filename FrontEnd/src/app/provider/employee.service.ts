@@ -31,7 +31,7 @@ export class EmployeeService {
       ).toPromise();
   }
 
-  getByStore(storeId): Promise<Employee[]> {
+  getByStore(storeId) : Promise<Employee[]> {
     return this.httpClient.get(`${API.ROOT}/store/employee/${storeId}`)
       .pipe(
         map((body: any) => body['data'].map(i => new Employee(i)),

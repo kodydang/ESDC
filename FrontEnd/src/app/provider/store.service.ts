@@ -15,18 +15,14 @@ export class StoreService {
     });
   }
 
-  getAll(): Observable<Store[]> {
+  getAll(): Promise<Store[]> {
     return this.httpClient
       .get(`${API.ROOT}/store`)
       .pipe(
-        tap(
-          (body: any) => console.log(body.data),
-        ),
         map(
           (body: any[]) => body['data'].map(i => new Store(i)),
-          catchError(() => of('Error, could not load store list')),
         ),
-      );
+      ).toPromise();
   }
 
   getById(id: string) {

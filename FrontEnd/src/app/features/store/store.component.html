@@ -22,6 +22,10 @@
           <span>Owner</span>
           <i class="fas i-sort" [ngClass]="sortIcon('owner')"></i>
         </th>
+        <th [style.minWidth.px]="200" (click)="sortBy('ownerUsername')">
+          <span>Owner's Username</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('ownerUsername')"></i>
+        </th>
         <th [style.minWidth.px]="200" (click)="sortBy('address')">
           <span>Address</span>
           <i class="fas i-sort" [ngClass]="sortIcon('address')"></i>
@@ -34,7 +38,8 @@
         <th>{{i+1}}</th>
         <!-- <td><img [src]="item.data.logo" alt="No Logo" class="logo" ></td> -->
         <td>{{ item.name }}</td>
-        <td>{{ owner[i] }}</td>
+        <td>{{ owners[i]?.name }}</td>
+        <td>{{ owners[i]?.username }}</td>
         <td>{{ item.address }}</td>
         <td class="text-center">
           <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
