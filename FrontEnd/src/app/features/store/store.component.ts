@@ -15,17 +15,19 @@ export class StoreComponent implements OnInit {
   store = new Store({});
   stores: Store[] = [];
   storeSorted: {}[] = [];
-  owners: any[] = [];
 
   sortKey = '';
   sortReverse = false;
   filter = '';
+  openDiaglog = false;
 
   paginateConfig = {
     id: 'paginator',
     itemsPerPage: 10,
     currentPage: 1,
   };
+
+  isUpdate = false;
 
   constructor(
     private storeService: StoreService,
@@ -40,20 +42,23 @@ export class StoreComponent implements OnInit {
     this.storeService.getAll().then(
       (stores) => {
         this.stores = stores;
-        this.owners = [];
-        Promise.all(stores.map(i => this.employeeService.getByStore(i.id)))
+        Promise.all(stores.map(store => this.employeeService.getByStore(store.id)))
           .then((employees: [Employee[]]) => {
-            this.owners = employees.map((emps, i) => {
+            employees.forEach((emps, index) => {
               const owner = emps.find(x => x.user.isOwner);
-              return owner ? { name: owner.name, username: owner.user.username } : null;
+              if (owner) {
+                this.stores[index].ownerId = owner.id;
+                this.stores[index].ownerName = owner.name;
+                this.stores[index].ownerUsername = owner.user.username;
+              }
             });
 
-            this.storeSorted = this.stores.map((i, index) => ({
+            this.storeSorted = this.stores.map(i => ({
               data: i,
               name: i.name,
               address: i.address,
-              owner: this.owners[index] ? this.owners[index].name : '',
-              ownerUsername: this.owners[index] ? this.owners[index].username : '',
+              ownerName: i.ownerName,
+              ownerUsername: i.ownerUsername,
             }));
           },
         );
@@ -86,10 +91,16 @@ export class StoreComponent implements OnInit {
   }
 
   edit(event) {
-    this.store = new Store(event);
+    this.store = new Store(event.data);
+    console.log('STORE', this.store, event.data);
+
+    this.isUpdate = true;
+    this.openDiaglog = true;
   }
 
   add() {
     this.store = new Store({});
+    this.isUpdate = false;
+    this.openDiaglog = true;
   }
 }

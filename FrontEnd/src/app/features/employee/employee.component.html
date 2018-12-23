@@ -1,6 +1,7 @@
 <div *ngIf="openDiaglog">
   <app-employee-create [user]="employee.user" [employee]="employee" [isUpdate]="isUpdate" [dateTime]="dateTime"></app-employee-create>
 </div>
+
 <div class="d-flex">
   <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal" (click)="add()">
     <i class="fas fa-plus"></i>
