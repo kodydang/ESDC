@@ -1,20 +1,28 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  Input,
+  ChangeDetectorRef,
+  SimpleChanges,
+} from '@angular/core';
 import * as moment from 'moment';
 import { Employee } from 'src/app/shared/models';
 import { EmployeeService } from '../../../provider/employee.service';
-import { forkJoin } from 'rxjs';
+import { ROLE } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-employee-create',
   templateUrl: './employee-create.component.html',
   styleUrls: ['./employee-create.component.scss'],
 })
-export class EmployeeCreateComponent implements OnInit {
+export class EmployeeCreateComponent implements OnInit, OnChanges {
   @Input() employee: Employee;
   @Input() isUpdate;
   @Input() dateTime: string;
   @Input() user: any;
 
+  roles = [];
   checkUsername = false;
   submitted = false;
   constructor(
@@ -23,12 +31,22 @@ export class EmployeeCreateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.employee);
+    this.roles = Object.keys(ROLE).map(i => ({
+      value: ROLE[i].KEY,
+      title: ROLE[i].TITLE,
+    }));
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.user) {
+      console.log(this.user);
+    }
   }
 
   mapDate(date) {
     return moment(date, 'YYYY-MM-DD').toDate();
   }
+
   submit() {
     if (this.isUpdate) {
       this.update();
@@ -57,7 +75,10 @@ export class EmployeeCreateComponent implements OnInit {
 
   update() {
     this.employee.birthday = this.mapDate(this.dateTime);
-    this.employeeService.update(this.employee)
+    Promise.all([
+      this.employeeService.update(this.employee),
+      this.employeeService.changeRole(this.user),
+    ])
       .then(() => {
         window.location.reload();
       })

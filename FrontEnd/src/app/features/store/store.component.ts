@@ -1,9 +1,10 @@
-import { ROLE } from 'src/app/shared/constants';
-import { Employee } from './../../shared/models/employee';
 import * as _ from 'lodash';
+import { Account } from './../../shared/models/account';
 import { Component, OnInit } from '@angular/core';
-import { StoreService } from './../../provider/store.service';
+import { Employee } from './../../shared/models/employee';
+import { EmployeeService } from 'src/app/provider/employee.service';
 import { Store } from 'src/app/shared/models';
+import { StoreService } from './../../provider/store.service';
 
 @Component({
   selector: 'app-store',
@@ -14,7 +15,7 @@ export class StoreComponent implements OnInit {
   store = new Store({});
   stores: Store[] = [];
   storeSorted: {}[] = [];
-  owner: string[] = [];
+  owners: any[] = [];
 
   sortKey = '';
   sortReverse = false;
@@ -28,6 +29,7 @@ export class StoreComponent implements OnInit {
 
   constructor(
     private storeService: StoreService,
+    private employeeService: EmployeeService,
   ) { }
 
   ngOnInit() {
@@ -35,21 +37,26 @@ export class StoreComponent implements OnInit {
   }
 
   getAll() {
-    this.storeService.getAll().subscribe(
-      (res) => {
-        this.stores = res;
-        this.owner = res.map((i) => {
-          const owner = i.employees.find(x => x.isOwner);
-          return owner ? owner.name : '';
-        });
-        console.log(res);
+    this.storeService.getAll().then(
+      (stores) => {
+        this.stores = stores;
+        this.owners = [];
+        Promise.all(stores.map(i => this.employeeService.getByStore(i.id)))
+          .then((employees: [Employee[]]) => {
+            this.owners = employees.map((emps, i) => {
+              const owner = emps.find(x => x.user.isOwner);
+              return owner ? { name: owner.name, username: owner.user.username } : null;
+            });
 
-        this.storeSorted = this.stores.map(i => ({
-          data: i,
-          name: i.name,
-          address: i.address,
-          owner: i.ownerName,
-        }));
+            this.storeSorted = this.stores.map((i, index) => ({
+              data: i,
+              name: i.name,
+              address: i.address,
+              owner: this.owners[index] ? this.owners[index].name : '',
+              ownerUsername: this.owners[index] ? this.owners[index].username : '',
+            }));
+          },
+        );
       },
       (er) => {
         console.warn(er);

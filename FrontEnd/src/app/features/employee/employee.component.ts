@@ -4,8 +4,6 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { EmployeeService } from '../../provider/employee.service';
 import { Employee } from '../../shared/models/employee';
-import { Router } from '@angular/router';
-import { ROLE } from 'src/app/shared/constants';
 import { NotificationType, NotificationBarService } from 'ngx-notification-bar/release';
 
 @Component({
