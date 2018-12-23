@@ -1,4 +1,7 @@
-<!-- <app-employee-create (submit)="addEvent($event)" [employee]="employee" [isUpdate]="isUpdate"></app-employee-create> -->
+<div *ngIf="openDiaglog">
+  <app-store-create [data]="store" [isUpdate]="isUpdate"></app-store-create>
+</div>
+
 <div class="d-flex">
   <button type="button" (click)="add()" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal">
     <i class="fas fa-plus"></i>
@@ -38,16 +41,16 @@
         <th>{{i+1}}</th>
         <!-- <td><img [src]="item.data.logo" alt="No Logo" class="logo" ></td> -->
         <td>{{ item.name }}</td>
-        <td>{{ owners[i]?.name }}</td>
-        <td>{{ owners[i]?.username }}</td>
+        <td>{{ item.ownerName }}</td>
+        <td>{{ item.ownerUsername }}</td>
         <td>{{ item.address }}</td>
         <td class="text-center">
           <button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(item)">
             <i class="fas fa-edit"></i> Edit
           </button>
-          <button class="btn btn-danger btn-sm">
+          <!-- <button class="btn btn-danger btn-sm">
             <i class="fas fa-trash-alt"></i> Delete
-          </button>
+          </button> -->
         </td>
       </tr>
     </tbody>

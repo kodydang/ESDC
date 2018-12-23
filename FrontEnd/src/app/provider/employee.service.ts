@@ -17,10 +17,7 @@ export class EmployeeService {
   getAll() {
     return this.httpClient.get(`${API.ROOT}/employee`)
       .pipe(
-        map(
-          (body: any) => body['data'].map(i => new Employee(i)),
-          catchError(() => of('Error, could not load employee from server')),
-        ),
+        map((body: any) => body['data'].map(i => new Employee(i))),
       ).toPromise();
   }
 
@@ -34,8 +31,7 @@ export class EmployeeService {
   getByStore(storeId) : Promise<Employee[]> {
     return this.httpClient.get(`${API.ROOT}/store/employee/${storeId}`)
       .pipe(
-        map((body: any) => body['data'].map(i => new Employee(i)),
-        ),
+        map((body: any) => body['data'].map(i => new Employee(i))),
       ).toPromise();
   }
 

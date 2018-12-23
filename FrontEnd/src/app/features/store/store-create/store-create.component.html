@@ -1,0 +1,56 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <form class="modal-dialog" #addForm="ngForm" data-toggle="validator" role="form">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Store Detail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <div class="modal-body">
+        <div class="form-group" [ngClass]="{
+              'has-success': storeName.valid,
+              'has-error': storeName.invalid && (storeName.dirty || storeName.touched)}">
+          <label for="name">Name: <span class="k-required">*</span></label>
+          <input type="text" class="form-control" id="storeName" placeholder="Enter store's name" [(ngModel)]="data.name"
+            name="storeName" #storeName="ngModel" required>
+          <div [hidden]="storeName.valid || storeName.pristine" class="alert alert-danger">
+            <strong>Please enter the store's name</strong>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+              'has-success': owner.valid,
+              'has-error': owner.invalid && (owner.dirty || owner.touched)}">
+          <label for="name">Owner's username: <span class="k-required">*</span></label>
+          <input type="text" class="form-control" id="owner" placeholder="Enter owner's username" [(ngModel)]="data.ownerUsername"
+            name="owner" #owner="ngModel" required [typeahead]="employees" typeaheadOptionField="user.username">
+          <!-- <div [hidden]="owner.invalid || owner.pristine || !isNewUser" class="alert alert-warning">
+            <strong>This account has never been created and will be create upon submitting</strong>
+          </div> -->
+          <div [hidden]="owner.valid || owner.pristine" class="alert alert-danger">
+            <strong>Please enter the owner's username</strong>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+          'has-success': storeAddress.valid,
+          'has-error': storeAddress.invalid && (storeAddress.dirty || storeAddress.touched)}">
+          <label for="name">Address:</label>
+          <input type="text" class="form-control" id="storeAddress" placeholder="Enter store's address" [(ngModel)]="data.address"
+            name="storeAddress" #storeAddress="ngModel">
+        </div>
+      </div>
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="submit()" [disabled]="addForm.invalid">{{isUpdate
+          ? 'Update' : 'Add' }}</button>
+      </div>
+    </div>
+  </form>
+</div>

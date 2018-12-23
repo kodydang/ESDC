@@ -28,4 +28,16 @@ export class StoreService {
   getById(id: string) {
 
   }
+
+  update(store: Store) {
+    return this.httpClient.put(
+      `${API.ROOT}/store/update/${store.id}`,
+      {
+        idCuahang: store.id,
+        rootId: null,
+        name: store.name,
+        address: store.address,
+      },
+    ).toPromise();
+  }
 }
