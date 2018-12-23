@@ -1,3 +1,4 @@
+import { Account } from './../shared/models/account';
 import { API } from '../shared/constants';
 import { catchError, map } from 'rxjs/operators';
 import { Employee } from '../shared/models';
@@ -74,6 +75,13 @@ export class EmployeeService {
       email: employee.email,
     };
     return this.httpClient.put(`${API.ROOT}/employee/${employee.id}`, dataObj).toPromise();
+  }
+
+  changeRole(account: Account, role?: string) {
+    return this.httpClient.put(
+      `${API.ROOT}/user/role/${account.username}`,
+      { role: role || account.roleKey },
+    ).toPromise();
   }
 
   delete(id) {

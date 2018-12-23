@@ -38,8 +38,8 @@ export class EmployeeCreateComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.employee) {
-      console.log(this.employee);
+    if (changes.user) {
+      console.log(this.user);
     }
   }
 
@@ -75,7 +75,10 @@ export class EmployeeCreateComponent implements OnInit, OnChanges {
 
   update() {
     this.employee.birthday = this.mapDate(this.dateTime);
-    this.employeeService.update(this.employee)
+    Promise.all([
+      this.employeeService.update(this.employee),
+      this.employeeService.changeRole(this.user),
+    ])
       .then(() => {
         window.location.reload();
       })
