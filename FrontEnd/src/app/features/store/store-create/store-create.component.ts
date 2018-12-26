@@ -28,19 +28,23 @@ export class StoreCreateComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.data) {
+    if (changes.data && changes.data.currentValue && changes.data.currentValue.id) {
       this.employeeService.getByStore(this.data.id).then(res => this.employees = res);
     }
   }
 
   submit() {
     console.log(this.data);
-    (this.isUpdate ? this.update() : this.update()).then(
+    (this.isUpdate ? this.update() : this.create()).then(
       () => window.location.reload(),
     );
   }
 
   update() {
     return this.storeService.update(this.data);
+  }
+
+  create() {
+    return this.storeService.create(this.data);
   }
 }

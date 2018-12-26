@@ -43,7 +43,6 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.getFromCurrentStore().then(
       (res: Employee[]) => {
         this.employees = res;
-        console.log(this.employees);
         this.employeeSorted = this.employees.map(i => ({
           username: i.user.username,
           // gender: i.gender,

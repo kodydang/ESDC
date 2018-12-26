@@ -22,7 +22,7 @@
           </div>
         </div>
 
-        <div class="form-group" [ngClass]="{
+        <!-- <div class="form-group" [ngClass]="{
               'has-success': owner.valid,
               'has-error': owner.invalid && (owner.dirty || owner.touched)}">
           <label for="name">Owner's username: <span class="k-required">*</span></label>
@@ -31,13 +31,13 @@
           <select name="owner" #owner="ngModel" required placeholder="Enter owner's username" [(ngModel)]="data.ownerUsername" class="form-control">
             <option [value]="item.user.username" *ngFor="let item of employees">{{item.name}}</option>
           </select>
-          <!-- <div [hidden]="owner.invalid || owner.pristine || !isNewUser" class="alert alert-warning">
-            <strong>This account has never been created and will be create upon submitting</strong>
-          </div> -->
+          <div [hidden]="owner.invalid || owner.pristine || !isNewUser" class="alert alert-warning">
+            <strong>This account has never been created and will be create upon submitting. Default password is 123456</strong>
+          </div>
           <div [hidden]="owner.valid || owner.pristine" class="alert alert-danger">
             <strong>Please enter the owner's username</strong>
           </div>
-        </div>
+        </div> -->
 
         <div class="form-group" [ngClass]="{
           'has-success': storeAddress.valid,

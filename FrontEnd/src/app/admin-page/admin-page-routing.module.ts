@@ -1,3 +1,4 @@
+import { AuthGuard } from './../guards/auth.guard';
 import { BillComponent } from './../features/bill/bill.component';
 import { StoreComponent } from './../features/store/store.component';
 import { AdminPageComponent } from './admin-page.component';
@@ -17,6 +18,7 @@ const routes: Routes = [
   {
     path: PAGE.ADMIN.URL,
     component: AdminPageComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: PAGE.EMPLOYEE.URL,
@@ -57,7 +59,7 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'prefix',
-        redirectTo: '',
+        redirectTo: PAGE.PAYMENT.URL,
       },
     ],
   },
