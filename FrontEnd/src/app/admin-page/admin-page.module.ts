@@ -35,6 +35,7 @@ import { FormsModule } from '@angular/forms';
   ],
   exports: [
     AdminPageComponent,
+    AdminRoutingModule,
   ],
 })
 export class AdminPageModule { }
