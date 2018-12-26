@@ -181,7 +181,7 @@ export class PaymentComponent implements OnInit {
   createBill(customer: Customer, items: Merchandise[]) {
     const bill = new Bill({
       employeeId: this.authService.currentAccount.id,
-      storeId: this.storeService.currentStore.id,
+      storeId: this.storeService.currentStore,
       customerId: customer.id,
       totalPrice: items.map(i => i.price * i.quantity).reduce((x, y) => x + y),
     });

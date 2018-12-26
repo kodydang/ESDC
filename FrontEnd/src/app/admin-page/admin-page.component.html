@@ -51,6 +51,16 @@
             </a>
           </li>
         </ul>
+        <ul *ngIf="account.roleKey === ROLE.SUPER_ADMIN.KEY">
+          <li class="header-menu">
+            <span>Current Store</span>
+            <div class="input-group px-2">
+              <select name="store" [(ngModel)]="storeService.currentStore" class="form-control bg-dark text-light">
+                <option [value]="item.id" *ngFor="let item of stores">{{item.name}}</option>
+              </select>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
 

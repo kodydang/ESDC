@@ -92,8 +92,6 @@ export class StoreComponent implements OnInit {
 
   edit(event) {
     this.store = new Store(event.data);
-    console.log('STORE', this.store, event.data);
-
     this.isUpdate = true;
     this.openDiaglog = true;
   }

@@ -29,7 +29,7 @@ export class CustomerService {
   }
 
   getFromCurrentStore() {
-    return this.getByStore(this.storeService.currentStore.id);
+    return this.getByStore(this.storeService.currentStore);
   }
 
   add(customer: Customer) {
@@ -54,7 +54,7 @@ export class CustomerService {
         phone: +customer.phone,
         email: customer.email,
         birthDay: customer.birthday,
-        idStore: this.storeService.currentStore.id,
+        idStore: this.storeService.currentStore,
       },
     ).toPromise();
   }
@@ -68,7 +68,7 @@ export class CustomerService {
         phone: +customer.phone,
         email: customer.email,
         birthDay: customer.birthday,
-        idStore: this.storeService.currentStore.id,
+        idStore: this.storeService.currentStore,
         idKhachhang: found.id,
       }).toPromise();
     }

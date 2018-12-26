@@ -36,7 +36,7 @@ export class EmployeeService {
   }
 
   getFromCurrentStore() {
-    return this.getByStore(this.storeService.currentStore.id);
+    return this.getByStore(this.storeService.currentStore);
   }
 
   add(employee: Employee, user) {
@@ -45,7 +45,7 @@ export class EmployeeService {
       bday: employee.birthday.toJSON(),
       phone: employee.phone,
       email: employee.email,
-      idStore: this.storeService.currentStore.id,
+      idStore: this.storeService.currentStore,
       userByUserName: {
         nameUser: user.nameUser,
         userPassword: '123456',

@@ -10,9 +10,11 @@ export class StoreService {
   constructor(private httpClient: HttpClient) {}
 
   get currentStore() {
-    return new Store({
-      idCuahang: sessionStorage.getItem('storeId'),
-    });
+    return +sessionStorage.getItem('storeId');
+  }
+
+  set currentStore(value) {
+    sessionStorage.setItem('storeId', value.toString());
   }
 
   getAll(): Promise<Store[]> {

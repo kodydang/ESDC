@@ -1,5 +1,5 @@
 import { StoreService } from './../../../provider/store.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { Store, Employee } from 'src/app/shared/models';
 import { EmployeeService } from 'src/app/provider/employee.service';
 
@@ -24,12 +24,17 @@ export class StoreCreateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.employeeService.getAll().then(res => this.employees = res);
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.data) {
+      this.employeeService.getByStore(this.data.id).then(res => this.employees = res);
+    }
   }
 
   submit() {
     console.log(this.data);
-
     (this.isUpdate ? this.update() : this.update()).then(
       () => window.location.reload(),
     );
