@@ -47,7 +47,7 @@ export class EmployeeService {
       email: employee.email,
       idStore: this.storeService.currentStore,
       userByUserName: {
-        nameUser: user.nameUser,
+        nameUser: user.username,
         userPassword: '123456',
       },
     };
@@ -55,9 +55,9 @@ export class EmployeeService {
   }
   addUser(user) {
     const dataObj = {
-      nameUser: user.nameUser,
+      nameUser: user.username,
       userPassword: '123456',
-      roleName: user.roleName,
+      roleName: user.roleKey,
       status: 1,
     };
     return this.httpClient.post(`${API.ROOT}/user/create`, dataObj).toPromise();
