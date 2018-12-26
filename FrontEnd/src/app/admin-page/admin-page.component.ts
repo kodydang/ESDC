@@ -1,8 +1,10 @@
+import { StoreService } from './../provider/store.service';
 import { Account } from './../shared/models/account';
 import { AuthenticationService } from './../provider/authentication.service';
 import { APP, PAGE, ROLE } from './../shared/constants';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Store } from '../shared/models';
 
 const ELEMENT_SELECTOR = {
   USER_NAME: 'input_Username',
@@ -17,6 +19,7 @@ const ELEMENT_SELECTOR = {
 export class AdminPageComponent implements OnInit {
   readonly PAGE = PAGE;
   readonly APP = APP;
+  readonly ROLE = ROLE;
   menu = [
     {
       title: 'Super Admin',
@@ -52,17 +55,17 @@ export class AdminPageComponent implements OnInit {
   account: Account;
   pageTitle = 'Page title';
   pageIcon = '';
+  stores: Store[] = [];
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService,
+    public storeService: StoreService,
   ) {
     this.account = new Account({
       username: sessionStorage.getItem('username'),
       role: sessionStorage.getItem('role'),
     });
-
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const url = this.router.url.replace(`/${PAGE.ADMIN.URL}/`, '');
@@ -78,7 +81,9 @@ export class AdminPageComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.storeService.getAll().then(res => this.stores = res);
+  }
 
   logout() {
     this.router.navigate(['/login']);
@@ -87,5 +92,4 @@ export class AdminPageComponent implements OnInit {
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('role');
   }
-
 }

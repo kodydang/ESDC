@@ -8,6 +8,8 @@ import {
 import { LogInRes } from '../model/loginRes';
 import { LoginService } from '../provider/login.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../provider/authentication.service';
+import { Account } from '../shared/models/account';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +29,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private loginService: LoginService,
+    private authService: AuthenticationService,
   ) {
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('role');
@@ -54,12 +57,13 @@ export class LoginComponent implements OnInit {
       this.data = datas;
       if (this.data.status === 'SUCCESS') {
         this.isLoading = true;
-        this.router.navigate(['/admin']);
-        window.location.reload();
-        sessionStorage.setItem('username', this.username);
-        sessionStorage.setItem('role', this.data.data.roleName);
-        sessionStorage.setItem('employeeId', `${this.data.data.employee}`);
+        this.authService.currentAccount = new Account({
+          username: this.username,
+          role: this.data.data.roleName,
+          id: this.data.data.employee,
+        });
         sessionStorage.setItem('storeId', this.data.data.storeId.toString());
+        this.router.navigate(['/admin']);
       } else {
         this.isSuccess = true;
       }

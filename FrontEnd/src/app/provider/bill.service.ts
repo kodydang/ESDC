@@ -52,7 +52,7 @@ export class BillService {
   }
 
   getFromCurrentStore() {
-    return this.getByStore(this.storeService.currentStore.id);
+    return this.getByStore(this.storeService.currentStore);
   }
 
   create(bill: Bill) {

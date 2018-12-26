@@ -39,13 +39,13 @@ export class CategoryService {
   }
 
   getFromCurrentStore() {
-    return this.getByStore(this.storeSerice.currentStore.id);
+    return this.getByStore(this.storeSerice.currentStore);
   }
 
   add(category) {
     const obj = {
       name: category.name,
-      idStore: this.storeSerice.currentStore.id,
+      idStore: this.storeSerice.currentStore,
     };
     return this.httpClient.post(`${API.ROOT}/category/create`, obj).toPromise();
   }
@@ -53,7 +53,7 @@ export class CategoryService {
   update(id, newNameCategory) {
     const obj = {
       name: newNameCategory,
-      idStore: this.storeSerice.currentStore.id,
+      idStore: this.storeSerice.currentStore,
     };
     return this.httpClient.put(`${API.ROOT}/category/${id}`, obj).toPromise();
   }

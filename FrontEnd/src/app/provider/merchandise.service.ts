@@ -53,7 +53,7 @@ export class MerchandiseService {
   }
 
   getFromCurrentStore() {
-    return this.getByStore(this.storeService.currentStore.id);
+    return this.getByStore(this.storeService.currentStore);
   }
 
   addToStore(items: Merchandise[], storeId) {
@@ -70,7 +70,7 @@ export class MerchandiseService {
   }
 
   addToCurrentStore(items: Merchandise[]) {
-    return this.addToStore(items, this.storeService.currentStore.id);
+    return this.addToStore(items, this.storeService.currentStore);
   }
 
   update(items: Merchandise[]) {

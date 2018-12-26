@@ -28,6 +28,9 @@
           <label for="name">Owner's username: <span class="k-required">*</span></label>
           <input type="text" class="form-control" id="owner" placeholder="Enter owner's username" [(ngModel)]="data.ownerUsername"
             name="owner" #owner="ngModel" required [typeahead]="employees" typeaheadOptionField="user.username">
+          <select name="owner" #owner="ngModel" required placeholder="Enter owner's username" [(ngModel)]="data.ownerUsername" class="form-control">
+            <option [value]="item.user.username" *ngFor="let item of employees">{{item.name}}</option>
+          </select>
           <!-- <div [hidden]="owner.invalid || owner.pristine || !isNewUser" class="alert alert-warning">
             <strong>This account has never been created and will be create upon submitting</strong>
           </div> -->
