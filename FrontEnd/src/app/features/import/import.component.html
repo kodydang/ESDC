@@ -43,7 +43,7 @@
             <div class="form-group">
               <input type="text" class="form-control" id="nameMerchandise" placeholder="Merchandise name" [(ngModel)]="newMerchandise.name"
                 name="nameMerchandise" #nameMerchandise="ngModel" autocomplete="off" [typeahead]="merchandises"
-                typeaheadOptionField="name" typeaheadGroupField="category" (typeaheadOnSelect)="select($event)" required>
+                typeaheadOptionField="name" typeaheadGroupField="category" (typeaheadOnSelect)="select($event)" required autocomplete="off">
             </div>
           </td>
 
@@ -58,13 +58,13 @@
           <td width="15%">
             <div class="form-group">
               <input type="number" min="1" class="form-control" id="quantityMerchandise" placeholder="Quantity"
-                [(ngModel)]="newMerchandise.quantity" name="quantityMerchandise" #quantityMerchandise="ngModel" required>
+                [(ngModel)]="newMerchandise.quantity" name="quantityMerchandise" #quantityMerchandise="ngModel" required autocomplete="off">
             </div>
           </td>
 
           <td width="15%" class="form-group">
             <input type="text" class="form-control" id="priceMerchandise" placeholder="Price" [(ngModel)]="newMerchandise.price" name="priceMerchandise"
-              #priceMerchandise="ngModel" required>
+              #priceMerchandise="ngModel" required autocomplete="off">
           </td>
 
           <td>

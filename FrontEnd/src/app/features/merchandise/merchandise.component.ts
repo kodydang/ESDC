@@ -22,12 +22,7 @@ export class MerchandiseComponent implements OnInit {
     currentPage: 1,
   };
   open = false;
-  merchandise = {
-    name: '',
-    category: '',
-    price: 0,
-    quantity: 0,
-  };
+  merchandise: Merchandise = new Merchandise({});
 
   isUpdate: boolean;
   constructor(
@@ -86,17 +81,12 @@ export class MerchandiseComponent implements OnInit {
     this.merchandise.quantity = 0;
   }
 
-  edit(event) {
+  edit(event: Merchandise) {
     this.isUpdate = true;
     this.merchandise.name = event.name;
-    this.merchandise.category = event.category;
+    this.merchandise.categoryId = event.categoryId;
     this.merchandise.price = event.price;
     this.merchandise.quantity = event.quantity;
+    this.merchandise.id = event.id;
   }
-
-  addEvent(event) {
-    console.log(event);
-
-  }
-
 }

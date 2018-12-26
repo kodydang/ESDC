@@ -2,7 +2,7 @@
   <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal" (click)="add()">
     <i class="fas fa-plus"></i>
     Add new</button>
-  <app-merchandise-create [merchandise]="merchandise" [isUpdate]="isUpdate" (submit)="addEvent($event)"></app-merchandise-create>
+  <app-merchandise-create [merchandise]="merchandise" [isUpdate]="isUpdate"></app-merchandise-create>
   <div class="form-group form-inline mb-0">
     <input type="text" class="form-control" placeholder="Search in merchandises" [(ngModel)]="filter">
   </div>

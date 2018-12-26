@@ -25,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
+
     // Page modules
     AdminPageModule,
     LoginModule,

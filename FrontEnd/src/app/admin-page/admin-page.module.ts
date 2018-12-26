@@ -37,6 +37,7 @@ import { LoginModule } from '../login/login.module';
   ],
   exports: [
     AdminPageComponent,
+    AdminRoutingModule,
   ],
 })
 export class AdminPageModule { }

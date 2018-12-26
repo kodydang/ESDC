@@ -58,24 +58,29 @@ export class MerchandiseService {
     return this.getByStore(this.storeService.currentStore);
   }
 
-  addToStore(items: Merchandise[], storeId) {
-    return forkJoin(
-      items.map(i => this.httpClient.post(
-        `${API.ROOT}/product/goodsrecept/`,
-        {
-          storeId,
-          productId: i.id,
-          quantity: i.quantity,
-        },
-      )),
-    ).toPromise();
-  }
+  // addToStore(items: Merchandise[], storeId) {
+  //   return Promise.all([
+  //     items.map(i => this.httpClient.post(
+  //       `${API.ROOT}/product/goodsrecept/`,
+  //       {
+  //         storeId,
+  //         productId: i.id,
+  //         quantity: i.quantity,
+  //       },
+  //     ).toPromise())])
+  //     .catch(() => this.notifyService.create({
+  //       message: 'Failed to add merchandises to store.',
+  //       type: NotificationType.Error,
+  //     }));
+  // }
 
-  addToCurrentStore(items: Merchandise[]) {
-    return this.addToStore(items, this.storeService.currentStore);
-  }
+  // addToCurrentStore(items: Merchandise[]) {
+  //   return this.addToStore(items, this.storeService.currentStore);
+  // }
 
   update(items: Merchandise[]) {
+    console.log(items);
+
     return forkJoin(
       items.map(i => this.httpClient.put(
         `${API.ROOT}/product/${i.id}`,
@@ -86,6 +91,35 @@ export class MerchandiseService {
           price: i.price,
         },
       )),
-    ).toPromise();
+    ).toPromise()
+    .catch((err) => {
+      this.notifyService.create({
+        message: 'Failed to update merchandises.',
+        type: NotificationType.Error,
+      });
+      throw err;
+    });
+  }
+
+  create(items: Merchandise[]) {
+    return forkJoin(
+      items.map(i => this.httpClient.post(
+        `${API.ROOT}/product/create/`,
+        {
+          name: i.name,
+          category: i.categoryId,
+          quantity: i.quantity,
+          price: i.price,
+          idStore: this.storeService.currentStore,
+        },
+      )),
+    ).toPromise()
+    .catch((err) => {
+      this.notifyService.create({
+        message: 'Failed to create merchandises.',
+        type: NotificationType.Error,
+      });
+      throw err;
+    });
   }
 }
