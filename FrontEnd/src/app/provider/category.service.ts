@@ -3,6 +3,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Category } from '../shared/models';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { NotificationBarService, NotificationType } from 'ngx-notification-bar/release';
 import { of } from 'rxjs';
 import { StoreService } from './store.service';
 
@@ -11,6 +12,7 @@ export class CategoryService {
   constructor(
     private httpClient: HttpClient,
     private storeSerice: StoreService,
+    private notifyService: NotificationBarService,
   ) { }
 
   getAll() {
@@ -27,7 +29,11 @@ export class CategoryService {
     return this.httpClient.get(`${API.ROOT}/category/${id}`)
       .pipe(
         map((body: any) => new Category(body['data'])),
-      ).toPromise();
+      ).toPromise()
+      .catch(() => this.notifyService.create({
+        message: 'Failed to load category from server.',
+        type: NotificationType.Error,
+      }));
   }
 
   getByStore(storeId): Promise<Category[]> {
@@ -35,7 +41,11 @@ export class CategoryService {
       .pipe(
         map((body: any) => body['data'].map(i => new Category(i)),
       ),
-      ).toPromise();
+      ).toPromise()
+      .catch(() => this.notifyService.create({
+        message: 'Failed to load category from server.',
+        type: NotificationType.Error,
+      }));
   }
 
   getFromCurrentStore() {
@@ -47,7 +57,12 @@ export class CategoryService {
       name: category.name,
       idStore: this.storeSerice.currentStore,
     };
-    return this.httpClient.post(`${API.ROOT}/category/create`, obj).toPromise();
+    return this.httpClient.post(`${API.ROOT}/category/create`, obj)
+      .toPromise()
+      .catch(() => this.notifyService.create({
+        message: 'Failed to create category.',
+        type: NotificationType.Error,
+      }));
   }
 
   update(id, newNameCategory) {
@@ -55,7 +70,12 @@ export class CategoryService {
       name: newNameCategory,
       idStore: this.storeSerice.currentStore,
     };
-    return this.httpClient.put(`${API.ROOT}/category/${id}`, obj).toPromise();
+    return this.httpClient.put(`${API.ROOT}/category/${id}`, obj)
+      .toPromise()
+      .catch(() => this.notifyService.create({
+        message: 'Failed to update category.',
+        type: NotificationType.Error,
+      }));
   }
 
   delete(id) {
