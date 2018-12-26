@@ -60,6 +60,8 @@ export class EmployeeCreateComponent implements OnInit, OnChanges {
     this.employee.birthday = this.mapDate(this.dateTime);
     this.employeeService.addUser(this.user)
       .then(() => {
+        console.log('created account');
+
         this.employeeService.add(this.employee, this.user)
           .then(() => {
             window.location.reload();
