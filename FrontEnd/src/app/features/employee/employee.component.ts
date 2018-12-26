@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { EmployeeService } from '../../provider/employee.service';
 import { Employee } from '../../shared/models/employee';
-import { Router } from '@angular/router';
+import { NotificationType, NotificationBarService } from 'ngx-notification-bar/release';
 
 @Component({
   selector: 'app-employee',
@@ -12,28 +12,27 @@ import { Router } from '@angular/router';
   styleUrls: ['./employee.component.scss'],
 })
 export class EmployeeComponent implements OnInit {
-  listEmployee: Employee[] = [];
-  listEmployeeSorted: Employee[] = [];
-  typeSort = ['', '', '', '', ''];
-  style: boolean[] = [false, false, false, false, false];
+  employee = new Employee({});
+  employees: Employee[] = [];
+  employeeSorted: any[] = [];
   paginateConfig = {
     id: 'paginator',
-    itemsPerPage: 4,
+    itemsPerPage: 10,
     currentPage: 1,
   };
   open = false;
-  employee = {
-    name: '',
-    gender: '',
-    address: '',
-    email: '',
-    birthday: null,
-    phone: '',
-  };
   isUpdate: boolean;
+
+  sortKey = '';
+  sortReverse = false;
+  filter = '';
+  dateTime: string;
+  openDiaglog: boolean = false;
+
   constructor(
-    private router: Router,
     private employeeService: EmployeeService,
+    private notifyService: NotificationBarService,
+    private ref: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -41,11 +40,20 @@ export class EmployeeComponent implements OnInit {
   }
 
   getAll() {
-    this.employeeService.getAll().subscribe(
-      (res: any) => {
-        this.listEmployee = res;
-        this.listEmployeeSorted = this.listEmployee;
-        // console.log(this.listEmployee);
+    this.employeeService.getFromCurrentStore().then(
+      (res: Employee[]) => {
+        this.employees = res;
+        this.employeeSorted = this.employees.map(i => ({
+          username: i.user.username,
+          // gender: i.gender,
+          name: i.name,
+          // address: i.address,
+          phone: i.phone,
+          email: i.email,
+          birthday: this.formatDate(i.birthday),
+          role: i.user.role,
+          data: i,
+        }));
       },
       (er) => {
         console.warn(er);
@@ -53,25 +61,23 @@ export class EmployeeComponent implements OnInit {
   }
 
   formatDate(date) {
-    return moment(date).format('ll');
+    return moment(date).format('MM/DD/YYYY');
   }
 
-  sortBy(type, position) {
-    this.typeSort[position] = type;
-    this.style[position] = !this.style[position];
-
-    if (this.style[position]) {
-      return this.listEmployeeSorted = _.sortBy(this.listEmployeeSorted, [type]);
+  sortBy(type) {
+    if (this.sortKey === type) {
+      this.sortReverse = !this.sortReverse;
+      return this.employeeSorted = _.reverse(this.employeeSorted);
     }
-    return this.listEmployeeSorted = _.reverse(_.sortBy(this.listEmployeeSorted, [type]));
+
+    this.sortKey = type;
+    this.sortReverse = false;
+    return this.employeeSorted = _.sortBy(this.employeeSorted, [type]);
   }
 
-  sortIcon(type, position) {
-    if (this.typeSort[position] === type) {
-      if (this.style[position]) {
-        return 'fa-sort-down';
-      }
-      return 'fa-sort-up';
+  sortIcon(type) {
+    if (this.sortKey === type) {
+      return this.sortReverse ? 'fa-sort-down' : 'fa-sort-up';
     }
     return 'fa-sort';
   }
@@ -82,26 +88,41 @@ export class EmployeeComponent implements OnInit {
 
   add() {
     this.isUpdate = false;
-    this.employee.name = '';
-    this.employee.gender = '';
-    this.employee.address = '';
-    this.employee.email = '';
-    this.employee.birthday = null;
-    this.employee.phone = '';
+    this.employee = new Employee({});
+    this.dateTime = this.format(new Date());
+    this.openDiaglog = true;
   }
 
   edit(event) {
     this.isUpdate = true;
-    this.employee.name = event.name;
-    this.employee.gender = event.gender;
-    this.employee.address = event.address;
-    this.employee.email = event.email;
-    this.employee.birthday = event.birthday;
-    this.employee.phone = event.phone;
+    this.employee = event.data;
+    this.dateTime = this.format(this.employee.birthday);
+    this.openDiaglog = true;
   }
 
-  addEvent(event) {
-    console.log(event);
+  format(date) {
+    return moment(date).format('YYYY-MM-DD');
+  }
 
+  delete(item) {
+    const id = item.id;
+    this.employeeService.delete(id)
+      .then(() => {
+        // window.location.reload();
+        this.employeeSorted.splice(this.employeeSorted.indexOf(item), 1);
+        this.ref.markForCheck();
+
+        this.notifyService.create({
+          message: 'Process deleted successfully.',
+          type: NotificationType.Success,
+        });
+      })
+      .catch((err) => {
+        this.notifyService.create({
+          message: 'Failed to delete.',
+          type: NotificationType.Error,
+        }),
+          console.warn(err);
+      });
   }
 }

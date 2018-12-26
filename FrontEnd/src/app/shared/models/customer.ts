@@ -4,17 +4,19 @@ export class Customer extends Base {
   'id': number;
   'name': string;
   'gender': string;
-  'birthday': string;
+  'birthday': Date;
   'address': string;
-  'phone': string;
+  'phone': number;
+  'email': string;
 
   constructor(item) {
-    super(item.createdBy, item.createdDate, item.updatedBy, item.updatedDate);
-    this.id = item.id;
+    super(item.createdDate || item.createDay);
+    this.id = item.idKhachhang;
     this.name = item.name;
-    this.gender = item.gender;
-    this.birthday = item.birthday;
-    this.address = item.address;
+    this.gender = item.gender || '';
+    this.birthday = new Date(item.birthDay || item.birthday);
+    this.address = item.address || '';
     this.phone = item.phone;
+    this.email = item.email;
   }
 }

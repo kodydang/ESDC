@@ -1,0 +1,9 @@
+@import './theme-variables.scss';
+
+$screen-sizes: xl lg md sm xs;
+
+@each $key in $screen-sizes {
+  .font-#{$key} {
+    font-size: map-get($font-sizes, $key);
+  }
+}

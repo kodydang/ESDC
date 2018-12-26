@@ -1,7 +1,8 @@
+import { Merchandise, Category } from 'src/app/shared/models';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
-import * as moment from 'moment';
 import { MerchandiseService } from '../../../provider/merchandise.service';
+import { CategoryService } from 'src/app/provider/category.service';
 
 @Component({
   selector: 'app-merchandise-create',
@@ -9,14 +10,14 @@ import { MerchandiseService } from '../../../provider/merchandise.service';
   styleUrls: ['./merchandise-create.component.scss'],
 })
 export class MerchandiseCreateComponent implements OnInit {
-  @Output() submit = new EventEmitter();
-  @Input() merchandise;
+  @Input() merchandise: Merchandise;
   @Input() isUpdate;
 
-  categories: any;
-  submitted = false;
+  categories: Category[];
+
   constructor(
     private merchandiseService: MerchandiseService,
+    private categoryService: CategoryService,
   ) {
   }
 
@@ -25,18 +26,26 @@ export class MerchandiseCreateComponent implements OnInit {
   }
 
   getCategory() {
-    this.merchandiseService.getCategory().subscribe((res: any) => {
+    this.categoryService.getFromCurrentStore().then((res: any) => {
       this.categories = res;
     });
   }
+
   formSubmit(res: NgForm) {
-    console.log(res);
-    this.submitted = true;
+    const data = new Merchandise({ ...this.merchandise, ...res.value });
+    (this.isUpdate ? this.update(data) : this.add(data)).then(
+      () => window.location.reload(),
+    );
   }
-  add() {
-    this.merchandise.birthday = moment(this.merchandise.birthday).toDate();
-    this.submit.emit(this.merchandise);
+
+  add(data: Merchandise) {
+    return this.merchandiseService.create([data]);
   }
+
+  update(data: Merchandise) {
+    return this.merchandiseService.update([data]);
+  }
+
   onCategoryClick(value) {
     this.merchandise.category = value;
   }

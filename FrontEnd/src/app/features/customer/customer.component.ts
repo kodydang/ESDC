@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Customer } from '../../shared/models';
 import { CustomerService } from '../../provider/customer.service';
+import { NotificationBarService, NotificationType } from 'ngx-notification-bar/release';
 
 @Component({
   selector: 'app-customer',
@@ -10,65 +11,70 @@ import { CustomerService } from '../../provider/customer.service';
   styleUrls: ['./customer.component.scss'],
 })
 export class CustomerComponent implements OnInit {
-  customer = {
-    name: '',
-    gender: '',
-    address: '',
-    email: '',
-    birthday: null,
-    phone: '',
-  };
-  listCustomer: Customer[] = [];
-  listCustomerSorted: Customer[] = [];
-  typeSort = ['', '', '', ''];
-  style: boolean[] = [false, false, false, false];
+  customer = new Customer({});
+  customers: Customer[] = [];
+  customerSorted: any[] = [];
+  openDiaglog: boolean = false;
   paginateConfig = {
     id: 'paginator',
-    itemsPerPage: 4,
+    itemsPerPage: 10,
     currentPage: 1,
   };
+
   isUpdate: boolean;
+
+  sortKey = '';
+  sortReverse = false;
+  filter = '';
+  dateTime: string;
+
   constructor(
     private customerService: CustomerService,
+    private notifyService: NotificationBarService,
+    private ref: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
     this.getAll();
   }
 
+  formatDate(date) {
+    return moment(date).format('MM/DD/YYYY');
+  }
   getAll() {
-    this.customerService.getAll().subscribe(
+    this.customerService.getFromCurrentStore().then(
       (res: any) => {
-        this.listCustomer = res;
-        this.listCustomerSorted = this.listCustomer;
-        // console.log(this.listCustomer);
+        this.customers = res;
+        this.customerSorted = this.customers.map(i => ({
+          id: i.id,
+          name: i.name,
+          // gender: i.gender,
+          email: i.email,
+          phone: i.phone,
+          birthday: this.formatDate(i.birthday),
+          fullData: i,
+        }));
+        console.log(this.customers);
       },
       (er) => {
         console.warn(er);
       });
   }
 
-  formatDate(date) {
-    return moment(date).format('ll');
-  }
-
-  sortBy(type, position) {
-    this.typeSort[position] = type;
-    this.style[position] = !this.style[position];
-    // console.log(this.typeSort);
-
-    if (this.style[position]) {
-      return this.listCustomerSorted = _.sortBy(this.listCustomerSorted, [type]);
+  sortBy(type) {
+    if (this.sortKey === type) {
+      this.sortReverse = !this.sortReverse;
+      return this.customerSorted = _.reverse(this.customerSorted);
     }
-    return this.listCustomerSorted = _.reverse(_.sortBy(this.listCustomerSorted, [type]));
+
+    this.sortKey = type;
+    this.sortReverse = false;
+    return this.customerSorted = _.sortBy(this.customerSorted, [type]);
   }
 
-  sortIcon(type, position) {
-    if (this.typeSort[position] === type) {
-      if (this.style[position]) {
-        return 'fa-sort-down';
-      }
-      return 'fa-sort-up';
+  sortIcon(type) {
+    if (this.sortKey === type) {
+      return this.sortReverse ? 'fa-sort-down' : 'fa-sort-up';
     }
     return 'fa-sort';
   }
@@ -77,27 +83,43 @@ export class CustomerComponent implements OnInit {
     this.paginateConfig.currentPage = number;
   }
 
-  addEvent(event) {
-    console.log(event);
-
-  }
   add() {
     this.isUpdate = false;
-    this.customer.name = '';
-    this.customer.gender = '';
-    this.customer.address = '';
-    this.customer.email = '';
-    this.customer.birthday = null;
-    this.customer.phone = '';
+    this.customer = new Customer({});
+    this.dateTime = this.format(new Date());
+    this.openDiaglog = true;
   }
 
   edit(event) {
     this.isUpdate = true;
-    this.customer.name = event.name;
-    this.customer.gender = event.gender;
-    this.customer.address = event.address;
-    this.customer.email = event.email;
-    this.customer.birthday = event.birthday;
-    this.customer.phone = event.phone;
+    this.customer = event;
+    this.dateTime = this.format(this.customer.birthday);
+    this.openDiaglog = true;
+  }
+
+  format(date) {
+    return moment(date).format('YYYY-MM-DD');
+  }
+
+  delete(item) {
+    const id = item.id;
+    this.customerService.delete(id)
+      .then(() => {
+        // window.location.reload();
+        this.customerSorted.splice(this.customerSorted.indexOf(item), 1);
+        this.ref.markForCheck();
+
+        this.notifyService.create({
+          message: 'Process deleted successfully.',
+          type: NotificationType.Success,
+        });
+      })
+      .catch((err) => {
+        this.notifyService.create({
+          message: 'Failed to delete.',
+          type: NotificationType.Error,
+        }),
+          console.warn(err);
+      });
   }
 }

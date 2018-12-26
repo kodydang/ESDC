@@ -12,21 +12,18 @@ import { MerchandiseService } from '../../provider/merchandise.service';
 })
 export class MerchandiseComponent implements OnInit {
   listMerchandise: Merchandise[] = [];
-  listMerchandiseSorted: Merchandise[] = [];
+  listMerchandiseSorted: any[] = [];
   typeSort = ['', '', '', ''];
   style: boolean[] = [false, false, false, false];
+  filter = '';
   paginateConfig = {
     id: 'paginator',
-    itemsPerPage: 4,
+    itemsPerPage: 10,
     currentPage: 1,
   };
   open = false;
-  merchandise = {
-    name: '',
-    category: '',
-    price: 0,
-    quantities: 0,
-  };
+  merchandise: Merchandise = new Merchandise({});
+
   isUpdate: boolean;
   constructor(
     private merchandiseService: MerchandiseService,
@@ -37,11 +34,11 @@ export class MerchandiseComponent implements OnInit {
   }
 
   getAll() {
-    this.merchandiseService.getAll().subscribe(
+    this.merchandiseService.getFromCurrentStore().then(
       (res: any) => {
         this.listMerchandise = res;
         this.listMerchandiseSorted = this.listMerchandise;
-        // console.log(this.listMerchandise);
+        // console.log(this.listMerchandiseSorted);
       },
       (er) => {
         console.warn(er);
@@ -81,20 +78,15 @@ export class MerchandiseComponent implements OnInit {
     this.merchandise.name = '';
     this.merchandise.category = '';
     this.merchandise.price = 0;
-    this.merchandise.quantities = 0;
+    this.merchandise.quantity = 0;
   }
 
-  edit(event) {
+  edit(event: Merchandise) {
     this.isUpdate = true;
     this.merchandise.name = event.name;
-    this.merchandise.category = event.category;
+    this.merchandise.categoryId = event.categoryId;
     this.merchandise.price = event.price;
-    this.merchandise.quantities = event.quantities;
+    this.merchandise.quantity = event.quantity;
+    this.merchandise.id = event.id;
   }
-
-  addEvent(event) {
-    console.log(event);
-
-  }
-
 }

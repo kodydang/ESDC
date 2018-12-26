@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import * as moment from 'moment';
+import { Customer } from '../../../shared/models/customer';
+import { CustomerService } from '../../../provider/customer.service';
 
 @Component({
   selector: 'app-customer-create',
@@ -8,22 +9,60 @@ import * as moment from 'moment';
   styleUrls: ['./customer-create.component.scss'],
 })
 export class CustomerCreateComponent implements OnInit {
-  @Output() submit = new EventEmitter();
-  @Input() customer;
+  @Input() customer: Customer;
   @Input() isUpdate;
-  submitted = false;
-  constructor() { }
+  @Input() dateTime: string;
+  constructor(
+    private customerService: CustomerService,
+    private ref: ChangeDetectorRef,
+  ) { }
 
   ngOnInit() {
   }
 
-  formSubmit(res: NgForm) {
-    console.log(res);
-    this.submitted = true;
+  mapDate(date) {
+    return moment(date, 'YYYY-MM-DD').toDate();
   }
+
   add() {
-    this.customer.birthday = moment(this.customer.birthday).toDate();
-    this.submit.emit(this.customer);
+    this.customer.birthday = this.mapDate(this.dateTime);
+    this.customerService.create(this.customer)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  }
+
+  update() {
+    this.customer.birthday = this.mapDate(this.dateTime);
+    this.customerService.update(this.customer)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  }
+
+  delete() {
+    this.customerService.delete(this.customer)
+    .then(() => {
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.warn(err);
+    });
+  }
+
+  submit() {
+    if (this.isUpdate) {
+      this.update();
+    } else {
+      this.add();
+    }
+    this.ref.markForCheck();
   }
   onGenderClick(value) {
     this.customer.gender = value;

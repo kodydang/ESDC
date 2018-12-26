@@ -1,0 +1,94 @@
+<form #importForm="ngForm" class="row mx-0 px-0">
+  <h5 class="text-uppercase"><i class="fas fa-shopping-cart"></i> Items to import</h5>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th></th>
+          <th (click)="sortBy('name')">
+            <span>Name</span>
+            <i class="fas i-sort" [ngClass]="sortIcon('name')"></i>
+          </th>
+          <th (click)="sortBy('category')">
+            <span>Category</span>
+            <i class="fas i-sort" [ngClass]="sortIcon('category')"></i>
+          </th>
+          <th (click)="sortBy('quantity')">
+            <span>Quantity</span>
+            <i class="fas i-sort" [ngClass]="sortIcon('quantity')"></i>
+          </th>
+          <th (click)="sortBy('price')">
+            <span>Price</span>
+            <i class="fas i-sort" [ngClass]="sortIcon('price')"></i>
+          </th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cart; let i = index">
+          <th>{{i+1}}</th>
+          <td>{{ item.name }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.price | number:'1.0-0' }}</td>
+          <td>
+            <button type="button" class="btn btn-danger btn-sm btn-block" (click)="delete(item)" tabindex="-1">
+              <i class="fas fa-trash-alt"></i> Delete</button>
+          </td>
+        </tr>
+
+        <tr>
+          <th width="5%">{{cart.length + 1}}</th>
+          <td width="40%">
+            <div class="form-group">
+              <input type="text" class="form-control" id="nameMerchandise" placeholder="Merchandise name" [(ngModel)]="newMerchandise.name"
+                name="nameMerchandise" #nameMerchandise="ngModel" autocomplete="off" [typeahead]="merchandises"
+                typeaheadOptionField="name" typeaheadGroupField="category" (typeaheadOnSelect)="select($event)" required autocomplete="off">
+            </div>
+          </td>
+
+          <td width="15%">
+            <div class="form-group">
+              <select class="form-control" name="categoryMerchandise" id="categoryMerchandise" [(ngModel)]="newMerchandise.categoryId" placeholder="Unclassified" required>
+                <option [value]="item.id" *ngFor="let item of category">{{item.name}}</option>
+              </select>
+            </div>
+          </td>
+
+          <td width="15%">
+            <div class="form-group">
+              <input type="number" min="1" class="form-control" id="quantityMerchandise" placeholder="Quantity"
+                [(ngModel)]="newMerchandise.quantity" name="quantityMerchandise" #quantityMerchandise="ngModel" required autocomplete="off">
+            </div>
+          </td>
+
+          <td width="15%" class="form-group">
+            <input type="text" class="form-control" id="priceMerchandise" placeholder="Price" [(ngModel)]="newMerchandise.price" name="priceMerchandise"
+              #priceMerchandise="ngModel" required autocomplete="off">
+          </td>
+
+          <td>
+            <button class="btn btn-success btn-sm btn-block" type="submit" [disabled]="importForm.invalid"
+              (click)="addToCart()"><i class="fas fa-plus"></i>
+              Add</button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=3>
+            <h5>Total</h5>
+          </td>
+          <td>{{totalQuantity}}</td>
+          <td>{{totalPrice | number:'1.0-0'}}</td>
+          <td>
+            <button class="btn btn-danger btn-sm btn-block" (click)="clear()">
+              <i class="fas fa-times"></i> Clear all</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card-footer text-center w-100">
+    <button type="submit" class="btn btn-primary" [disabled]="cart.length === 0" (click)="onSubmit()">Import</button>
+  </div>
+</form>

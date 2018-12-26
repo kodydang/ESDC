@@ -13,39 +13,52 @@
         </button>
       </div>
       <div class="modal-body">
-        <form #addForm="ngForm" (ngSubmit)="formSubmit(addForm)" data-toggle="validator" role="form">
+        <form #addForm="ngForm" data-toggle="validator" role="form">
           <div class="form-group" [ngClass]="{
             'has-success': nameEmployee.valid,
             'has-error': nameEmployee.invalid && (nameEmployee.dirty || nameEmployee.touched)}">
             <label for="name">Name: <span class="k-required">*</span></label>
             <input type="text" class="form-control" id="nameEmployee" placeholder="Enter employee's name" [(ngModel)]="employee.name"
-              name="nameEmployee" #nameEmployee="ngModel" required pattern="^[a-z A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$">
+              name="nameEmployee" #nameEmployee="ngModel" required>
             <div [hidden]="nameEmployee.valid || nameEmployee.pristine" class="alert alert-danger">
               <strong>Please enter employee's name</strong>
             </div>
           </div>
 
           <div class="form-group" [ngClass]="{
-            'has-success': address.valid,
-            'has-error': address.invalid && (address.dirty || address.touched)}">
-            <label for="address">Address: <span class="k-required">*</span></label>
-            <input class="form-control" type="text" id="address" placeholder="Enter employee's address" [(ngModel)]="employee.address"
-              name="address" #address="ngModel" required pattern="^[0-9a-z A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ,.]+$">
-            <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
-              <strong>You should enter employee's address</strong>
+            'has-success': username.valid,
+            'has-error': username.invalid && (username.dirty || username.touched)}">
+            <label for="name">Username: <span class="k-required">*</span></label>
+            <input type="text" class="form-control" id="username" placeholder="Enter employee's username" [(ngModel)]="user.username"
+              name="username" #username="ngModel" required [disabled]="isUpdate">
+            <div [hidden]="nameEmployee.valid || nameEmployee.pristine" class="alert alert-danger">
+              <strong>Please enter employee's name</strong>
+            </div>
+          </div>
+
+          <div class="form-group" [ngClass]="{
+            'has-success': role.valid,
+            'has-error': role.invalid && (role.dirty || role.touched)}">
+            <label for="name">Role: <span class="k-required">*</span></label>
+            <select class="form-control" name="role" placeholder="Select a role" [(ngModel)]="user.roleKey" #role="ngModel"
+              required>
+              <option [value]="item.value" *ngFor="let item of roles">{{item.title}}</option>
+            </select>
+            <div [hidden]="nameEmployee.valid || nameEmployee.pristine" class="alert alert-danger">
+              <strong>Please enter employee's name</strong>
             </div>
           </div>
 
           <div class="form-group">
             <label>Birthday: <span class="k-required">*</span></label>
-            <input class="form-control" type="date" id="input_Date" [(ngModel)]="employee.birthday" name="birthday"
-              #birthday="ngModel" required>
+            <input class="form-control" type="date" id="birthday" [(ngModel)]="dateTime" name="birthday" #birthday="ngModel"
+              required>
             <div [hidden]="birthday.valid || birthday.pristine" class="alert alert-warning">
               <strong>You should enter employee's birthday!!</strong>
             </div>
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label class="mr-3">Gender: <span class="k-required">*</span></label>
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="male" id="male" value="Male" [(ngModel)]="employee.gender">
@@ -55,7 +68,7 @@
               <input class="form-check-input" type="radio" name="female" id="female" value="Female" [(ngModel)]="employee.gender">
               <label class="form-check-label" for="female">Female</label>
             </div>
-          </div>
+          </div> -->
 
           <div class="form-group" [ngClass]="{
           'has-success': email.valid,
@@ -76,7 +89,7 @@
         }">
             <label>Phone: <span class="k-required">*</span></label>
             <input class="form-control" type="phone" id="input_Phone" placeholder="Phone" [(ngModel)]="employee.phone"
-              name="phone" #phone="ngModel" required pattern="^([0][0-9]{9,10})$" minlength="10">
+              name="phone" #phone="ngModel" required length="10" pattern="[0-9]{10}">
             <div [hidden]="phone.valid || phone.pristine" class="alert alert-warning">
               <strong>Phone must be at least 10 number [0-9] and begin number 0 or +</strong>
               <p>Example: 0912345678</p>
@@ -85,7 +98,8 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!(nameEmployee.valid && address.valid && email.valid && birthday.valid && phone.valid)">{{ isUpdate ? 'Update' : 'Add' }}</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="submit()" [disabled]="addForm.invalid">{{isUpdate
+              ? 'Update' : 'Add' }}</button>
             <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()">Add</button> -->
           </div>
 

@@ -1,20 +1,26 @@
-import { Base } from './base';
+import { Account } from './account';
 
-export class Employee extends Base {
+export class Employee extends Account {
   'id': number;
   'name': string;
-  'gender': string;
-  'birthday': string;
-  'address': string;
+  // 'gender': string;
+  'birthday': Date;
+  'email': string;
   'phone': string;
+  'user': Account;
+  'idStore': number;
+  'status': string;
 
   constructor(item) {
-    super(item.createdBy, item.createdDate, item.updatedBy, item.updatedDate);
-    this.id = item.id;
-    this.name = item.name;
-    this.gender = item.gender;
-    this.birthday = item.birthday;
-    this.address = item.address;
-    this.phone = item.phone;
+    super(item.createdDate || item.createDay);
+    this.id = item.idNv || -1;
+    this.name = item.name || '';
+    // this.gender = item.gender || '';
+    this.birthday = new Date(item.bday);
+    this.email = item.email || '';
+    this.phone = item.phone || '';
+    this.user = new Account(item.userByUserName || {});
+    this.idStore = item.idStore || -1;
+    this.status = item.status || 0;
   }
 }

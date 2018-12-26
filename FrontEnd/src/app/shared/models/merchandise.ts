@@ -4,15 +4,17 @@ export class Merchandise extends Base {
   'id': number;
   'name': string;
   'category': string;
+  'categoryId': string;
   'price': number;
-  'quantities': number;
+  'quantity': number;
 
   constructor(item) {
-    super(item.createdBy, item.createdDate, item.updatedBy, item.updatedDate);
-    this.id = item.id;
+    super(item.createdDate || item.createDay);
+    this.id = item.id || item['idSanpham'];
     this.name = item.name;
+    this.categoryId = item.categoryId;
     this.category = item.category;
-    this.quantities = item.quantities;
+    this.quantity = item.quantity;
     this.price = item.price;
   }
 }

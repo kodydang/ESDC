@@ -1,37 +1,65 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './../guards/auth.guard';
+import { BillComponent } from './../features/bill/bill.component';
+import { StoreComponent } from './../features/store/store.component';
 import { AdminPageComponent } from './admin-page.component';
-import { EmployeeComponent } from '../features/employee/employee.component';
+import { CategoryComponent } from '../features/category/category.component';
 import { CustomerComponent } from '../features/customer/customer.component';
-import { ReportComponent } from '../features/report/report.component';
+import { EmployeeComponent } from '../features/employee/employee.component';
+import { ImportComponent } from './../features/import/import.component';
 import { MerchandiseComponent } from '../features/merchandise/merchandise.component';
+import { NgModule } from '@angular/core';
+import { PAGE } from './../shared/constants';
+import { PaymentComponent } from '../features/payment/payment.component';
+import { ReportComponent } from '../features/report/report.component';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   // Module is lazy loaded, see app-routing.module.ts
   {
-    path: 'admin',
+    path: PAGE.ADMIN.URL,
     component: AdminPageComponent,
+    canActivate: [AuthGuard],
     children: [
       {
-        path: 'employee',
+        path: PAGE.EMPLOYEE.URL,
         component: EmployeeComponent,
       },
       {
-        path: 'customer',
+        path: PAGE.CUSTOMER.URL,
         component: CustomerComponent,
       },
       {
-        path: 'report',
+        path: PAGE.REPORT.URL,
         component: ReportComponent,
       },
       {
-        path: 'merchandise',
+        path: PAGE.MERCHANDISE.URL,
         component: MerchandiseComponent,
+      },
+      {
+        path: PAGE.CATEGORY.URL,
+        component: CategoryComponent,
+      },
+      {
+        path: PAGE.PAYMENT.URL,
+        component: PaymentComponent,
+      },
+      {
+        path: PAGE.IMPORT.URL,
+        component: ImportComponent,
+      },
+      {
+        path: PAGE.STORE.URL,
+        component: StoreComponent,
+      },
+      {
+        path: PAGE.BILL.URL,
+        component: BillComponent,
       },
       {
         path: '',
         pathMatch: 'prefix',
-        redirectTo: '',
+        redirectTo: PAGE.PAYMENT.URL,
       },
     ],
   },

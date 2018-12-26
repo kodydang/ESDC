@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MomentModule } from 'angular2-moment';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -12,27 +12,34 @@ import { ProvidersModule } from './provider/providers.module';
 import { AdminPageModule } from './admin-page/admin-page.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
+import { NgxMaskModule } from 'ngx-mask';
+import { TypeaheadModule } from 'ngx-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
-    AppRoutingModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
+    BrowserAnimationsModule,
+    // Page modules
+    AdminPageModule,
+    LoginModule,
+
+    // 3rd Libary
     MomentModule,
-    // Libary 3rd
+    NgxMaskModule.forRoot(),
+    TypeaheadModule.forRoot(),
     NgxPaginationModule,
 
     ProvidersModule,
     SharedModule,
-    AdminPageModule,
-    LoginModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

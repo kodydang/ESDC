@@ -1,0 +1,177 @@
+<!-- BEGIN: CART -->
+<form #cartForm="ngForm" class="row">
+  <h5 class="text-uppercase"><i class="fas fa-shopping-cart"></i> Items in cart</h5>
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col" (click)="sortBy('name')">
+          <span>Name</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('name')"></i>
+        </th>
+        <th scope="col" (click)="sortBy('category')">
+          <span>Category</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('category')"></i>
+        </th>
+        <th scope="col" (click)="sortBy('quantity')">
+          <span>Quantity</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('quantity')"></i>
+        </th>
+        <th scope="col" (click)="sortBy('price')">
+          <span>Price</span>
+          <i class="fas i-sort" [ngClass]="sortIcon('price')"></i>
+        </th>
+        <th class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cart; let i = index">
+        <th>{{i+1}}</th>
+        <td>{{ item.name }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price | number:'1.0-0' }}</td>
+        <td>
+          <button type="button" class="btn btn-danger btn-sm btn-block" (click)="delete(item)" tabindex="-1">
+            <i class="fas fa-trash-alt"></i> Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <th width="5%">{{cart.length + 1}}</th>
+        <td width="40%">
+          <div class="form-group">
+            <input type="text" class="form-control" id="nameMerchandise" placeholder="Merchandise name" [(ngModel)]="newMerchandise.name"
+              name="nameMerchandise" #nameMerchandise="ngModel" autocomplete="off" [typeahead]="merchandises"
+              typeaheadOptionField="name" typeaheadGroupField="category" (typeaheadOnSelect)="select($event)" required>
+          </div>
+        </td>
+
+        <td width="15%">
+          <div class="form-group">
+            <input type="text" class="form-control" id="categoryMerchandise" [value]="newMerchandise.category" name="categoryMerchandise"
+              readonly>
+          </div>
+        </td>
+
+        <td width="15%">
+          <div class="form-group input-group">
+            <input type="number" min="0" [max]="stock" class="form-control" id="quantityMerchandise" placeholder="Purcharing quantity"
+              [(ngModel)]="newMerchandise.quantity" name="quantityMerchandise" #quantityMerchandise="ngModel" required>
+            <span class="input-group-append">
+              <span class="input-group-text bg-transparent text-muted" style="font-size: 80%;">/{{stock}}</span>
+            </span>
+          </div>
+        </td>
+
+        <td width="15%" class="form-group">
+          <input type="text" class="form-control" id="priceMerchandise" [value]="price | number:'1.0-0'" name="priceMerchandise"
+            readonly>
+        </td>
+
+        <td>
+          <button class="btn btn-success btn-sm btn-block" type="submit" [disabled]="cartForm.invalid || !isItemValid"
+            (click)="addToCart()"><i class="fas fa-plus"></i>
+            Add</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan=3>
+          <h5>Total</h5>
+        </td>
+        <td>{{totalQuantity}}</td>
+        <td>{{totalPrice | number:'1.0-0'}}</td>
+        <td>
+          <button class="btn btn-danger btn-sm btn-block" (click)="clear()">
+            <i class="fas fa-times"></i> Clear all</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+<!-- END: CART -->
+
+
+<form class="row mt-5" #customerForm="ngForm" (ngSubmit)="formSubmit(customerForm)" data-toggle="validator" role="form">
+  <h5 class="text-uppercase"><i class="fas fa-user"></i> Customer Information</h5>
+  <div class="col-md-12 card p-0">
+    <div class="card-body">
+      <div class="form-group" [ngClass]="{
+                            'has-success': nameCustomer.valid,
+                            'has-error': nameCustomer.invalid && (nameCustomer.dirty || nameCustomer.touched)}">
+        <label for="name">Name: <span class="k-required">*</span></label>
+        <input type="text" class="form-control" id="nameCustomer" placeholder="Enter customer's name" [(ngModel)]="customer.name"
+          name="nameCustomer" #nameCustomer="ngModel" required pattern="^[a-z A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$">
+        <div [hidden]="nameCustomer.valid || nameCustomer.pristine" class="alert alert-danger">
+          <strong>Please enter customer's name</strong>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{
+                            'has-success': address.valid,
+                            'has-error': address.invalid && (address.dirty || address.touched)}">
+        <label for="address">Address: <span class="k-required">*</span></label>
+        <input class="form-control" type="text" id="address" placeholder="Enter customer's address" [(ngModel)]="customer.address"
+          name="address" #address="ngModel" required pattern="^[0-9a-z A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ,./]+$">
+        <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
+          <strong>You should enter customer's address</strong>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Birthday: <span class="k-required">*</span></label>
+        <input class="form-control" type="date" id="input_Date" [(ngModel)]="customer.birthday" name="birthday"
+          #birthday="ngModel" required>
+        <div [hidden]="birthday.valid || birthday.pristine" class="alert alert-warning">
+          <strong>You should enter customer's birthday!!</strong>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="mr-3">Gender: <span class="k-required">*</span></label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="male" value="Male" [(ngModel)]="customer.gender"
+            required>
+          <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="female" value="Female" [(ngModel)]="customer.gender"
+            required>
+          <label class="form-check-label" for="female">Female</label>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{
+                          'has-success': email.valid,
+                          'has-warning': email.invalid && (email.dirty || email.touched)
+                        }">
+        <label>Email: <span class="k-required">*</span></label>
+        <input class="form-control" type="email" id="input_Email" placeholder="you@example.com" [(ngModel)]="customer.email"
+          name="email" #email="ngModel" required email>
+        <div [hidden]="email.valid || email.pristine" class="alert alert-warning">
+          <strong>Please enter a valid email </strong>
+          <p>Example: you@example.com</p>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{
+                          'has-success': phone.valid,
+                          'has-warning': phone.invalid && (phone.dirty || phone.touched)
+                        }">
+        <label>Phone: <span class="k-required">*</span></label>
+        <input class="form-control" type="phone" id="input_Phone" placeholder="Phone" [(ngModel)]="customer.phone" name="phone"
+          #phone="ngModel" required pattern="^([0][0-9]{9,10})$" minlength="10">
+        <div [hidden]="phone.valid || phone.pristine" class="alert alert-warning">
+          <strong>Phone must be at least 10 number [0-9] and begin number 0 or +</strong>
+          <p>Example: 0912345678</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer d-flex">
+      <button type="button" class="btn btn-primary" (click)="resetForm(customerForm)">New Payment</button>
+      <div class="ml-auto">
+        <button type="submit" class="btn btn-primary mx-1" [disabled]="customerForm.invalid || cart.length === 0">Place Payment</button>
+      </div>
+    </div>
+  </div>
+</form>
