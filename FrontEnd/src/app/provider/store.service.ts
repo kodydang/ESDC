@@ -1,3 +1,4 @@
+import { NotificationBarService, NotificationType } from 'ngx-notification-bar/release';
 import { API } from './../shared/constants';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -7,7 +8,10 @@ import { Store } from '../shared/models';
 
 @Injectable()
 export class StoreService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private notifyService: NotificationBarService,
+  ) {}
 
   get currentStore() {
     return +sessionStorage.getItem('storeId');
@@ -24,7 +28,11 @@ export class StoreService {
         map(
           (body: any[]) => body['data'].map(i => new Store(i)),
         ),
-      ).toPromise();
+      ).toPromise()
+      .catch(() => this.notifyService.create({
+        message: 'Failed to load stores from server.',
+        type: NotificationType.Error,
+      }));
   }
 
   getById(id: string) {
@@ -40,6 +48,24 @@ export class StoreService {
         name: store.name,
         address: store.address,
       },
-    ).toPromise();
+    ).toPromise()
+    .catch(() => this.notifyService.create({
+      message: 'Failed to update store.',
+      type: NotificationType.Error,
+    }));
+  }
+
+  create(store: Store) {
+    return this.httpClient.post(
+      `${API.ROOT}/store/create`,
+      {
+        name: store.name,
+        address: store.address,
+      },
+    ).toPromise()
+    .catch(() => this.notifyService.create({
+      message: 'Failed to create store.',
+      type: NotificationType.Error,
+    }));
   }
 }

@@ -22,10 +22,11 @@ export class AdminPageComponent implements OnInit {
   readonly ROLE = ROLE;
   menu = [
     {
-      title: 'Super Admin',
-      permissionLevel: ROLE.SUPER_ADMIN.LEVEL,
+      title: 'General',
+      permissionLevel: ROLE.STAFF.LEVEL,
       pages: [
-        PAGE.STORE,
+        PAGE.PAYMENT,
+        PAGE.IMPORT,
       ],
     },
     {
@@ -42,11 +43,10 @@ export class AdminPageComponent implements OnInit {
       ],
     },
     {
-      title: 'General',
-      permissionLevel: ROLE.STAFF.LEVEL,
+      title: 'Super Admin',
+      permissionLevel: ROLE.SUPER_ADMIN.LEVEL,
       pages: [
-        PAGE.PAYMENT,
-        PAGE.IMPORT,
+        PAGE.STORE,
       ],
     },
   ].filter(i => this.authService.havePermission(i.permissionLevel));
@@ -91,5 +91,9 @@ export class AdminPageComponent implements OnInit {
     localStorage.removeItem('currentUser');
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('role');
+  }
+
+  reload() {
+    window.location.reload();
   }
 }

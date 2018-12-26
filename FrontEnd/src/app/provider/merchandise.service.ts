@@ -1,3 +1,4 @@
+import { NotificationBarService, NotificationType } from 'ngx-notification-bar/release';
 import { Category } from './../shared/models/category';
 import { CategoryService } from './category.service';
 import { API } from './../shared/constants';
@@ -14,6 +15,7 @@ export class MerchandiseService {
     private httpClient: HttpClient,
     private storeService: StoreService,
     private categoryService: CategoryService,
+    private notifyService: NotificationBarService,
   ) { }
 
   getAll() {
@@ -45,11 +47,11 @@ export class MerchandiseService {
         });
         return products;
       }),
-      // catchError((err) => {
-      //   console.error('Error, could not load product from server', err);
-      //   return null;
-      // }),
-    ).toPromise();
+    ).toPromise()
+    .catch(() => this.notifyService.create({
+      message: 'Failed to load merchandises from server.',
+      type: NotificationType.Error,
+    }));
   }
 
   getFromCurrentStore() {

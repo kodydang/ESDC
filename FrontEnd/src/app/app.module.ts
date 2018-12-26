@@ -19,13 +19,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    AppRoutingModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
+    // Page modules
+    AdminPageModule,
+    LoginModule,
 
     // 3rd Libary
     MomentModule,
@@ -35,10 +37,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
     ProvidersModule,
     SharedModule,
-
-    // Page modules
-    AdminPageModule,
-    LoginModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
