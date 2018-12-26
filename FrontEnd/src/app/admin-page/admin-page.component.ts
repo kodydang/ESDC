@@ -57,6 +57,8 @@ export class AdminPageComponent implements OnInit {
   pageIcon = '';
   stores: Store[] = [];
 
+  openDiaglog: boolean = false;
+
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -95,5 +97,9 @@ export class AdminPageComponent implements OnInit {
 
   reload() {
     window.location.reload();
+  }
+
+  changePass() {
+    this.openDiaglog = true;
   }
 }

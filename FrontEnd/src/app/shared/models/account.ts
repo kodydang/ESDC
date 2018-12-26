@@ -7,6 +7,7 @@ export class Account extends Base {
   'photo': string;
   'roleKey': string;
   'id': number;
+  status?: string | number;
 
   constructor(item) {
     super(item ? item.createdDate || item.createDay : null);
@@ -16,6 +17,7 @@ export class Account extends Base {
       this.photo = item.photo;
       this.roleKey = item.role || item['roleName'];
       this.id = item.id;
+      this.status = item.status;
     }
   }
 

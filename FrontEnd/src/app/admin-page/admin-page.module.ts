@@ -14,6 +14,7 @@ import { PaymentModule } from '../features/payment/payment.module';
 import { ImportModule } from '../features/import/import.module';
 import { StoreModule } from '../features/store/store.module';
 import { FormsModule } from '@angular/forms';
+import { LoginModule } from '../login/login.module';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     BillModule,
     AdminRoutingModule,
     FormsModule,
+    LoginModule,
   ],
   declarations: [
     AdminPageComponent,

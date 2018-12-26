@@ -1,0 +1,56 @@
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i>
+  Add new</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="changePassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addForm="ngForm" data-toggle="validator" role="form">
+          <span id="reauth-email" class="reauth-email"></span>
+          <div class="form-group">
+            <input type="text" [(ngModel)]="account.nameUser" name="username" id="username" placeholder="Username"
+              class="form-control radius" [disabled]="true">
+          </div>
+
+          <div class="form-group">
+            <input type="password" [(ngModel)]="account.userPassword" name="password" id="password" placeholder="Old Password"
+              class="form-control radius" />
+          </div>
+
+          <div class="form-group">
+            <input type="password" [(ngModel)]="passToChange" name="re-password1" id="re-password1" placeholder="New Password"
+              class="form-control radius" />
+          </div>
+          <div class="form-group">
+            <input type="password" [(ngModel)]="rePassToChange" name="re-password2" id="re-password2" placeholder="Re-New Password"
+              class="form-control radius" />
+          </div>
+
+          <div class="alert alert-warning" *ngIf="account.userPassword.length < 6 && passToChange.length <6">Password
+            must have at least 6 characters.</div>
+          <div class="alert alert-warning" *ngIf="passToChange != rePassToChange">Confirm password not match.</div>
+          <div class="alert alert-success" *ngIf="passToChange === rePassToChange && passToChange.length >= 6">Confirm
+            password.</div>
+          <!-- <div class="alert alert-danger" *ngIf="isSuccess">Username or password incorrect.</div> -->
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="submit()" [disabled]="account.userPassword === passToChange && account.userPassword.length >= 6">Change</button>
+            <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()">Add</button> -->
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

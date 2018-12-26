@@ -68,15 +68,15 @@
 
     <!-- sidebar-content  -->
     <div class="sidebar-footer">
-      <a>
+      <!-- <a>
         <i class="fa fa-bell"></i>
         <span class="badge badge-pill badge-warning notification">3</span>
       </a>
       <a>
         <i class="fa fa-envelope"></i>
         <span class="badge badge-pill badge-success notification">7</span>
-      </a>
-      <a>
+      </a> -->
+      <a (click)="changePass()" title="Change to Password" data-toggle="modal" data-target="#changePassModal">
         <i class="fa fa-cog"></i>
       </a>
       <a (click)="logout()">
@@ -95,4 +95,8 @@
     </div>
   </main>
   <!-- page-content" -->
+</div>
+
+<div *ngIf="openDiaglog">
+  <app-change-pass></app-change-pass>
 </div>
