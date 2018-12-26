@@ -27,7 +27,10 @@
 
           <div class="form-group">
             <label>Category: <span class="k-required">*</span></label>
-            <div class="dropdown">
+            <select name="categoryId" [(ngModel)]="merchandise.categoryId" class="form-control" required>
+              <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>
+            </select>
+            <!-- <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 {{merchandise.category? merchandise.category : 'Category' }}
@@ -36,7 +39,7 @@
                 <a class="dropdown-item" *ngFor="let category of categories" (click)="onCategoryClick(category.name)">
                   {{category.name}}</a>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <div class="form-group">

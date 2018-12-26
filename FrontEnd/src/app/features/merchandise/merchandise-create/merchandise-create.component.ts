@@ -1,3 +1,4 @@
+import { Merchandise, Category } from 'src/app/shared/models';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import * as moment from 'moment';
@@ -11,11 +12,12 @@ import { CategoryService } from 'src/app/provider/category.service';
 })
 export class MerchandiseCreateComponent implements OnInit {
   @Output() submit = new EventEmitter();
-  @Input() merchandise;
+  @Input() merchandise: Merchandise;
   @Input() isUpdate;
 
-  categories: any;
+  categories: Category[];
   submitted = false;
+
   constructor(
     private merchandiseService: MerchandiseService,
     private categoryService: CategoryService,
@@ -36,7 +38,6 @@ export class MerchandiseCreateComponent implements OnInit {
     this.submitted = true;
   }
   add() {
-    this.merchandise.birthday = moment(this.merchandise.birthday).toDate();
     this.submit.emit(this.merchandise);
   }
   onCategoryClick(value) {
