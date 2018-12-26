@@ -76,9 +76,6 @@ export class BillComponent implements OnInit {
         createdDate: `${moment(i.createdDate).format('L')} ${moment(i.createdDate).format('LT')}`,
         details: i.details,
       }));
-
-      console.log(this.dataSorted);
-
     });
   }
 

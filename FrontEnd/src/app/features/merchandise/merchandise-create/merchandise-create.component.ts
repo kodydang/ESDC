@@ -1,7 +1,6 @@
 import { Merchandise, Category } from 'src/app/shared/models';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
-import * as moment from 'moment';
 import { MerchandiseService } from '../../../provider/merchandise.service';
 import { CategoryService } from 'src/app/provider/category.service';
 
@@ -11,12 +10,10 @@ import { CategoryService } from 'src/app/provider/category.service';
   styleUrls: ['./merchandise-create.component.scss'],
 })
 export class MerchandiseCreateComponent implements OnInit {
-  @Output() submit = new EventEmitter();
   @Input() merchandise: Merchandise;
   @Input() isUpdate;
 
   categories: Category[];
-  submitted = false;
 
   constructor(
     private merchandiseService: MerchandiseService,
@@ -33,13 +30,22 @@ export class MerchandiseCreateComponent implements OnInit {
       this.categories = res;
     });
   }
+
   formSubmit(res: NgForm) {
-    console.log(res);
-    this.submitted = true;
+    const data = new Merchandise({ ...this.merchandise, ...res.value });
+    (this.isUpdate ? this.update(data) : this.add(data)).then(
+      () => window.location.reload(),
+    );
   }
-  add() {
-    this.submit.emit(this.merchandise);
+
+  add(data: Merchandise) {
+    return this.merchandiseService.create([data]);
   }
+
+  update(data: Merchandise) {
+    return this.merchandiseService.update([data]);
+  }
+
   onCategoryClick(value) {
     this.merchandise.category = value;
   }

@@ -92,7 +92,7 @@ export class ImportComponent implements OnInit {
   }
 
   addToCart() {
-    const item = this.cart.find(i => i.id === this.newMerchandise.id);
+    const item = this.cart.find(i => i.id === this.newMerchandise.id && i.id);
     if (item) {
       item.quantity += this.newMerchandise.quantity;
     } else {
@@ -112,12 +112,14 @@ export class ImportComponent implements OnInit {
   }
 
   onSubmit() {
+    const requests = [];
     if (this.filterNewItems().length) {
-      return;
+      requests.push(this.merchandiseService.create(this.filterNewItems()));
     }
 
-    this.updateProduct()
-      .then(
+    requests.push(this.updateProduct());
+    Promise.all(requests)
+    .then(
         () => this.notifyService.create({
           message: 'Import completed successfully.',
           type: NotificationType.Success,
@@ -148,7 +150,6 @@ export class ImportComponent implements OnInit {
   filterNewItems() {
     let result: Merchandise[];
     result = this.cart.filter(i => !this.merchandises.find(x => x.id === i.id));
-
     return result;
   }
 }
