@@ -55,14 +55,12 @@ export class AdminPageComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService,
   ) {
     this.account = new Account({
       username: sessionStorage.getItem('username'),
       role: sessionStorage.getItem('role'),
     });
-
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const url = this.router.url.replace(`/${PAGE.ADMIN.URL}/`, '');
